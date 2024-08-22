@@ -9,9 +9,14 @@ Note: all JS code has been rewritten to use Alpine instead of the Flowbite code.
 
 ## Roadmap
 
-[ ] Basic components
-[ ] Styles (based on a tailwind plugin)
-[ ] Storybook-like viewer
+- [ ] Textarea
+- [ ] Checkbox
+- [ ] Radio
+- [ ] Button
+- [ ] In place edit
+- [ ] Modal
+- [ ] Styles (based on a tailwind plugin)
+- [ ] Storybook-like viewer
 
 # Components
 
