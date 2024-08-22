@@ -1,0 +1,11 @@
+package icon
+
+import "strings"
+
+templ Icon(def IconDefinition) {
+  if def.Class == "" {
+     @templ.Raw(def.Icon)
+  } else {
+    @templ.Raw(strings.Replace(def.Icon, `class="lucide`, `class="lucide `+def.Class, 1))
+  }
+}
