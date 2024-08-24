@@ -6,19 +6,19 @@ import (
 	"github.com/jfbus/templ-components/size"
 )
 
-// InputFieldDefinition is the definition for input fields.
-// Usage: @form.InputField(form.InputFieldDefinition{})
-type InputFieldDefinition struct {
+// TextareaDefinition is the definition for input fields.
+// Usage: @form.Textarea(form.TextareaDefinition{})
+type TextareaDefinition struct {
 	// Name is the input name.
 	Name string
 	// Type is the input type (text, password, ...).
-	Type string
-	// Label is the input label.
 	Label string
 	// Value is the input value.
 	Value string
 	// Placeholder is the placeholder text displayed when no value is set.
 	Placeholder string
+	// Rows defines the number of rows
+	Rows int
 	// Disabled disables the input.
 	Disabled bool
 	// Size defines the input size (size.S, size.Normal (default) or size.L).
@@ -35,8 +35,16 @@ type InputFieldDefinition struct {
 	Attributes templ.Attributes
 }
 
-func (def InputFieldDefinition) iconClass() string {
-	class := "absolute inset-y-0 flex items-center pointer-events-none"
+func (def TextareaDefinition) iconClass() string {
+	class := "absolute inset-y-0 flex items-top pointer-events-none"
+	switch def.Size {
+	case size.S:
+		class += " pt-2"
+	case size.L:
+		class += " pt-4"
+	default:
+		class += " pt-3.5"
+	}
 	switch {
 	case def.Icon == "":
 		return ""
@@ -47,7 +55,7 @@ func (def InputFieldDefinition) iconClass() string {
 	}
 }
 
-func (def InputFieldDefinition) inputClass() string {
+func (def TextareaDefinition) inputClass() string {
 	class := "block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 	switch def.Size {
 	case size.S:

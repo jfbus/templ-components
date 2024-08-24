@@ -2,10 +2,27 @@ package icon
 
 import "strings"
 
-templ Icon(def IconDefinition) {
-  if def.Class == "" {
-     @templ.Raw(def.Icon)
+templ Icon(def any) {
+  switch def := def.(type) {
+  case IconDefinition:
+    if strings.HasPrefix(def.Icon, "<svg") {
+      @icon(def.Icon, def.Class+" "+def.Size.Class())
+    } else {
+      @icon(NameToIcon[def.Icon], def.Class+" "+def.Size.Class())
+    }
+  case string:
+    if strings.HasPrefix(def, "<svg") {
+      @icon(def, "")
+    } else {
+      @icon(NameToIcon[def], "")
+    }
+  }
+}
+
+templ icon(def, class string) {
+  if class != "" {
+    @templ.Raw(strings.Replace(def, `class="lucide`, `class="lucide `+class, 1))
   } else {
-    @templ.Raw(strings.Replace(def.Icon, `class="lucide`, `class="lucide `+def.Class, 1))
+    @templ.Raw(def)
   }
 }

@@ -7,6 +7,30 @@ Note: all JS code has been rewritten to use Alpine instead of the Flowbite code.
 
 > This is a work in progress, breaking changes will probably occur.
 
+## Setup
+
+Install this package :
+
+```
+go get -u github.com/jfbus/templ-components
+```
+
+Install flowbite :
+
+```
+npm install 
+```
+
+Add the components to your tailwind config :
+
+```
+  content: [
+    require('flowbite/tailwindConfig'),
+    require('./templ-components'),
+  ],
+
+```
+
 ## Roadmap
 
 - [ ] Textarea
@@ -15,20 +39,26 @@ Note: all JS code has been rewritten to use Alpine instead of the Flowbite code.
 - [ ] Button
 - [ ] In place edit
 - [ ] Modal
-- [ ] Styles (based on a tailwind plugin)
+- [ ] Styles (based on a tailwind tailwindConfig)
 - [ ] Storybook-like viewer
 
 # Components
 
 ## Icons
 
+```
+import "github.com/jfbus/templ-components/icon"
+```
+
+Basic usage :
+
+```
+@icon.Icon(icon.Flower)
+```
+
 CSS classes can be applied to the SVG icons:
 
 ```
-import "github.com/jfbus/templ-components/icon"
-
-[...]
-
 @icon.Icon(icon.IconDefinition{Icon:icon.Flower, Class:"p-1 w-8 h-8"})
 ```
 

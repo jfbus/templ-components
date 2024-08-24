@@ -18,9 +18,10 @@ func main() {
 		panic(err)
 	}
 
-	var names []string
+	var icons []string
 	svgs := map[string]string{}
-	max := 0
+	names := map[string]string{}
+	maxLenIcon, maxLenName := 0, 0
 	for _, de := range des {
 		if !strings.HasSuffix(de.Name(), ".svg") {
 			continue
@@ -29,18 +30,19 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		var name []rune
+		var icon []rune
 		upper := true
-		for _, r := range strings.TrimSuffix(de.Name(), ".svg") {
+		name := strings.TrimSuffix(de.Name(), ".svg")
+		for _, r := range name {
 			if r == '-' {
 				upper = true
 				continue
 			}
 			if upper {
-				name = append(name, unicode.ToUpper(r))
+				icon = append(icon, unicode.ToUpper(r))
 				upper = false
 			} else {
-				name = append(name, r)
+				icon = append(icon, r)
 			}
 		}
 		ssvg := strings.TrimSpace(string(svg))
@@ -49,22 +51,34 @@ func main() {
 		} else {
 			continue
 		}
-		if len(name) > max {
-			max = len(name)
+		if len(icon) > maxLenIcon {
+			maxLenIcon = len(icon)
 		}
-		names = append(names, string(name))
-		svgs[string(name)] = re.ReplaceAllString(ssvg, " ")
+		if len(name) > maxLenName {
+			maxLenName = len(name)
+		}
+		icons = append(icons, string(icon))
+		svgs[string(icon)] = re.ReplaceAllString(ssvg, " ")
+		names[string(icon)] = name
 	}
 	file := `// Auto-generated code, DO NOT EDIT.
 package icon
 
 const (`
-	for _, name := range names {
+	for _, icon := range icons {
 		file += `
-	` + name + strings.Repeat(" ", max-len(name)) + " = `" + svgs[name] + "`"
+	` + icon + strings.Repeat(" ", maxLenIcon-len(icon)) + " = `" + svgs[icon] + "`"
 	}
 	file += `
-)`
+)
+
+var NameToIcon = map[string]string{`
+	for _, icon := range icons {
+		file += `
+	"` + names[icon] + `":` + strings.Repeat(" ", maxLenName-len(names[icon])) + " `" + svgs[icon] + "`,"
+	}
+	file += `
+}`
 	err = os.WriteFile("icon_lucide.go", []byte(file), 0644)
 	if err != nil {
 		panic(err)
