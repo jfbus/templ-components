@@ -1,0 +1,15 @@
+package form
+
+import "github.com/jfbus/templ-components/icon"
+
+templ InlineEdit(def InlineEditDefinition) {
+  <div x-data="{edit: false}" @click.outside="edit = false">
+    <div :class="edit ? 'hidden' : 'block'" @click="edit = true" class="cursor-pointer">
+      { def.Value }
+      @icon.Icon(icon.IconDefinition{Icon: icon.Pencil, Class:"inline-block ml-1", Size: def.IconSize})
+    </div>
+    <div :class="edit ? 'block' : 'hidden'">
+      @def.Edit
+    </div>
+  </div>
+}
