@@ -21,31 +21,38 @@ Install flowbite :
 npm install flowbite
 ```
 
-Add the component sources path and Flowbite to your tailwind config :
+No need to configure Flowbite, it is handled by templ-components.
+
+In the same directory as your source js & css files, create a `tailwind.config.go` file :
+
+```go
+//go:generate tailwindconfig
+package tailwind_config
+```
+
+Generate the tailwind config file:
 
 ```
-module.exports = {
-  content: [
-      "[your GOPATH]/pkg/mog/github.com/jfbus/templ-components@[version]/**/*.{templ,go}",
-  ],
-    plugins: [
-    require('flowbite/plugin'),
-  ],
-}
+go generate
 ```
+
+## Update Tailwind config
+
+`go generate` can run with an existing config;
+it renames the previous config file to `tailwind.config.js.saved`.
 
 ## Roadmap
 
 - [ ] Button
-- [ ] Checkbox
 - [ ] Radio
+- [ ] Checkbox
 - [ ] Modal
-- [ ] Tailwind config
+- [ ] Only add used components in tailwind config
 - [ ] Storybook-like viewer
 
 ## Sizes
 
-Sizes vary from size.XS to size.NineXL.
+Sizes vary from `size.XS` to `size.NineXL`.
 
 ## Components
 
@@ -89,7 +96,7 @@ Basic usage:
 
 ```
 @form.InputField(form.InputFieldDefinition{
-    Name: "foo",
+    Name:  "foo",
     Label: "Foo",
     Value: [your value],    
 })
@@ -101,10 +108,10 @@ With an icon (don't forget the icon import):
 import "github.com/jfbus/templ-components/icon"
 
 @form.InputField(form.InputFieldDefinition{
-    Name: "foo",
+    Name:  "foo",
     Label: "Foo",
     Value: [your value],
-    Icon: icon.Flower,
+    Icon:  icon.Flower,
 })
 ```
 
@@ -117,10 +124,10 @@ import (
 )
 
 @form.InputField(form.InputFieldDefinition{
-    Name: "foo",
+    Name:  "foo",
     Label: "Foo",
     Value: [your value],
-    Icon: icon.Flower,
+    Icon:  icon.Flower,
     IconPosition: position.End,
 })
 ```
@@ -129,13 +136,28 @@ With HTMX attributes and a spinning loader:
 
 ```
 @form.InputField(form.InputFieldDefinition{
-    Name: "foo",
-    Label: "Foo",
-    Value: [your value],
+    Name:   "foo",
+    Label:  "Foo",
+    Value:  [your value],
     Loader: true,
     Attributes:templ.Attributes{
         "hx-post":"/add",
         "hx-target":"#list",
+})
+```
+
+Sizes (only `size.S`, `size.Normal` and `size.L` are available)
+
+```
+import (
+    "github.com/jfbus/templ-components/size"
+)
+
+@form.InputField(form.InputFieldDefinition{
+    Name:  "foo",
+    Label: "Foo",
+    Value: [your value],
+    Size:  size.S,
 })
 ```
 
