@@ -1,4 +1,4 @@
-package form
+package textarea
 
 import (
 	"github.com/a-h/templ"
@@ -6,9 +6,9 @@ import (
 	"github.com/jfbus/templ-components/size"
 )
 
-// TextareaDefinition is the definition for input fields.
-// Usage: @form.Textarea(form.TextareaDefinition{})
-type TextareaDefinition struct {
+// D is the definition for input fields.
+// Usage: @textarea.C(textarea.D{})
+type D struct {
 	// Name is the input name.
 	Name string
 	// Type is the input type (text, password, ...).
@@ -35,7 +35,7 @@ type TextareaDefinition struct {
 	Attributes templ.Attributes
 }
 
-func (def TextareaDefinition) iconClass() string {
+func (def D) iconClass() string {
 	class := "absolute inset-y-0 flex items-top pointer-events-none"
 	switch def.Size {
 	case size.S:
@@ -55,7 +55,7 @@ func (def TextareaDefinition) iconClass() string {
 	}
 }
 
-func (def TextareaDefinition) inputClass() string {
+func (def D) inputClass() string {
 	class := "block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 	switch def.Size {
 	case size.S:

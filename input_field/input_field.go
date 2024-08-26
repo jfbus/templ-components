@@ -1,4 +1,4 @@
-package form
+package input_field
 
 import (
 	"github.com/a-h/templ"
@@ -6,13 +6,23 @@ import (
 	"github.com/jfbus/templ-components/size"
 )
 
-// InputFieldDefinition is the definition for input fields.
-// Usage: @form.InputField(form.InputFieldDefinition{})
-type InputFieldDefinition struct {
+type Type string
+
+const (
+	TypeEmail    Type = "email"
+	TypeNumber   Type = "number"
+	TypePassword Type = "password"
+	TypeText     Type = "text"
+	TypeURL      Type = "url"
+)
+
+// D is the definition for input fields.
+// Usage: @input_field.C(input_field.D{})
+type D struct {
 	// Name is the input name.
 	Name string
 	// Type is the input type (text, password, ...).
-	Type string
+	Type Type
 	// Label is the input label.
 	Label string
 	// Value is the input value.
@@ -35,7 +45,14 @@ type InputFieldDefinition struct {
 	Attributes templ.Attributes
 }
 
-func (def InputFieldDefinition) iconClass() string {
+func (def D) inputType() string {
+	if def.Type == "" {
+		return string(TypeText)
+	}
+	return string(def.Type)
+}
+
+func (def D) iconClass() string {
 	class := "absolute inset-y-0 flex items-center pointer-events-none"
 	switch {
 	case def.Icon == "":
@@ -47,7 +64,7 @@ func (def InputFieldDefinition) iconClass() string {
 	}
 }
 
-func (def InputFieldDefinition) inputClass() string {
+func (def D) inputClass() string {
 	class := "block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 	switch def.Size {
 	case size.S:
