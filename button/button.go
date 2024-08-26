@@ -16,9 +16,8 @@ const (
 type Style int
 
 const (
-	defaultStyle Style = 0
-	Outline      Style = 1
-	Pill         Style = 2
+	Outline Style = 1
+	Pill    Style = 2
 )
 
 type D struct {
