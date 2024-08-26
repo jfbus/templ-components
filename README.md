@@ -5,7 +5,7 @@ library.
 
 Note: all Flowbite JS code has been rewritten using Alpine.
 
-> This is a work in progress, breaking changes will probably happen.
+> This is a work in progress, breaking changes might happen.
 
 ## Setup
 
@@ -43,7 +43,6 @@ it renames the previous config file to `tailwind.config.js.saved`.
 
 ## Roadmap
 
-- [ ] Button
 - [ ] Radio
 - [ ] Checkbox
 - [ ] Modal
@@ -53,27 +52,28 @@ it renames the previous config file to `tailwind.config.js.saved`.
 ## Sizes
 
 Sizes vary from `size.XS` to `size.NineXL`.
+Not all components support all sizes. Each component definition lists the allowed sizes.
 
 ## Components
 
 ### Icons
 
-```
+```go
 import "github.com/jfbus/templ-components/icon"
 ```
 
 Basic usage:
 
-```
-@icon.Icon(icon.Flower)
+```templ
+@icon.C(icon.Flower)
 ```
 
 A size can be set:
 
-```
+```templ
 import "github.com/jfbus/templ-components/size"
 
-@icon.Icon(icon.IconDefinition{Icon:icon.Flower, Size:size:S})
+@icon.C(icon.D{Icon:icon.Flower, Size:size:S})
 ```
 
 Icon sizes are mapped to text sizes:
@@ -84,30 +84,24 @@ Icon sizes are mapped to text sizes:
 
 `size.S` translates into a `w-3.5 h-3.5` class. `size.L` translates into a `w-[18px] h-[18px]` class.
 
-### Form
-
-```
-import "github.com/jfbus/templ-components/form"
-```
-
-#### Input Field
+### Input Field
 
 Basic usage:
 
-```
-@form.InputField(form.InputFieldDefinition{
+```templ
+import "github.com/jfbus/templ-components/input_field"
+
+@input_field.C(input_field.D{
     Name:  "foo",
     Label: "Foo",
     Value: [your value],    
 })
 ```
 
-With an icon (don't forget the icon import):
+With an icon:
 
-```
-import "github.com/jfbus/templ-components/icon"
-
-@form.InputField(form.InputFieldDefinition{
+```templ
+@input_field.C(input_field.D{
     Name:  "foo",
     Label: "Foo",
     Value: [your value],
@@ -117,13 +111,8 @@ import "github.com/jfbus/templ-components/icon"
 
 Icon can be placed on the right side:
 
-```
-import (
-    "github.com/jfbus/templ-components/icon"
-    "github.com/jfbus/templ-components/position"
-)
-
-@form.InputField(form.InputFieldDefinition{
+```templ
+@input_field.C(input_field.D{
     Name:  "foo",
     Label: "Foo",
     Value: [your value],
@@ -134,8 +123,8 @@ import (
 
 With HTMX attributes and a spinning loader:
 
-```
-@form.InputField(form.InputFieldDefinition{
+```templ
+@input_field.C(input_field.D{
     Name:   "foo",
     Label:  "Foo",
     Value:  [your value],
@@ -148,12 +137,8 @@ With HTMX attributes and a spinning loader:
 
 Sizes (only `size.S`, `size.Normal` and `size.L` are available)
 
-```
-import (
-    "github.com/jfbus/templ-components/size"
-)
-
-@form.InputField(form.InputFieldDefinition{
+```templ
+@input_field.C(input_field.D{
     Name:  "foo",
     Label: "Foo",
     Value: [your value],
@@ -163,8 +148,10 @@ import (
 
 ### Textarea
 
-```
-@form.Textarea(form.TextareaDefinition{
+```templ
+import "github.com/jfbus/templ-components/textarea"
+
+@textarea.C(textarea.D{
     Name: "foo",
     Label: "Foo",
     Value: [your value],
@@ -174,11 +161,13 @@ import (
 
 ### Inline editing
 
-```
-@form.InlineEdit(form.InlineEditDefinition{
+```templ
+import "github.com/jfbus/templ-components/inline_edit"
+
+@inline_edit.C(inline_edit.D{
     Value: [your value],
     IconSize: size.S,
-    Edit: form.InputField(form.InputFieldDefinition{
+    Edit: input_field.C(input_field.D{
         Name: "title",
         Value: [your value],
         Icon: icon.CornerDownLeft,

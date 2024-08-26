@@ -2,9 +2,9 @@ package icon
 
 import "strings"
 
-templ Icon(def any) {
+templ C(def any) {
   switch def := def.(type) {
-  case IconDefinition:
+  case D:
     if strings.HasPrefix(def.Icon, "<svg") {
       @icon(def.Icon, def.Class+" "+def.Size.Class())
     } else {
