@@ -21,7 +21,7 @@ Install flowbite :
 npm install flowbite
 ```
 
-No need to configure Flowbite, it is handled by templ-components.
+No need to configure Tailwind & Flowbite, it is handled by templ-components.
 
 In the same directory as your source js & css files, create a `tailwind.config.go` file :
 
@@ -56,15 +56,13 @@ Not all components support all sizes. Each component definition lists the allowe
 
 ## Components
 
-### Icons
-
-```go
-import "github.com/jfbus/templ-components/icon"
-```
+### Icon
 
 Basic usage:
 
 ```templ
+import "github.com/jfbus/templ-components/icon"
+
 @icon.C(icon.Flower)
 ```
 
@@ -180,5 +178,29 @@ import "github.com/jfbus/templ-components/inline_edit"
             "hx-swap":"outerHTML",
       },
     }),
+})
+```
+
+### Button
+
+Basic usage:
+
+```templ
+import "github.com/jfbus/templ-components/button"
+
+@button.C(button.D{
+    ID:  "foo",
+    Label: "Foo",
+})
+```
+
+With an icon:
+
+```templ
+@button.C(button.D{
+    Name:  "foo",
+    Label: "Foo",
+    Value: [your value],
+    Icon:  icon.Pencil,
 })
 ```
