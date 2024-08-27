@@ -14,4 +14,22 @@ type D struct {
 	IconSize size.Size
 	// Edit is the component used to edit the value.
 	Edit templ.Component
+	// DefaultEdit defines if the default display is the Edit component or the text value.
+	DefaultEdit bool
+	// Focus defines the input field that needs to have the focus after. You'll need to add a "x-ref" attribute to this input.
+	Focus string
+}
+
+func (def D) defaultState() string {
+	if def.DefaultEdit {
+		return "{edit: true}"
+	}
+	return "{edit: false}"
+}
+
+func (def D) click() string {
+	if def.Focus == "" {
+		return "edit = true"
+	}
+	return "edit = true; $nextTick(() => { $refs." + def.Focus + ".focus(); });"
 }
