@@ -7,7 +7,6 @@ import (
 )
 
 // D is the definition for input fields.
-// Usage: @textarea.C(textarea.D{})
 type D struct {
 	// Name is the input name.
 	Name string

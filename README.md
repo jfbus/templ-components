@@ -87,9 +87,9 @@ Icon sizes are mapped to text sizes:
 Basic usage:
 
 ```templ
-import "github.com/jfbus/templ-components/input_field"
+import "github.com/jfbus/templ-components/input"
 
-@input_field.C(input_field.D{
+@input.C(input.D{
     Name:  "foo",
     Label: "Foo",
     Value: [your value],    
@@ -99,7 +99,7 @@ import "github.com/jfbus/templ-components/input_field"
 With an icon:
 
 ```templ
-@input_field.C(input_field.D{
+@input.C(input.D{
     Name:  "foo",
     Label: "Foo",
     Value: [your value],
@@ -110,7 +110,7 @@ With an icon:
 Icon can be placed on the right side:
 
 ```templ
-@input_field.C(input_field.D{
+@input.C(input.D{
     Name:  "foo",
     Label: "Foo",
     Value: [your value],
@@ -122,7 +122,7 @@ Icon can be placed on the right side:
 With HTMX attributes and a spinning loader:
 
 ```templ
-@input_field.C(input_field.D{
+@input.C(input.D{
     Name:   "foo",
     Label:  "Foo",
     Value:  [your value],
@@ -136,7 +136,7 @@ With HTMX attributes and a spinning loader:
 Sizes (only `size.S`, `size.Normal` and `size.L` are available)
 
 ```templ
-@input_field.C(input_field.D{
+@input.C(input.D{
     Name:  "foo",
     Label: "Foo",
     Value: [your value],
@@ -160,12 +160,12 @@ import "github.com/jfbus/templ-components/textarea"
 ### Inline editing
 
 ```templ
-import "github.com/jfbus/templ-components/inline_edit"
+import "github.com/jfbus/templ-components/inline"
 
-@inline_edit.C(inline_edit.D{
+@inline.C(inline.D{
     Value: [your value],
     IconSize: size.S,
-    Edit: input_field.C(input_field.D{
+    Edit: input.C(input.D{
         Name: "title",
         Value: [your value],
         Icon: icon.CornerDownLeft,

@@ -1,4 +1,4 @@
-package input_field
+package input
 
 import (
 	"github.com/a-h/templ"
@@ -17,7 +17,6 @@ const (
 )
 
 // D is the definition for input fields.
-// Usage: @input_field.C(input_field.D{})
 type D struct {
 	// Name is the input name.
 	Name string
@@ -25,6 +24,8 @@ type D struct {
 	Type Type
 	// Label is the input label.
 	Label string
+	// HideLabel defines if the label is only available to screenreaders.
+	HideLabel bool
 	// Value is the input value.
 	Value string
 	// Placeholder is the placeholder text displayed when no value is set.

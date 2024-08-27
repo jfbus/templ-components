@@ -4,7 +4,7 @@ package icon
 import "github.com/jfbus/templ-components/size"
 
 // D is the definition of icons.
-// Usage: @icon.Icon(icon.D{Icon:icon.Flower}) or @icon.Icon(icon.Flower) or &icon.Icon("flower")
+// Usage: @icon.C(icon.D{Icon:icon.Flower}) or @icon.C(icon.Flower) or &icon.C("flower")
 type D struct {
 	// Icon is the SVG string (e.g. icon.Flower).
 	Icon string

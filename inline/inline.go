@@ -1,4 +1,4 @@
-package inline_edit
+package inline
 
 import (
 	"github.com/a-h/templ"
@@ -6,7 +6,6 @@ import (
 )
 
 // D is the definition for inline edits.
-// Usage: @inline_edit.C(inline_edit.D{Value: "foo", Edit: input_field.C(...)})
 type D struct {
 	// Value defines the current value.
 	Value string
