@@ -7,7 +7,11 @@ import (
 templ C(def D) {
 <div>
 if def.Label != "" {
-<label for={def.Name} class="block label">{def.Label}</label>
+  if def.HideLabel {
+    <label class="sr-only" for={def.Name} class="block label">{def.Label}</label>
+  } else {
+    <label for={def.Name} class="block label">{def.Label}</label>
+  }
 }
 <div class={"relative input "+def.Class}>
   if def.Icon != "" {

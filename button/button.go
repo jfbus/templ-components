@@ -20,6 +20,7 @@ const (
 	Pill    Style = 2
 )
 
+// D is the button definition.
 type D struct {
 	// ID is the button id.
 	ID string
