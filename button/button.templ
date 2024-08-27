@@ -7,7 +7,9 @@ import (
 
 templ C(def D) {
   <button type={def.buttonType()}
+  if def.ID != "" {
     id={def.ID}
+  }
     class={def.buttonClass()}
     { def.Attributes... }
   if def.Disabled {
@@ -18,7 +20,7 @@ templ C(def D) {
   }
   >
   if def.IconPosition != position.End {
-    @icon.C(icon.D{Icon:def.Icon, Size:def.Size, Class:"me-2"})
+    @icon.C(icon.D{Icon:def.Icon, Size:def.iconSize(), Class:def.iconClass()})
   }
   if def.HideLabel {
     <span class="sr-only">{def.Label}</span>
@@ -26,7 +28,7 @@ templ C(def D) {
     {def.Label}
   }
   if def.IconPosition == position.End {
-    @icon.C(icon.D{Icon:def.Icon, Size:def.Size, Class:"ms-2"})
+    @icon.C(icon.D{Icon:def.Icon, Size:def.iconSize(), Class:def.iconClass()})
   }
   if def.Loader {
     <span id={def.ID+"-indicator"} class="htmx-indicator">
