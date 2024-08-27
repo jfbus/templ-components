@@ -1,3 +1,4 @@
+// Package textarea implements textarea fields.
 package textarea
 
 import (
@@ -6,7 +7,7 @@ import (
 	"github.com/jfbus/templ-components/size"
 )
 
-// D is the definition for input fields.
+// D is the definition for textareas.
 type D struct {
 	// Name is the input name.
 	Name string

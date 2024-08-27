@@ -1,13 +1,14 @@
 package inline_test
 
 import (
-	"github.com/jfbus/templ-components/inlineedit"
+	"github.com/a-h/templ"
+	"github.com/jfbus/templ-components/inline"
 	"github.com/jfbus/templ-components/input"
 	"github.com/jfbus/templ-components/size"
 )
 
 func ExampleC() {
-	_ = inlineedit.C(inlineedit.D{
+	_ = inline.C(inline.D{
 		Value:    "Previous value",
 		IconSize: size.S,
 		Edit: input.C(input.D{

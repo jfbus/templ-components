@@ -1,3 +1,4 @@
+// Package button implements buttons.
 package button
 
 import (

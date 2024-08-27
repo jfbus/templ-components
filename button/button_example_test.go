@@ -1,6 +1,7 @@
 package button_test
 
 import (
+	"github.com/a-h/templ"
 	"github.com/jfbus/templ-components/button"
 	"github.com/jfbus/templ-components/icon"
 	"github.com/jfbus/templ-components/size"

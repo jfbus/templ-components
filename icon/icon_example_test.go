@@ -1,8 +1,8 @@
 package icon_test
 
 import (
-	"pkgs/templ-components/icon"
-	"pkgs/templ-components/size"
+	"github.com/jfbus/templ-components/icon"
+	"github.com/jfbus/templ-components/size"
 )
 
 func ExampleC() {

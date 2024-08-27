@@ -1,3 +1,4 @@
+// Package inline implements inline edits.
 package inline
 
 import (
