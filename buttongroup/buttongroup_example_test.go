@@ -31,7 +31,7 @@ func ExampleC() {
 			},
 			{
 				Icon:      icon.Banknote,
-				Label:     "PRice",
+				Label:     "Price",
 				HideLabel: true,
 				Attributes: templ.Attributes{
 					"@click": "$dispatch('input', 'price')",

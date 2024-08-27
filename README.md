@@ -1,15 +1,18 @@
 # A library of templ components
 
 <a href="https://pkg.go.dev/github.com/jfbus/templ-components"><img src="https://pkg.go.dev/badge/github.com/jfbus/templ-components.svg" alt="Go Reference" /></a>
+<a href="https://goreportcard.com/report/github.com/jfbus/templ-components"><img src="https://goreportcard.com/badge/github.com/jfbus/templ-components" alt="Go Report Card" /></a>
 
-A library of components to be used in a Go/templ/HTMX/AlpineJS project, based on Flowbite components and the Lucide icon
+A library of components to be used in a Go/templ/HTMX/AlpineJS project, based on [Flowbite](https://flowbite.com/) components and the [Lucide](https://lucide.dev/) icon
 library.
 
-Note: all Flowbite JS code has been rewritten using Alpine.
+_Note: all Flowbite JS code has been rewritten using Alpine._
 
 > This is a work in progress, breaking changes might happen.
 
 ## Setup
+
+### Start a new project
 
 Install this package :
 
@@ -17,7 +20,7 @@ Install this package :
 go get -u github.com/jfbus/templ-components
 ```
 
-Install flowbite :
+Create a new `assets_src` directory & install Flowbite:
 
 ```
 npm install flowbite
@@ -25,7 +28,9 @@ npm install flowbite
 
 No need to configure Tailwind & Flowbite, it is handled by templ-components.
 
-In the same directory as your source js & css files, create a `tailwind.config.go` file :
+Install [Alpine.js](https://alpinejs.dev/).
+
+In the same `assets_src` directory, create a `tailwind.config.go` file :
 
 ```go
 //go:generate tailwindconfig
@@ -38,7 +43,15 @@ Generate the tailwind config file:
 go generate
 ```
 
-## Update Tailwind config
+### Add to an existing Tailwind project
+
+Add the `tailwind.config.go` file beside your `tailwind.config.js` file.
+
+Update the tailwind config file:
+
+```
+go generate
+```
 
 `go generate` can run with an existing config;
 it renames the previous config file to `tailwind.config.js.saved`.
@@ -86,38 +99,13 @@ Icon sizes are mapped to text sizes:
 
 ### Input Field
 
-Basic usage:
-
-```templ
-import "github.com/jfbus/templ-components/input"
-
-@input.C(input.D{
-    Name:  "foo",
-    Label: "Foo",
-    Value: [your value],    
-})
-```
-
-With an icon:
-
 ```templ
 @input.C(input.D{
     Name:  "foo",
     Label: "Foo",
     Value: [your value],
+    Size:  size.S,
     Icon:  icon.Flower,
-})
-```
-
-Icon can be placed on the right side:
-
-```templ
-@input.C(input.D{
-    Name:  "foo",
-    Label: "Foo",
-    Value: [your value],
-    Icon:  icon.Flower,
-    IconPosition: position.End,
 })
 ```
 
@@ -132,17 +120,6 @@ With HTMX attributes and a spinning loader:
     Attributes:templ.Attributes{
         "hx-post":"/add",
         "hx-target":"#list",
-})
-```
-
-Sizes (only `size.S`, `size.Normal` and `size.L` are available)
-
-```templ
-@input.C(input.D{
-    Name:  "foo",
-    Label: "Foo",
-    Value: [your value],
-    Size:  size.S,
 })
 ```
 
@@ -185,19 +162,6 @@ import "github.com/jfbus/templ-components/inline"
 
 ### Button
 
-Basic usage:
-
-```templ
-import "github.com/jfbus/templ-components/button"
-
-@button.C(button.D{
-    ID:  "foo",
-    Label: "Foo",
-})
-```
-
-With an icon:
-
 ```templ
 @button.C(button.D{
     Name:  "foo",
@@ -206,3 +170,39 @@ With an icon:
     Icon:  icon.Pencil,
 })
 ```
+
+### Button group
+
+```templ
+@buttongroup.C(buttongroup.D{
+    Size: size.S,
+    Buttons: []button.D{
+        {
+            Icon:      icon.ArrowDownNarrowWide,
+            Label:     "Sort",
+            HideLabel: true,
+            },
+        },
+        {
+            Icon:      icon.Heart,
+            Label:     "Rating",
+            HideLabel: true,
+        },
+        {
+            Icon:      icon.Banknote,
+            Label:     "Price",
+            HideLabel: true,
+        },
+    },
+})
+```
+
+## FAQ
+
+### I use a new component and it looks broken !
+
+Run `go generate` again, and update your Tailwind class (`npx tailwindcss -i [...] -o [...]`).
+
+Check that your `tailwind.config.js` content section contains :
+* your templates (something like `"../views/**/*.{templ,go}"`)
+* templ-components (something like `"[your local path]/github.com/jfbus/templ-components/**/*.{templ,go}"`)
