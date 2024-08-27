@@ -1,23 +1,23 @@
 package size
 
-type Size string
+type Size int
 
 const (
-	Inherit Size = ""
-	XS      Size = "xs"
-	S       Size = "sm"
-	Normal  Size = "base"
-	L       Size = "lg"
-	XL      Size = "xl"
-	TwoXL   Size = "2xl"
-	ThreeXL Size = "3xl"
-	FourXL  Size = "4xl"
-	FiveXL  Size = "5xl"
-	SixXL   Size = "6xl"
-	SevenXL Size = "7xl"
-	EightXL Size = "8xl"
-	NineXL  Size = "9xl"
-	Full    Size = "full"
+	Inherit Size = iota
+	XS
+	S
+	Normal
+	L
+	XL
+	TwoXL
+	ThreeXL
+	FourXL
+	FiveXL
+	SixXL
+	SevenXL
+	EightXL
+	NineXL
+	Full
 )
 
 var Default Size
