@@ -39,11 +39,11 @@ func main() {
 func updateConfig(path string) error {
 	content, err := os.ReadFile("tailwind.config.js")
 	if err != nil {
-		return fmt.Errorf("read tailwind.config.js: %w", path, err)
+		return fmt.Errorf("read tailwind.config.js: %w", err)
 	}
 	err = os.Rename("tailwind.config.js", "tailwind.config.js.saved")
 	if err != nil {
-		return fmt.Errorf("rename tailwind.config.js: %w", path, err)
+		return fmt.Errorf("rename tailwind.config.js: %w", err)
 	}
 	return createConfig(path, string(content))
 }

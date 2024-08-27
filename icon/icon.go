@@ -1,3 +1,5 @@
+// Package icon implements SVG icons.
+//
 //go:generate go run .build/generate.go
 package icon
 

@@ -1,9 +1,9 @@
 package textarea_test
 
 import (
-	"pkgs/templ-components/icon"
-	"pkgs/templ-components/size"
-	"pkgs/templ-components/textarea"
+	"github.com/jfbus/templ-components/icon"
+	"github.com/jfbus/templ-components/size"
+	"github.com/jfbus/templ-components/textarea"
 )
 
 func ExampleC() {

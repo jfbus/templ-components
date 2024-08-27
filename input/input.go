@@ -1,3 +1,4 @@
+// Package button implements input fields.
 package input
 
 import (

@@ -1,5 +1,7 @@
 # A library of templ components
 
+<a href="https://pkg.go.dev/github.com/jfbus/templ-components"><img src="https://pkg.go.dev/badge/github.com/jfbus/templ-components.svg" alt="Go Reference" /></a>
+
 A library of components to be used in a Go/templ/HTMX/AlpineJS project, based on Flowbite components and the Lucide icon
 library.
 
