@@ -1,13 +1,11 @@
 package row
 
-import (
-	"github.com/jfbus/templ-components/table/cell"
-)
+import "github.com/jfbus/templ-components/table/cell"
 
 templ C(def D) {
-<tr class={def.Class}>
-for _, c := range def.cells() {
-  @cell.C(c)
-}
-</tr>
+	<tr class={ def.Class }>
+		for _, c := range def.cells() {
+			@cell.C(c)
+		}
+	</tr>
 }
