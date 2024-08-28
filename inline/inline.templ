@@ -3,13 +3,13 @@ package inline
 import "github.com/jfbus/templ-components/icon"
 
 templ C(def D) {
-  <div x-data={def.defaultState()} @click.outside="edit = false">
-    <div :class="edit ? 'hidden' : 'block'" @click={def.click()} class="cursor-pointer">
-      { def.Value }
-      @icon.C(icon.D{Icon: icon.Pencil, Class:"inline-block ml-1", Size: def.IconSize})
-    </div>
-    <div :class="edit ? 'block' : 'hidden'">
-      @def.Edit
-    </div>
-  </div>
+	<div x-data={ def.defaultState() } @click.outside="edit = false">
+		<div :class="edit ? 'hidden' : 'block'" @click={ def.click() } class="cursor-pointer">
+			{ def.Value }
+			@icon.C(icon.D{Icon: icon.Pencil, Class: "inline-block ml-1", Size: def.IconSize})
+		</div>
+		<div :class="edit ? 'block' : 'hidden'">
+			@def.Edit
+		</div>
+	</div>
 }

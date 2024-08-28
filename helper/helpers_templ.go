@@ -61,7 +61,7 @@ func IfEmpty(s string, def string) templ.Component {
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(s)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `helper/helpers.templ`, Line: 9, Col: 6}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `helper/helpers.templ`, Line: 9, Col: 5}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
@@ -71,7 +71,7 @@ func IfEmpty(s string, def string) templ.Component {
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(def)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `helper/helpers.templ`, Line: 11, Col: 8}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `helper/helpers.templ`, Line: 11, Col: 7}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {

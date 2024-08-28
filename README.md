@@ -113,13 +113,13 @@ With HTMX attributes and a spinning loader:
 
 ```templ
 @input.C(input.D{
-    Name:   "foo",
-    Label:  "Foo",
-    Value:  [your value],
-    Loader: true,
-    Attributes:templ.Attributes{
-        "hx-post":"/add",
-        "hx-target":"#list",
+    Name:       "foo",
+    Label:      "Foo",
+    Value:      [your value],
+    Loader:     true,
+    Attributes: templ.Attributes{
+        "hx-post":   "/add",
+        "hx-target": "#list",
 })
 ```
 
@@ -129,10 +129,10 @@ With HTMX attributes and a spinning loader:
 import "github.com/jfbus/templ-components/textarea"
 
 @textarea.C(textarea.D{
-    Name: "foo",
+    Name:  "foo",
     Label: "Foo",
     Value: [your value],
-    Icon: icon.Flower,
+    Icon:  icon.Flower,
 })
 ```
 
@@ -142,19 +142,19 @@ import "github.com/jfbus/templ-components/textarea"
 import "github.com/jfbus/templ-components/inline"
 
 @inline.C(inline.D{
-    Value: [your value],
+    Value:    [your value],
     IconSize: size.S,
-    Edit: input.C(input.D{
-        Name: "title",
-        Value: [your value],
-        Icon: icon.CornerDownLeft,
+    Edit:     input.C(input.D{
+        Name:         "title",
+        Value:        [your value],
+        Icon:         icon.CornerDownLeft,
         IconPosition: position.End,
-        Size: size.S,
-        Attributes: templ.Attributes{
-            "hx-trigger":"keyup[key=='Enter']",
-            "hx-post":"/add",
-            "hx-target":"#item",
-            "hx-swap":"outerHTML",
+        Size:         size.S,
+        Attributes:   templ.Attributes{
+            "hx-trigger": "keyup[key=='Enter']",
+            "hx-post":    "/add",
+            "hx-target":  "#item",
+            "hx-swap":    "outerHTML",
       },
     }),
 })
@@ -179,7 +179,7 @@ import "github.com/jfbus/templ-components/button"
 import "github.com/jfbus/templ-components/buttongroup"
 
 @buttongroup.C(buttongroup.D{
-    Size: size.S,
+    Size:    size.S,
     Buttons: []button.D{
         {
             Icon:      icon.ArrowDownNarrowWide,
@@ -211,9 +211,9 @@ import (
 )
 
 @table.C(table.D{
-    Style: table.StyleStripedRows,
+    Style:  table.StyleStripedRows,
     Header: &row.D{
-        Cells:[]string{"Email","Name","Status", ""},
+        Cells: []string{"Email","Name","Status", ""},
     },
     Rows: []row.D{{
         Cells: []any{
@@ -221,7 +221,7 @@ import (
             "john.doe@example.com",
             "active",
             cell.D{
-                Class: "text-center",
+                Class:   "text-center",
                 Content: button.C(button.D{
                     Label: "disable"
                 }),
