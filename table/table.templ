@@ -1,0 +1,25 @@
+package table
+
+import (
+  "github.com/jfbus/templ-components/table/row"
+)
+
+templ C(def D) {
+<table class={def.tableClass()}>
+if def.Header != nil {
+  <thead class={def.headerClass()}>
+    @row.C(def.header())
+  </thead>
+}
+  <tbody>
+  for _, r := range def.rows() {
+    @row.C(r)
+  }
+  </tbody>
+if def.Footer != nil {
+  <tfoot class={def.footerClass()}>
+    @row.C(def.footer())
+  </tfoot>
+}
+</table>
+}

@@ -163,6 +163,8 @@ import "github.com/jfbus/templ-components/inline"
 ### Button
 
 ```templ
+import "github.com/jfbus/templ-components/button"
+
 @button.C(button.D{
     Name:  "foo",
     Label: "Foo",
@@ -174,6 +176,8 @@ import "github.com/jfbus/templ-components/inline"
 ### Button group
 
 ```templ
+import "github.com/jfbus/templ-components/buttongroup"
+
 @buttongroup.C(buttongroup.D{
     Size: size.S,
     Buttons: []button.D{
@@ -196,6 +200,61 @@ import "github.com/jfbus/templ-components/inline"
     },
 })
 ```
+
+### Table
+
+```templ
+import (
+    "github.com/jfbus/templ-components/table"
+    "github.com/jfbus/templ-components/table/row"
+    "github.com/jfbus/templ-components/table/cell"
+)
+
+@table.C(table.D{
+    Style: table.StyleStripedRows,
+    Header: &row.D{
+        Cells:[]string{"Email","Name","Status", ""},
+    },
+    Rows: []row.D{{
+        Cells: []any{
+            "John Doe",
+            "john.doe@example.com",
+            "active",
+            cell.D{
+                Class: "text-center",
+                Content: button.C(button.D{
+                    Label: "disable"
+                }),
+            },
+        },
+    }},
+})
+```
+
+Row contents can either be a slice of strings, a slice of `cell.D` definitions,
+a slice of `templ.Component` components or a `[]any` slice containing any number of these.
+
+## Helpers
+
+```
+import "github.com/jfbus/templ-components/helper"
+```
+
+### S
+
+`helper.S` renders anything (numbers, booleans, ...). `{helper.S(1)}` is the equivalent of `{strconv.Itoa(1)}`
+
+### IfEmpty
+
+Renders a string or another value if the string is empty.
+
+```templ
+@helper.IfEmpty(item.Value, "???")
+```
+
+### L
+
+`L` returns a `templ.Component` based on a list of `templ.Component` values.
 
 ## FAQ
 
