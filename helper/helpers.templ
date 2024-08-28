@@ -1,0 +1,23 @@
+package helper
+
+templ S(s any) {
+  {tostring(s)}
+}
+
+templ IfEmpty(s string, def string) {
+  if s != "" {
+    {s}
+  } else {
+    {def}
+  }
+}
+
+templ L(l ...templ.Component) {
+	for _, c := range l {
+		if c, ok := c.(templ.Component); ok {
+			@c
+		} else {
+		  @S(c)
+		}
+	}
+}
