@@ -1,0 +1,15 @@
+package selectfield
+
+templ C(def D) {
+	@label.C(def.label())
+	<select id={ def.id() } class={ def.class() }>
+		for _,opt := range def.Options {
+			<option
+				value={ opt.Value }
+				if opt.Value == opt.Selected {
+					selected
+				}
+			>{ opt.Label }</option>
+		}
+	</select>
+}

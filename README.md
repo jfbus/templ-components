@@ -136,6 +136,32 @@ import "github.com/jfbus/templ-components/textarea"
 })
 ```
 
+### Select
+
+```templ
+import (
+	"github.com/jfbus/templ-components/selectfield"
+	"github.com/jfbus/templ-components/selectfield/option"
+)
+
+@selectfield.C(selectfield.D{
+    Name:  "country",
+    Label: "Country",
+    Options: []option.D{{
+        Label: "Select a country",
+    }, {
+        Value: "FR",
+        Label: "France",
+    }, {
+        Value: "DE",
+        Label: "Germany",
+    }, {
+        Value: "GB",
+        Label: "United Kingdom",
+    }},
+    Selected: "DE",
+})
+```
 ### Inline editing
 
 ```templ
@@ -182,15 +208,16 @@ import "github.com/jfbus/templ-components/buttongroup"
     Size:    size.S,
     Buttons: []button.D{
         {
-            Icon:      icon.ArrowDownNarrowWide,
-            Label:     "Sort",
-            HideLabel: true,
+            Icon:  icon.ArrowDownNarrowWide,
+            Label: label.D{
+                  Label: "Sort",
+                  Hide: true,
+                  },
             },
         },
         {
             Icon:      icon.Heart,
             Label:     "Rating",
-            HideLabel: true,
         },
         {
             Icon:      icon.Banknote,
@@ -223,7 +250,7 @@ import (
             cell.D{
                 Class:   "text-center",
                 Content: button.C(button.D{
-                    Label: "disable"
+                    Label: "disable",
                 }),
             },
         },
@@ -246,10 +273,10 @@ import "github.com/jfbus/templ-components/helper"
 
 ### IfEmpty
 
-Renders a string or another value if the string is empty.
+Renders the first non empty string from all parameters.
 
-```templ
-@helper.IfEmpty(item.Value, "???")
+```go
+helper.IfEmpty(item.Value, "???")
 ```
 
 ### L
