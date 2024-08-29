@@ -76,7 +76,7 @@ Not all components support all sizes. Each component definition lists the allowe
 Basic usage:
 
 ```templ
-import "github.com/jfbus/templ-components/icon"
+import "github.com/jfbus/templ-components/components/icon"
 
 @icon.C(icon.Flower)
 ```
@@ -84,7 +84,7 @@ import "github.com/jfbus/templ-components/icon"
 A size can be set:
 
 ```templ
-import "github.com/jfbus/templ-components/size"
+import "github.com/jfbus/templ-components/components/size"
 
 @icon.C(icon.D{Icon:icon.Flower, Size:size:S})
 ```
@@ -126,7 +126,7 @@ With HTMX attributes and a spinning loader:
 ### Textarea
 
 ```templ
-import "github.com/jfbus/templ-components/textarea"
+import "github.com/jfbus/templ-components/components/textarea"
 
 @textarea.C(textarea.D{
     Name:  "foo",
@@ -140,8 +140,8 @@ import "github.com/jfbus/templ-components/textarea"
 
 ```templ
 import (
-	"github.com/jfbus/templ-components/selectfield"
-	"github.com/jfbus/templ-components/selectfield/option"
+	"github.com/jfbus/templ-components/components/selectfield"
+	"github.com/jfbus/templ-components/components/selectfield/option"
 )
 
 @selectfield.C(selectfield.D{
@@ -165,7 +165,7 @@ import (
 ### Inline editing
 
 ```templ
-import "github.com/jfbus/templ-components/inline"
+import "github.com/jfbus/templ-components/components/inline"
 
 @inline.C(inline.D{
     Value:    [your value],
@@ -189,7 +189,7 @@ import "github.com/jfbus/templ-components/inline"
 ### Button
 
 ```templ
-import "github.com/jfbus/templ-components/button"
+import "github.com/jfbus/templ-components/components/button"
 
 @button.C(button.D{
     Name:  "foo",
@@ -202,7 +202,7 @@ import "github.com/jfbus/templ-components/button"
 ### Button group
 
 ```templ
-import "github.com/jfbus/templ-components/buttongroup"
+import "github.com/jfbus/templ-components/components/buttongroup"
 
 @buttongroup.C(buttongroup.D{
     Size:    size.S,
@@ -232,9 +232,9 @@ import "github.com/jfbus/templ-components/buttongroup"
 
 ```templ
 import (
-    "github.com/jfbus/templ-components/table"
-    "github.com/jfbus/templ-components/table/row"
-    "github.com/jfbus/templ-components/table/cell"
+    "github.com/jfbus/templ-components/components/table"
+    "github.com/jfbus/templ-components/components/table/row"
+    "github.com/jfbus/templ-components/components/table/cell"
 )
 
 @table.C(table.D{
@@ -264,7 +264,7 @@ a slice of `templ.Component` components or a `[]any` slice containing any number
 ## Helpers
 
 ```
-import "github.com/jfbus/templ-components/helper"
+import "github.com/jfbus/templ-components/components/helper"
 ```
 
 ### S
