@@ -1,0 +1,41 @@
+package button
+
+import (
+	"github.com/jfbus/templ-components/components/icon"
+	"github.com/jfbus/templ-components/components/loader"
+	"github.com/jfbus/templ-components/components/position"
+)
+
+templ C(def D) {
+	<button
+		type={ def.buttonType() }
+		if def.ID != "" {
+			id={ def.ID }
+		}
+		class={ def.buttonClass() }
+		{ def.Attributes... }
+		if def.Disabled {
+			disabled
+		}
+		if def.Loader {
+			hx-indicator={ "#" + def.ID + "-indicator" }
+		}
+	>
+		if def.IconPosition != position.End {
+			@icon.C(icon.D{Icon: def.Icon, Size: def.iconSize(), Class: def.iconClass()})
+		}
+		if def.HideLabel {
+			<span class="sr-only">{ def.Label }</span>
+		} else {
+			{ def.Label }
+		}
+		if def.IconPosition == position.End {
+			@icon.C(icon.D{Icon: def.Icon, Size: def.iconSize(), Class: def.iconClass()})
+		}
+		if def.Loader {
+			<span id={ def.ID + "-indicator" } class="htmx-indicator">
+				@loader.C()
+			</span>
+		}
+	</button>
+}

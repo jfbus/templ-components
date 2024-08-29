@@ -1,0 +1,23 @@
+package cell
+
+import "github.com/jfbus/templ-components/components/helper"
+
+templ C(def D) {
+	if def.Header {
+		<th scope="col" class={ def.Class }>
+			if c, ok := def.Content.(templ.Component); ok {
+				@c
+			} else {
+				@helper.S(def.Content)
+			}
+		</th>
+	} else {
+		<td class={ def.Class }>
+			if c, ok := def.Content.(templ.Component); ok {
+				@c
+			} else {
+				@helper.S(def.Content)
+			}
+		</td>
+	}
+}

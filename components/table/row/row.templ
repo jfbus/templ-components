@@ -1,0 +1,11 @@
+package row
+
+import "github.com/jfbus/templ-components/components/table/cell"
+
+templ C(def D) {
+	<tr class={ def.Class }>
+		for _, c := range def.cells() {
+			@cell.C(c)
+		}
+	</tr>
+}
