@@ -1,12 +1,18 @@
+// Package buttongroup implements button groups.
 package buttongroup
 
 import (
 	"github.com/a-h/templ"
 	"github.com/jfbus/templ-components/button"
+	"github.com/jfbus/templ-components/helper"
 	"github.com/jfbus/templ-components/size"
 )
 
-const DefaultColor = "text-gray-900 bg-white border-gray-300 hover:bg-gray-100 focus:ring-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+// Defaults defines the default Color/Class. They are overriden by D.Color/D.Class.
+var Defaults = D{
+	Color: "text-gray-900 bg-white border-gray-300 hover:bg-gray-100 focus:ring-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700",
+	Class: "inline-flex rounded-md shadow-sm",
+}
 
 type D struct {
 	// Color overrides the default color CSS classes.
@@ -29,13 +35,7 @@ func (def D) buttons() []button.D {
 		if def.Size != size.Inherit {
 			bs[i].Size = def.Size
 		}
-		switch {
-		case bs[i].Color != "":
-		case def.Color != "":
-			bs[i].Color = def.Color
-		default:
-			bs[i].Color = DefaultColor
-		}
+		bs[i].Color = helper.IfEmpty(bs[i].Color, def.Color, Defaults.Color)
 		switch i {
 		case 0:
 			bs[i].Class += " border rounded-s-lg"
@@ -49,14 +49,7 @@ func (def D) buttons() []button.D {
 }
 
 func (def D) groupClass() string {
-	class := "inline-flex rounded-md shadow-sm "
-	if def.Color != "" {
-		class += def.Color
-	} else {
-		class += DefaultColor
-	}
-	if def.Class != "" {
-		class += " " + def.Class
-	}
+	class := helper.IfEmpty(def.Class, Defaults.Class)
+	class += " " + helper.IfEmpty(def.Color, Defaults.Color)
 	return class
 }

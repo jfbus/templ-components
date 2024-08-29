@@ -1,6 +1,8 @@
+// Package table implements tables.
 package table
 
 import (
+	"github.com/jfbus/templ-components/helper"
 	"github.com/jfbus/templ-components/table/row"
 )
 
@@ -13,6 +15,7 @@ const (
 	StyleAddHighlightHover       = 16
 )
 
+// Defaults are default CSS classes for each style. The are overriden by D.TableClass/D.HeaderClass/D.BodyClass/D.CellClass.
 var Defaults = map[Style]D{
 	StyleDefault: {
 		TableClass:  "w-full text-sm text-left",
@@ -28,29 +31,37 @@ var Defaults = map[Style]D{
 		BodyClass:   "text-gray-900 whitespace-nowrap dark:text-white",
 	},
 	StyleAddHighlightHover: {
+		// This style is added to the previous class or to D.TableClass
 		BodyClass: "hover:bg-gray-50 dark:hover:bg-gray-600",
 	},
 }
 
+// D is the table definition.
 type D struct {
-	Style       Style
-	Color       string
-	TableClass  string
+	// Style defines the table style.
+	Style Style
+	// Color defines the table color CSS classes. If not set, Defaults is used.
+	Color string
+	// TableClass defines the CSS classes for the table tag.
+	TableClass string
+	// HeaderClass defines the CSS classes for the thead tag.
 	HeaderClass string
-	BodyClass   string
+	// BodyClass defines the CSS classes for the tr tags within tbody.
+	BodyClass string
+	// FooterClass defines the CSS classes for the tfoot tag.
 	FooterClass string
-	CellClass   string
-	Header      *row.D
-	Rows        []row.D
-	Footer      *row.D
+	// CellClass defines the CSS classes tor all td tags.
+	CellClass string
+	// Header defines an optional header row (thead).
+	Header *row.D
+	// Rows defines the body rows (tbody).
+	Rows []row.D
+	// Footer defines an optional footer fow (tfoot).
+	Footer *row.D
 }
 
 func (def D) cellClass() string {
-	class := Defaults[StyleDefault].CellClass
-	if def.CellClass != "" {
-		class = def.CellClass
-	}
-	return class
+	return helper.IfEmpty(def.CellClass, Defaults[def.Style].CellClass, Defaults[StyleDefault].CellClass)
 }
 
 func (def D) rows() []row.D {
@@ -65,12 +76,14 @@ func (def D) rows() []row.D {
 }
 
 func (def D) tableClass() string {
-	class := Defaults[StyleDefault].TableClass
-	if def.Style&StyleStripedRows != 0 && Defaults[StyleStripedRows].TableClass != "" {
-		class = Defaults[StyleStripedRows].TableClass
-	}
-	if def.Style&StyleNoBorder != 0 && Defaults[StyleNoBorder].TableClass != "" {
-		class = Defaults[StyleNoBorder].TableClass
+	var class string
+	switch {
+	case def.Style&StyleStripedRows != 0:
+		class = helper.IfEmpty(def.TableClass, Defaults[StyleStripedRows].TableClass, Defaults[StyleDefault].TableClass)
+	case def.Style&StyleNoBorder != 0:
+		class = helper.IfEmpty(def.TableClass, Defaults[StyleNoBorder].TableClass, Defaults[StyleDefault].TableClass)
+	default:
+		class = helper.IfEmpty(def.TableClass, Defaults[StyleDefault].TableClass)
 	}
 	if def.Style&StyleAddHighlightHover != 0 {
 		class += " " + Defaults[StyleAddHighlightHover].TableClass
@@ -97,35 +110,33 @@ func (def D) headerClass() string {
 	if def.Header == nil {
 		return ""
 	}
-	class := Defaults[StyleDefault].HeaderClass
-	if def.Style&StyleStripedRows != 0 && Defaults[StyleStripedRows].HeaderClass != "" {
-		class = Defaults[StyleStripedRows].HeaderClass
-	}
-	if def.Style&StyleNoBorder != 0 && Defaults[StyleStripedRows].HeaderClass != "" {
-		class = Defaults[StyleNoBorder].HeaderClass
+	var class string
+	switch {
+	case def.Style&StyleStripedRows != 0:
+		class = helper.IfEmpty(def.HeaderClass, Defaults[StyleStripedRows].HeaderClass, Defaults[StyleDefault].HeaderClass)
+	case def.Style&StyleNoBorder != 0:
+		class = helper.IfEmpty(def.HeaderClass, Defaults[StyleNoBorder].HeaderClass, Defaults[StyleDefault].HeaderClass)
+	default:
+		class = helper.IfEmpty(def.HeaderClass, Defaults[StyleDefault].HeaderClass)
 	}
 	if def.Style&StyleAddHighlightHover != 0 {
 		class += " " + Defaults[StyleAddHighlightHover].HeaderClass
-	}
-	if def.HeaderClass != "" {
-		class += " " + def.HeaderClass
 	}
 	return class
 }
 
 func (def D) trClass() string {
-	class := Defaults[StyleDefault].BodyClass
-	if def.Style&StyleStripedRows != 0 {
-		class = Defaults[StyleStripedRows].BodyClass
-	}
-	if def.Style&StyleNoBorder != 0 {
-		class = Defaults[StyleNoBorder].BodyClass
+	var class string
+	switch {
+	case def.Style&StyleStripedRows != 0:
+		class = helper.IfEmpty(def.BodyClass, Defaults[StyleStripedRows].BodyClass, Defaults[StyleDefault].BodyClass)
+	case def.Style&StyleNoBorder != 0:
+		class = helper.IfEmpty(def.BodyClass, Defaults[StyleNoBorder].BodyClass, Defaults[StyleDefault].BodyClass)
+	default:
+		class = helper.IfEmpty(def.BodyClass, Defaults[StyleDefault].BodyClass)
 	}
 	if def.Style&StyleAddHighlightHover != 0 {
 		class += " " + Defaults[StyleAddHighlightHover].BodyClass
-	}
-	if def.BodyClass != "" {
-		class += " " + def.BodyClass
 	}
 	return class
 }
@@ -145,18 +156,17 @@ func (def D) footerClass() string {
 	if def.Footer == nil {
 		return ""
 	}
-	class := Defaults[StyleDefault].FooterClass
-	if def.Style&StyleStripedRows != 0 {
-		class = Defaults[StyleStripedRows].FooterClass
-	}
-	if def.Style&StyleNoBorder != 0 {
-		class = Defaults[StyleNoBorder].FooterClass
+	var class string
+	switch {
+	case def.Style&StyleStripedRows != 0:
+		class = helper.IfEmpty(def.FooterClass, Defaults[StyleStripedRows].FooterClass, Defaults[StyleDefault].FooterClass)
+	case def.Style&StyleNoBorder != 0:
+		class = helper.IfEmpty(def.FooterClass, Defaults[StyleNoBorder].FooterClass, Defaults[StyleDefault].FooterClass)
+	default:
+		class = helper.IfEmpty(def.FooterClass, Defaults[StyleDefault].FooterClass)
 	}
 	if def.Style&StyleAddHighlightHover != 0 {
 		class += " " + Defaults[StyleAddHighlightHover].FooterClass
-	}
-	if def.FooterClass != "" {
-		class += " " + def.FooterClass
 	}
 	return class
 }

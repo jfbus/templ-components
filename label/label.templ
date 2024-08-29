@@ -1,0 +1,11 @@
+package label
+
+templ C(def D) {
+	if def.Label != "" {
+		if def.Hide {
+			<label class="sr-only" for={ def.InputID } class={ def.class() }>{ def.Label }</label>
+		} else {
+			<label for={ def.InputID } class={ def.class() }>{ def.Label }</label>
+		}
+	}
+}
