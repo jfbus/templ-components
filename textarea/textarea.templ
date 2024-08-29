@@ -2,18 +2,17 @@ package textarea
 
 import (
 	"github.com/jfbus/templ-components/icon"
+	"github.com/jfbus/templ-components/label"
 	"strconv"
 )
 
 templ C(def D) {
 	<div>
-		if def.Label != "" {
-			<label for={ def.Name } class="block label">{ def.Label }</label>
-		}
-		<div class={ "relative input " + def.Class }>
+		@label.C(def.label())
+		<div class="relative">
 			if def.Icon != "" {
 				<div class={ def.iconClass() }>
-					@icon.C(icon.D{Icon: def.Icon, Size: def.Size})
+					@icon.C(icon.D{Icon: def.Icon, Size: def.iconSize()})
 				</div>
 			}
 			if def.Loader {

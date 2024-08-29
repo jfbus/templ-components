@@ -5,11 +5,17 @@ import (
 	"github.com/jfbus/templ-components/table/cell"
 )
 
+// D defines a table row (tr).
 type D struct {
-	Header           bool
-	Class            string
+	// Header defines if it is a Header row or not.
+	Header bool
+	// Class is the CSS class, inherited from the table if not set.
+	Class string
+	// DefaultCellClass is the class for all cells of the row.
 	DefaultCellClass string
-	Cells            any
+	// Cells is the slice of cell contents
+	// (either []string, []cell.D or []templ.Component or []any mixing the previous types).
+	Cells any
 }
 
 func (def D) cells() []cell.D {

@@ -3,6 +3,7 @@ package button
 
 import (
 	"github.com/a-h/templ"
+	"github.com/jfbus/templ-components/helper"
 	"github.com/jfbus/templ-components/position"
 	"github.com/jfbus/templ-components/size"
 )
@@ -17,15 +18,28 @@ const (
 type Style int
 
 const (
+	// Normal is the normal style
 	Normal   Style = 0
 	Outline  Style = 1
 	Pill     Style = 2
 	NoBorder Style = 4
 )
 
-const (
-	DefaultOutlineColor = "text-gray-900 bg-white border-gray-300 hover:bg-gray-100 focus:ring-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-	DefaultColor        = "text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+// Defaults defines the default Color/Class values, and may be changed. They are overriden by D.Color/D.Class.
+var (
+	Defaults = map[Style]D{
+		Normal: {
+			Color: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800",
+			Class: "font-medium focus:ring-4 focus:outline-none",
+		},
+		Outline: {
+			Color: "text-gray-900 bg-white border-gray-300 hover:bg-gray-100 focus:ring-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700",
+			Class: "font-medium focus:ring-4 focus:outline-none border",
+		},
+		NoBorder: {
+			Color: "text-gray-900 bg-white hover:bg-gray-100 focus:ring-gray-100 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700",
+		},
+	}
 )
 
 // D is the button definition.
@@ -40,10 +54,8 @@ type D struct {
 	HideLabel bool
 	// Style is the button style (Normal, Pill, Outline ou Pill|Outline).
 	Style Style
-	// Color overrides the default color CSS classes (DefaultOutlineColor if Outline, DefaultColor otherwise)
-	// e.g.
-	// - for a plain green button: text-white bg-green-700 hover:bg-green-800 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800
-	// - for a outline green button: text-green-700 hover:text-white border-green-700 hover:bg-green-800 focus:ring-green-300 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800
+	// Color overrides the default color CSS classes
+	// (Defaults[Outline].Color if Outline, Defaults[Normal].Color otherwise)
 	Color string
 	// Size defines the input size (size.XS, size.S, size.Normal (default) size.L or size.XL).
 	Size size.Size
@@ -55,7 +67,7 @@ type D struct {
 	Disabled bool
 	// Loader displays a spinning loader when an HTMX action is triggered by the input.
 	Loader bool
-	// Class defines additional CSS class for the button.
+	// Class overrides the default CSS class for the button.
 	Class string
 	// Attributes stores additional attributes (e.g. HTMX attributes).
 	Attributes templ.Attributes
@@ -69,14 +81,17 @@ func (def D) buttonType() string {
 }
 
 func (def D) buttonClass() string {
-	class := "focus:ring-4 focus:outline-none"
-	if def.Style&Outline != 0 {
-		class += " border"
-		if def.Color == "" {
-			class += " " + DefaultOutlineColor
-		}
-	} else if def.Color == "" {
-		class += " " + DefaultColor
+	var class string
+	switch {
+	case def.Style&Outline != 0:
+		class = helper.IfEmpty(def.Class, Defaults[Outline].Class)
+		class += " " + helper.IfEmpty(def.Color, Defaults[Outline].Color)
+	case def.Style&NoBorder != 0:
+		class = helper.IfEmpty(def.Class, Defaults[NoBorder].Class)
+		class += " " + helper.IfEmpty(def.Color, Defaults[NoBorder].Color)
+	default:
+		class = helper.IfEmpty(def.Class, Defaults[Normal].Class)
+		class += " " + helper.IfEmpty(def.Color, Defaults[Normal].Color)
 	}
 
 	if def.Style&Pill != 0 {
@@ -100,7 +115,7 @@ func (def D) buttonClass() string {
 	case def.Size == size.XL:
 		class += " px-6 py-3.5 text-base"
 	default:
-		class += " px-5 py-2.5 text-base"
+		class += " px-5 py-2.5 text-sm"
 	}
 	if def.Icon != "" || def.Loader {
 		class += " inline-flex items-center"
@@ -122,7 +137,14 @@ func (def D) iconSize() size.Size {
 	if def.HideLabel || def.Label == "" {
 		return def.Size + 1
 	}
-	return def.Size
+	switch def.Size {
+	case size.XS:
+		return size.XS
+	case size.L, size.XL:
+		return size.Normal
+	default:
+		return size.S
+	}
 }
 
 func (def D) iconClass() string {

@@ -3,16 +3,23 @@ package textarea
 
 import (
 	"github.com/a-h/templ"
+	"github.com/jfbus/templ-components/helper"
+	"github.com/jfbus/templ-components/input"
+	"github.com/jfbus/templ-components/label"
 	"github.com/jfbus/templ-components/position"
 	"github.com/jfbus/templ-components/size"
 )
 
-// D is the definition for textareas.
+// Defaults defines no defaults, you can set them, otherwise, input.Defaults are used.
+var Defaults = D{}
+
+// D is the definition for textarea fields.
 type D struct {
+	ID string
 	// Name is the input name.
 	Name string
 	// Type is the input type (text, password, ...).
-	Label string
+	Label any
 	// Value is the input value.
 	Value string
 	// Placeholder is the placeholder text displayed when no value is set.
@@ -29,7 +36,9 @@ type D struct {
 	Icon string
 	// IconPosition can be position.Start (default) or position.End.
 	IconPosition position.Position
-	// Class defines additional CSS class for the container.
+	// Color overrides the default color CSS classes
+	Color string
+	// Class overrides the default CSS class for the textarea.
 	Class string
 	// Attributes stores additional attributes (e.g. HTMX attributes).
 	Attributes templ.Attributes
@@ -55,8 +64,16 @@ func (def D) iconClass() string {
 	}
 }
 
+func (def D) iconSize() size.Size {
+	if def.Size == size.Inherit {
+		return size.Normal
+	}
+	return def.Size
+}
+
 func (def D) inputClass() string {
-	class := "block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+	class := helper.IfEmpty(def.Class, Defaults.Class, input.Defaults.Class)
+	class += " " + helper.IfEmpty(def.Color, Defaults.Color, input.Defaults.Color)
 	switch def.Size {
 	case size.S:
 		class += " p-2 text-xs"
@@ -72,5 +89,27 @@ func (def D) inputClass() string {
 		return class + " pe-10"
 	default:
 		return class + " ps-10"
+	}
+}
+
+func (def D) id() string {
+	if def.ID != "" {
+		return def.ID
+	}
+	return def.Name
+}
+
+func (def D) label() label.D {
+	switch l := def.Label.(type) {
+	case string:
+		return label.D{
+			InputID: def.id(),
+			Label:   l,
+		}
+	case label.D:
+		l.InputID = def.id()
+		return l
+	default:
+		return label.D{}
 	}
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/a-h/templ"
 )
 
-func List(l ...any) []templ.Component {
+func ComponentSlice(l ...any) []templ.Component {
 	res := make([]templ.Component, len(l))
 	for _, c := range l {
 		if c, ok := c.(templ.Component); ok {
@@ -17,6 +17,15 @@ func List(l ...any) []templ.Component {
 		res = append(res, S(c))
 	}
 	return res
+}
+
+func IfEmpty(ss ...string) string {
+	for _, s := range ss {
+		if s != "" {
+			return s
+		}
+	}
+	return ""
 }
 
 func tostring(v any) string {
