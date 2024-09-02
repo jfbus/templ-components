@@ -61,6 +61,9 @@ it renames the previous config file to `tailwind.config.js.saved`.
 - [ ] Radio
 - [ ] Checkbox
 - [ ] Modal
+- [ ] Toast
+- [ ] Rating
+- [ ] Tooltip
 - [ ] Only add used components in tailwind config
 - [ ] Storybook-like viewer
 
@@ -68,6 +71,16 @@ it renames the previous config file to `tailwind.config.js.saved`.
 
 Sizes vary from `size.XS` to `size.NineXL`.
 Not all components support all sizes. Each component definition lists the allowed sizes.
+
+## Overriding CSS classes
+
+There are usually 2 attributes in each component: `Color` and `Class`.
+`Color` contains all CSS classes defining colors (text, background, color).
+`Class` contains all other CSS classes (border, padding, ...).
+
+You change override default CSS classes either:
+* by setting the relevant attribute in each component,
+* by changing the default values used by every component (usually `packagename.Defaults`).
 
 ## Components
 
@@ -122,6 +135,8 @@ With HTMX attributes and a spinning loader:
         "hx-target": "#list",
 })
 ```
+
+You can define a custom loader by changing `loader.DefaultLoader`. 
 
 ### Textarea
 
@@ -212,17 +227,21 @@ import "github.com/jfbus/templ-components/components/buttongroup"
             Label: label.D{
                   Label: "Sort",
                   Hide: true,
-                  },
             },
         },
         {
             Icon:      icon.Heart,
-            Label:     "Rating",
+            Label: label.D{
+                  Label: "Rating",
+                  Hide: true,
+            },
         },
         {
             Icon:      icon.Banknote,
-            Label:     "Price",
-            HideLabel: true,
+            Label: label.D{
+                  Label: "Price",
+                  Hide: true,
+            },
         },
     },
 })
@@ -273,7 +292,7 @@ import "github.com/jfbus/templ-components/components/helper"
 
 ### IfEmpty
 
-Renders the first non empty string from all parameters.
+Renders the first non empty string from a list of string parameters.
 
 ```go
 helper.IfEmpty(item.Value, "???")

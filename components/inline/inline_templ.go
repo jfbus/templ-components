@@ -8,7 +8,10 @@ package inline
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "github.com/jfbus/templ-components/components/icon"
+import (
+	"github.com/jfbus/templ-components/components/icon"
+	"github.com/jfbus/templ-components/components/style"
+)
 
 func C(def D) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -35,7 +38,7 @@ func C(def D) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(def.defaultState())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/inline/inline.templ`, Line: 6, Col: 33}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/inline/inline.templ`, Line: 9, Col: 33}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -48,7 +51,7 @@ func C(def D) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(def.click())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/inline/inline.templ`, Line: 7, Col: 62}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/inline/inline.templ`, Line: 10, Col: 62}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -61,13 +64,13 @@ func C(def D) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(def.Value)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/inline/inline.templ`, Line: 8, Col: 14}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/inline/inline.templ`, Line: 11, Col: 14}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = icon.C(icon.D{Icon: icon.Pencil, Class: "inline-block ml-1", Size: def.IconSize}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = icon.C(icon.D{Icon: icon.Pencil, Class: style.D{Class: "inline-block ml-1"}, Size: def.IconSize}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

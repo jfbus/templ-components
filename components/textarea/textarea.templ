@@ -21,7 +21,7 @@ templ C(def D) {
 				</div>
 			}
 			<textarea
-				id={ def.Name }
+				id={ def.id() }
 				name={ def.Name }
 				if def.Loader {
 					hx-indicator={ "#" + def.Name + "-indicator" }

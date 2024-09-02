@@ -3,9 +3,9 @@ package button
 
 import (
 	"github.com/a-h/templ"
-	"github.com/jfbus/templ-components/components/helper"
 	"github.com/jfbus/templ-components/components/position"
 	"github.com/jfbus/templ-components/components/size"
+	"github.com/jfbus/templ-components/components/style"
 )
 
 type Type string
@@ -13,34 +13,55 @@ type Type string
 const (
 	Button Type = "button"
 	Submit Type = "submit"
+	A      Type = "a"
 )
 
-type Style int
-
 const (
-	// Normal is the normal style
-	Normal   Style = 0
-	Outline  Style = 1
-	Pill     Style = 2
-	NoBorder Style = 4
+	StylePill        style.Style = 1
+	StyleOutline     style.Style = 2
+	StyleOutlinePill style.Style = 4
+	StyleNoBorder    style.Style = 8
+
+	StyleFullWidth style.Style = 32
 )
 
 // Defaults defines the default Color/Class values, and may be changed. They are overriden by D.Color/D.Class.
-var (
-	Defaults = map[Style]D{
-		Normal: {
+var Defaults = style.Defaults{
+	style.StyleDefault: map[string]style.D{
+		"Button": {
 			Color: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800",
-			Class: "font-medium focus:ring-4 focus:outline-none",
+			Class: "rounded-lg font-medium focus:ring-4 focus:outline-none",
 		},
-		Outline: {
+	},
+	StylePill: map[string]style.D{
+		"Button": {
+			Color: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800",
+			Class: "rounded-full font-medium focus:ring-4 focus:outline-none",
+		},
+	},
+	StyleOutline: map[string]style.D{
+		"Button": {
 			Color: "text-gray-900 bg-white border-gray-300 hover:bg-gray-100 focus:ring-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700",
-			Class: "font-medium focus:ring-4 focus:outline-none border",
+			Class: "rounded-lg font-medium focus:ring-4 focus:outline-none border",
 		},
-		NoBorder: {
+	},
+	StyleOutlinePill: map[string]style.D{
+		"Button": {
+			Color: "text-gray-900 bg-white border-gray-300 hover:bg-gray-100 focus:ring-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700",
+			Class: "rounded-full font-medium focus:ring-4 focus:outline-none border",
+		},
+	},
+	StyleNoBorder: map[string]style.D{
+		"Button": {
 			Color: "text-gray-900 bg-white hover:bg-gray-100 focus:ring-gray-100 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700",
 		},
-	}
-)
+	},
+	StyleFullWidth: map[string]style.D{
+		"Button": {
+			Class: "block w-full text-center",
+		},
+	},
+}
 
 // D is the button definition.
 type D struct {
@@ -53,10 +74,7 @@ type D struct {
 	// HideLabel defines if the label is only available to screenreaders.
 	HideLabel bool
 	// Style is the button style (Normal, Pill, Outline ou Pill|Outline).
-	Style Style
-	// Color overrides the default color CSS classes
-	// (Defaults[Outline].Color if Outline, Defaults[Normal].Color otherwise)
-	Color string
+	Style style.Style
 	// Size defines the input size (size.XS, size.S, size.Normal (default) size.L or size.XL).
 	Size size.Size
 	// Icon displays an icon on the left side.
@@ -68,7 +86,7 @@ type D struct {
 	// Loader displays a spinning loader when an HTMX action is triggered by the input.
 	Loader bool
 	// Class overrides the default CSS class for the button.
-	Class string
+	Class style.D
 	// Attributes stores additional attributes (e.g. HTMX attributes).
 	Attributes templ.Attributes
 }
@@ -81,24 +99,7 @@ func (def D) buttonType() string {
 }
 
 func (def D) buttonClass() string {
-	var class string
-	switch {
-	case def.Style&Outline != 0:
-		class = helper.IfEmpty(def.Class, Defaults[Outline].Class)
-		class += " " + helper.IfEmpty(def.Color, Defaults[Outline].Color)
-	case def.Style&NoBorder != 0:
-		class = helper.IfEmpty(def.Class, Defaults[NoBorder].Class)
-		class += " " + helper.IfEmpty(def.Color, Defaults[NoBorder].Color)
-	default:
-		class = helper.IfEmpty(def.Class, Defaults[Normal].Class)
-		class += " " + helper.IfEmpty(def.Color, Defaults[Normal].Color)
-	}
-
-	if def.Style&Pill != 0 {
-		class += " rounded-full"
-	} else if def.Style&NoBorder == 0 {
-		class += " rounded-lg"
-	}
+	class := def.Class.CSSClass(style.Default(Defaults, def.Style, "Button"))
 	switch {
 	case def.noLabel() && def.Size >= size.Normal:
 		class += " p-2.5 text-sm"
@@ -118,13 +119,7 @@ func (def D) buttonClass() string {
 		class += " px-5 py-2.5 text-sm"
 	}
 	if def.Icon != "" || def.Loader {
-		class += " inline-flex items-center"
-	}
-	if def.Color != "" {
-		class += " " + def.Color
-	}
-	if def.Class != "" {
-		class += " " + def.Class
+		class += " inline-flex items-center justify-center"
 	}
 	return class
 }
@@ -147,12 +142,12 @@ func (def D) iconSize() size.Size {
 	}
 }
 
-func (def D) iconClass() string {
+func (def D) iconClass() style.D {
 	if def.noLabel() {
-		return ""
+		return style.D{}
 	}
 	if def.IconPosition == position.End {
-		return "ms-2"
+		return style.D{Class: "ms-2"}
 	}
-	return "me-2"
+	return style.D{Class: "me-2"}
 }

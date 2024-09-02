@@ -3,15 +3,15 @@ package textarea
 
 import (
 	"github.com/a-h/templ"
-	"github.com/jfbus/templ-components/components/helper"
 	"github.com/jfbus/templ-components/components/input"
 	"github.com/jfbus/templ-components/components/label"
 	"github.com/jfbus/templ-components/components/position"
 	"github.com/jfbus/templ-components/components/size"
+	"github.com/jfbus/templ-components/components/style"
 )
 
 // Defaults defines no defaults, you can set them, otherwise, input.Defaults are used.
-var Defaults = D{}
+var Defaults = input.Defaults
 
 // D is the definition for textarea fields.
 type D struct {
@@ -36,10 +36,8 @@ type D struct {
 	Icon string
 	// IconPosition can be position.Start (default) or position.End.
 	IconPosition position.Position
-	// Color overrides the default color CSS classes
-	Color string
 	// Class overrides the default CSS class for the textarea.
-	Class string
+	Class style.D
 	// Attributes stores additional attributes (e.g. HTMX attributes).
 	Attributes templ.Attributes
 }
@@ -72,8 +70,7 @@ func (def D) iconSize() size.Size {
 }
 
 func (def D) inputClass() string {
-	class := helper.IfEmpty(def.Class, Defaults.Class, input.Defaults.Class)
-	class += " " + helper.IfEmpty(def.Color, Defaults.Color, input.Defaults.Color)
+	class := def.Class.CSSClass(style.Default(Defaults, style.StyleDefault, "Class"))
 	switch def.Size {
 	case size.S:
 		class += " p-2 text-xs"

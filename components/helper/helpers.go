@@ -28,6 +28,17 @@ func IfEmpty(ss ...string) string {
 	return ""
 }
 
+func Merge(ss ...string) string {
+	var res string
+	for _, s := range ss {
+		if res != "" {
+			res += " "
+		}
+		res += s
+	}
+	return res
+}
+
 func tostring(v any) string {
 	switch v := v.(type) {
 	case string:

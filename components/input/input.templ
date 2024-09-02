@@ -7,9 +7,9 @@ import (
 )
 
 templ C(def D) {
-	<div>
+	<div class={ def.containerClass() }>
 		@label.C(def.label())
-		<div class={ "relative input " + def.Class }>
+		<div class="relative">
 			if def.Icon != "" {
 				<div class={ def.iconClass() }>
 					@icon.C(icon.D{Icon: def.Icon, Size: def.iconSize()})
