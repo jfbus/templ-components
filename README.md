@@ -74,7 +74,7 @@ Not all components support all sizes. Each component definition lists the allowe
 
 ## Overriding CSS classes
 
-There are usually 2 attributes in each component: `Color` and `Class`.
+There are usually `Class` attributes in each component, containing both `Color` and `Class` values.
 `Color` contains all CSS classes defining colors (text, background, color).
 `Class` contains all other CSS classes (border, padding, ...).
 
@@ -267,7 +267,7 @@ import (
             "john.doe@example.com",
             "active",
             cell.D{
-                Class:   "text-center",
+                Class:   style.D{Class:"text-center"},
                 Content: button.C(button.D{
                     Label: "disable",
                 }),
