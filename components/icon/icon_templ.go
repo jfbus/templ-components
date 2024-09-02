@@ -31,12 +31,12 @@ func C(def any) templ.Component {
 		switch def := def.(type) {
 		case D:
 			if strings.HasPrefix(def.Icon, "<svg") {
-				templ_7745c5c3_Err = icon(def.Icon, def.Class+" "+def.Size.Class()).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = icon(def.Icon, def.class()).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 			} else {
-				templ_7745c5c3_Err = icon(NameToIcon[def.Icon], def.Class+" "+def.Size.Class()).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = icon(NameToIcon[def.Icon], def.class()).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

@@ -7,6 +7,29 @@ import (
 )
 
 templ C(def D) {
+	if def.Type == A {
+		@a(def)
+	} else {
+		@button(def)
+	}
+}
+
+templ a(def D) {
+	<a
+		if def.ID != "" {
+			id={ def.ID }
+		}
+		class={ def.buttonClass() }
+		{ def.Attributes... }
+		if def.Loader {
+			hx-indicator={ "#" + def.ID + "-indicator" }
+		}
+	>
+		@label(def)
+	</a>
+}
+
+templ button(def D) {
 	<button
 		type={ def.buttonType() }
 		if def.ID != "" {
@@ -21,21 +44,25 @@ templ C(def D) {
 			hx-indicator={ "#" + def.ID + "-indicator" }
 		}
 	>
-		if def.IconPosition != position.End {
-			@icon.C(icon.D{Icon: def.Icon, Size: def.iconSize(), Class: def.iconClass()})
-		}
-		if def.HideLabel {
-			<span class="sr-only">{ def.Label }</span>
-		} else {
-			{ def.Label }
-		}
-		if def.IconPosition == position.End {
-			@icon.C(icon.D{Icon: def.Icon, Size: def.iconSize(), Class: def.iconClass()})
-		}
-		if def.Loader {
-			<span id={ def.ID + "-indicator" } class="htmx-indicator">
-				@loader.C()
-			</span>
-		}
+		@label(def)
 	</button>
+}
+
+templ label(def D) {
+	if def.IconPosition != position.End {
+		@icon.C(icon.D{Icon: def.Icon, Size: def.iconSize(), Class: def.iconClass()})
+	}
+	if def.HideLabel {
+		<span class="sr-only">{ def.Label }</span>
+	} else {
+		{ def.Label }
+	}
+	if def.IconPosition == position.End {
+		@icon.C(icon.D{Icon: def.Icon, Size: def.iconSize(), Class: def.iconClass()})
+	}
+	if def.Loader {
+		<span id={ def.ID + "-indicator" } class="htmx-indicator">
+			@loader.C()
+		</span>
+	}
 }

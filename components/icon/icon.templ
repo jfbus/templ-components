@@ -6,9 +6,9 @@ templ C(def any) {
 	switch def := def.(type) {
 		case D:
 			if strings.HasPrefix(def.Icon, "<svg") {
-				@icon(def.Icon, def.Class+" "+def.Size.Class())
+				@icon(def.Icon, def.class())
 			} else {
-				@icon(NameToIcon[def.Icon], def.Class+" "+def.Size.Class())
+				@icon(NameToIcon[def.Icon], def.class())
 			}
 		case string:
 			if strings.HasPrefix(def, "<svg") {

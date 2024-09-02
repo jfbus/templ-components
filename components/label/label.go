@@ -2,24 +2,27 @@
 package label
 
 import (
-	"github.com/jfbus/templ-components/components/helper"
+	"github.com/jfbus/templ-components/components/style"
 )
 
 // Defaults defines the default Color/Class. They are overriden by D.Color/D.Class.
-var Defaults = D{
-	Color: "text-gray-900 dark:text-white",
-	Class: "block mb-2 text-sm font-medium",
+var Defaults = style.Defaults{
+	style.StyleDefault: {
+		"Class": {
+			Color: "text-gray-900 dark:text-white",
+			Class: "block mb-2 text-sm font-medium",
+		},
+	},
 }
 
 // D is the label definition.
 type D struct {
 	InputID string
-	Label   string
+	Label   any
 	Hide    bool
-	Color   string
-	Class   string
+	Class   style.D
 }
 
 func (def D) class() string {
-	return helper.IfEmpty(def.Class, Defaults.Class) + " " + helper.IfEmpty(def.Color, Defaults.Color)
+	return def.Class.CSSClass(style.Default(Defaults, style.StyleDefault, "Class"))
 }

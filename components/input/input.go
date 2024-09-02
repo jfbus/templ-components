@@ -3,10 +3,10 @@ package input
 
 import (
 	"github.com/a-h/templ"
-	"github.com/jfbus/templ-components/components/helper"
 	"github.com/jfbus/templ-components/components/label"
 	"github.com/jfbus/templ-components/components/position"
 	"github.com/jfbus/templ-components/components/size"
+	"github.com/jfbus/templ-components/components/style"
 )
 
 type Type string
@@ -20,9 +20,14 @@ const (
 )
 
 // Defaults defines the default Color/Class. They are overriden by D.Color/D.Class.
-var Defaults = D{
-	Color: "bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-	Class: "block w-full border rounded-lg",
+var Defaults = style.Defaults{
+	style.StyleDefault: {
+		"Class": {
+			Color: "bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+			Class: "block w-full border rounded-lg",
+		},
+		"ContainerClass": {},
+	},
 }
 
 // D is the definition for input fields.
@@ -49,10 +54,10 @@ type D struct {
 	Icon string
 	// IconPosition can be position.Start (default) or position.End.
 	IconPosition position.Position
-	// Color overrides the default color CSS classes
-	Color string
 	// Class overrides the default CSS class for the button.
-	Class string
+	Class style.D
+	// ContainerClass overrides the default CSS class for the button.
+	ContainerClass style.D
 	// Attributes stores additional attributes (e.g. HTMX attributes).
 	Attributes templ.Attributes
 }
@@ -60,6 +65,11 @@ type D struct {
 func (def D) label() label.D {
 	switch l := def.Label.(type) {
 	case string:
+		return label.D{
+			InputID: def.id(),
+			Label:   l,
+		}
+	case templ.Component:
 		return label.D{
 			InputID: def.id(),
 			Label:   l,
@@ -106,8 +116,7 @@ func (def D) iconSize() size.Size {
 }
 
 func (def D) inputClass() string {
-	class := helper.IfEmpty(def.Class, Defaults.Class)
-	class += " " + helper.IfEmpty(def.Color, Defaults.Color)
+	class := def.Class.CSSClass(style.Default(Defaults, style.StyleDefault, "Class"))
 	switch def.Size {
 	case size.S:
 		class += " p-2 text-xs"
@@ -124,4 +133,8 @@ func (def D) inputClass() string {
 	default:
 		return class + " ps-10"
 	}
+}
+
+func (def D) containerClass() string {
+	return def.ContainerClass.CSSClass(style.Default(Defaults, style.StyleDefault, "ContainerClass"))
 }
