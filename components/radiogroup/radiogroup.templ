@@ -1,0 +1,11 @@
+package radiogroup
+
+import "github.com/jfbus/templ-components/components/radio"
+
+templ C(def D) {
+	<div class={ def.containerClass() }>
+		for _, d := range def.inputs() {
+			@radio.C(d)
+		}
+	</div>
+}

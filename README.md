@@ -58,7 +58,6 @@ it renames the previous config file to `tailwind.config.js.saved`.
 
 ## Roadmap
 
-- [ ] Radio
 - [ ] Checkbox
 - [ ] Modal
 - [ ] Toast
@@ -177,6 +176,28 @@ import (
     Selected: "DE",
 })
 ```
+
+### Radio/Radiogroup
+
+```templ
+import (
+  "github.com/jfbus/templ-components/components/radio"
+  "github.com/jfbus/templ-components/components/radiogroup"
+)
+
+@radiogroup.C(radiogroup.D{
+  Name: "choice",
+  Style: radiogroup.StyleBordered,
+  Inputs: []radio.D{{
+    Value: "choice1",
+    Label: "Choice 1",
+  }, {
+    Value: "choice2",
+    Label: "Choice 2",
+  }},
+})
+```
+
 ### Inline editing
 
 ```templ
