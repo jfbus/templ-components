@@ -48,8 +48,11 @@ type D struct {
 	// CellClass defines the CSS classes tor all td tags.
 	CellClass style.D
 	// Header defines an optional header row (thead).
+	//playground:import:github.com/jfbus/templ-components/components/table/row
+	//playground:default:&row.D{Cells: []string{"Name", "Description", ""}}
 	Header *row.D
 	// Rows defines the body rows (tbody).
+	//playground:default:[]row.D{{Cells: []string{"Lorem", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.", ""}},{Cells: []string{"Ipsum", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.", ""}},{Cells: []string{"Dolor", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.", ""}}}
 	Rows []row.D
 	// Footer defines an optional footer fow (tfoot).
 	Footer *row.D
