@@ -1,12 +1,15 @@
 package selectfield_test
 
 import (
-	selectfield2 "github.com/jfbus/templ-components/components/selectfield"
+	"context"
+	"os"
+
+	"github.com/jfbus/templ-components/components/selectfield"
 	"github.com/jfbus/templ-components/components/selectfield/option"
 )
 
 func ExampleC() {
-	_ = selectfield2.C(selectfield2.D{
+	c := selectfield.C(selectfield.D{
 		Name:  "country",
 		Label: "Country",
 		Options: []option.D{{
@@ -23,4 +26,5 @@ func ExampleC() {
 		}},
 		Selected: "DE",
 	})
+	c.Render(context.TODO(), os.Stdout)
 }

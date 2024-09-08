@@ -4,7 +4,7 @@ import "github.com/jfbus/templ-components/components/radio"
 
 templ C(def D) {
 	<div class={ def.containerClass() }>
-		for _, d := range def.inputs() {
+		for _, d := range def.radios() {
 			@radio.C(d)
 		}
 	</div>
