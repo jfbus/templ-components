@@ -30,25 +30,25 @@ func C(def any) templ.Component {
 		ctx = templ.ClearChildren(ctx)
 		switch def := def.(type) {
 		case D:
-			if strings.HasPrefix(def.Icon, "<svg") {
-				templ_7745c5c3_Err = icon(def.Icon, def.class()).Render(ctx, templ_7745c5c3_Buffer)
+			if strings.HasPrefix(def.Icon, "<") {
+				templ_7745c5c3_Err = icon(def).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 			} else {
-				templ_7745c5c3_Err = icon(NameToIcon[def.Icon], def.class()).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = icon(D{Icon: NameToIcon[def.Icon], Style: def.Style, Class: def.Class, Size: def.Size, Attributes: def.Attributes}).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 			}
 		case string:
-			if strings.HasPrefix(def, "<svg") {
-				templ_7745c5c3_Err = icon(def, "").Render(ctx, templ_7745c5c3_Buffer)
+			if strings.HasPrefix(def, "<") {
+				templ_7745c5c3_Err = icon(D{Icon: def}).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 			} else {
-				templ_7745c5c3_Err = icon(NameToIcon[def], "").Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = icon(D{Icon: NameToIcon[def]}).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -58,7 +58,7 @@ func C(def any) templ.Component {
 	})
 }
 
-func icon(def, class string) templ.Component {
+func icon(def D) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -76,13 +76,42 @@ func icon(def, class string) templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		if class != "" {
-			templ_7745c5c3_Err = templ.Raw(strings.Replace(def, `class="lucide`, `class="lucide `+class, 1)).Render(ctx, templ_7745c5c3_Buffer)
+		if def.Icon != "" {
+			var templ_7745c5c3_Var3 = []any{def.class()}
+			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var3...)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-		} else {
-			templ_7745c5c3_Err = templ.Raw(def).Render(ctx, templ_7745c5c3_Buffer)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<svg class=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var4 string
+			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(templ.CSSClasses(templ_7745c5c3_Var3).String())
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/icon/icon.templ`, Line: 1, Col: 0}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templ.RenderAttributes(ctx, templ_7745c5c3_Buffer, def.Attributes)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templ.Raw(def.Icon).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</svg>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

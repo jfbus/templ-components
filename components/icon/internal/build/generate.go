@@ -8,9 +8,11 @@ import (
 	"unicode"
 )
 
-const assetsPath = ".build/node_modules/lucide-static/icons"
+const assetsPath = "internal/build/node_modules/lucide-static/icons"
 
 var re = regexp.MustCompile("[\n\r\t ]+")
+
+var reSVG = regexp.MustCompile("<svg [^>]+> *(.*) *</svg>")
 
 func main() {
 	des, err := os.ReadDir(assetsPath)
@@ -45,9 +47,9 @@ func main() {
 				icon = append(icon, r)
 			}
 		}
-		ssvg := strings.TrimSpace(string(svg))
-		if i := strings.Index(ssvg, "<svg"); i >= 0 {
-			ssvg = ssvg[i:]
+		ssvg := re.ReplaceAllString(string(svg), " ")
+		if sm := reSVG.FindStringSubmatch(ssvg); len(sm) == 2 {
+			ssvg = sm[1]
 		} else {
 			continue
 		}
@@ -58,10 +60,10 @@ func main() {
 			maxLenName = len(name)
 		}
 		icons = append(icons, string(icon))
-		svgs[string(icon)] = re.ReplaceAllString(ssvg, " ")
+		svgs[string(icon)] = strings.ReplaceAll(ssvg, " /> ", "/>")
 		names[string(icon)] = name
 	}
-	file := `// Auto-generated code, DO NOT EDIT.
+	file := `// Code generated - DO NOT EDIT\.$
 package icon
 
 const (`

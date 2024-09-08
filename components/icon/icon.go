@@ -1,9 +1,10 @@
 // Package icon implements SVG icons.
 //
-//go:generate go run .build/generate.go
+//go:generate go run internal/build/generate.go
 package icon
 
 import (
+	"github.com/a-h/templ"
 	"github.com/jfbus/templ-components/components/size"
 	"github.com/jfbus/templ-components/components/style"
 )
@@ -19,7 +20,7 @@ var Defaults = style.Defaults{
 	StyleBorder: {
 		"Class": {
 			Color: "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600",
-			Class: "p-1 rounded-md  border",
+			Class: "p-1 rounded-md border",
 		},
 	},
 }
@@ -33,7 +34,8 @@ type D struct {
 	// Class is an option CSS class to apply to the SVG tag.
 	Class style.D
 	// Size is the icon size.
-	Size size.Size
+	Size       size.Size
+	Attributes templ.Attributes
 }
 
 func (def D) class() string {
