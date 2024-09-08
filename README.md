@@ -58,7 +58,6 @@ it renames the previous config file to `tailwind.config.js.saved`.
 
 ## Roadmap
 
-- [ ] Checkbox
 - [ ] Modal
 - [ ] Toast
 - [ ] Rating
@@ -73,13 +72,22 @@ Not all components support all sizes. Each component definition lists the allowe
 
 ## Overriding CSS classes
 
-There are usually `Class` attributes in each component, containing both `Color` and `Class` values.
-`Color` contains all CSS classes defining colors (text, background, color).
-`Class` contains all other CSS classes (border, padding, ...).
+Default CSS classes are defined by a `Defaults` package variable.
+They can be changed if you need to globally change the style.
 
-You change override default CSS classes either:
-* by setting the relevant attribute in each component,
-* by changing the default values used by every component (usually `packagename.Defaults`).
+You can override two components: `Class` (borders, spacing, text size, ...) and `Color` (foreground/background/text color, ...).
+There are usually `Class` attributes in each component to add your style overrides.
+
+* `style.Class()` replaces all `Class` values by new CSS classes,
+* `style.Color()` replaces all `Color` values by new CSS classes,
+* `style.Add()` adds new CSS classes to the default ones,
+* `style.ReplaceClass()`/`style.ReplaceColor()`/`style.Replace()` replace some CSS classes by new ones.
+
+Remove removes the specified class family, including all variants (modifiers, values, ...)
+
+```go
+style.Replace("ring", "foo") // removes ring-2, ring-[2px], hover:ring-2, ...
+```
 
 ## Components
 

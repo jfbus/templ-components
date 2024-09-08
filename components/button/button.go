@@ -29,36 +29,36 @@ const (
 var Defaults = style.Defaults{
 	style.StyleDefault: map[string]style.D{
 		"Button": {
-			Color: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800",
-			Class: "rounded-lg font-medium focus:ring-4 focus:outline-none",
+			style.Color("text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"),
+			style.Class("rounded-lg font-medium focus:ring-4 focus:outline-none"),
 		},
 	},
 	StylePill: map[string]style.D{
 		"Button": {
-			Color: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800",
-			Class: "rounded-full font-medium focus:ring-4 focus:outline-none",
+			style.Color("text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"),
+			style.Class("rounded-full font-medium focus:ring-4 focus:outline-none"),
 		},
 	},
 	StyleOutline: map[string]style.D{
 		"Button": {
-			Color: "text-gray-900 bg-white border-gray-300 hover:bg-gray-100 focus:ring-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700",
-			Class: "rounded-lg font-medium focus:ring-4 focus:outline-none border",
+			style.Color("text-gray-900 bg-white border-gray-300 hover:bg-gray-100 focus:ring-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"),
+			style.Class("rounded-lg font-medium focus:ring-4 focus:outline-none border"),
 		},
 	},
 	StyleOutlinePill: map[string]style.D{
 		"Button": {
-			Color: "text-gray-900 bg-white border-gray-300 hover:bg-gray-100 focus:ring-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700",
-			Class: "rounded-full font-medium focus:ring-4 focus:outline-none border",
+			style.Color("text-gray-900 bg-white border-gray-300 hover:bg-gray-100 focus:ring-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"),
+			style.Class("rounded-full font-medium focus:ring-4 focus:outline-none border"),
 		},
 	},
 	StyleNoBorder: map[string]style.D{
 		"Button": {
-			Color: "text-gray-900 bg-white hover:bg-gray-100 focus:ring-gray-100 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700",
+			style.Color("text-gray-900 bg-white hover:bg-gray-100 focus:ring-gray-100 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"),
 		},
 	},
 	StyleFullWidth: map[string]style.D{
 		"Button": {
-			Class: "block w-full text-center",
+			style.Add("block w-full text-center"),
 		},
 	},
 }
@@ -102,7 +102,7 @@ func (def D) buttonType() string {
 }
 
 func (def D) buttonClass() string {
-	class := def.Class.CSSClass(style.Default(Defaults, def.Style, "Button"))
+	class := def.Class.CSSClass(Defaults, def.Style, "Button")
 	switch {
 	case def.noLabel() && def.Size >= size.Normal:
 		class += " p-2.5 text-sm"
@@ -150,7 +150,7 @@ func (def D) iconClass() style.D {
 		return style.D{}
 	}
 	if def.IconPosition == position.End {
-		return style.D{Class: "ms-2"}
+		return style.D{style.Class("ms-2")}
 	}
-	return style.D{Class: "me-2"}
+	return style.D{style.Class("me-2")}
 }
