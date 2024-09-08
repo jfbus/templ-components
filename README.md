@@ -59,7 +59,6 @@ it renames the previous config file to `tailwind.config.js.saved`.
 ## Roadmap
 
 - [ ] Modal
-- [ ] Toast
 - [ ] Rating
 - [ ] Tooltip
 - [ ] Only add used components in tailwind config
@@ -331,6 +330,8 @@ import (
 ```
 
 ### Toast
+
+Toasts either close manually or automatically.
 
 ```templ
 import "github.com/jfbus/templ-components/components/toast"
