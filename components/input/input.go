@@ -19,12 +19,12 @@ const (
 	TypeURL      Type = "url"
 )
 
-// Defaults defines the default Color/Class. They are overriden by D.Color/D.Class.
+// Defaults defines the default Color/Class.
 var Defaults = style.Defaults{
 	style.StyleDefault: {
 		"Class": {
-			Color: "bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-			Class: "block w-full border rounded-lg",
+			style.Color("bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"),
+			style.Class("block w-full border rounded-lg"),
 		},
 		"ContainerClass": {},
 	},
@@ -59,7 +59,7 @@ type D struct {
 	IconPosition position.Position
 	// Class overrides the default CSS class for the button.
 	Class style.D
-	// ContainerClass overrides the default CSS class for the button.
+	// ContainerClass overrides the default CSS class for the div container.
 	ContainerClass style.D
 	// Attributes stores additional attributes (e.g. HTMX attributes).
 	Attributes templ.Attributes
@@ -119,7 +119,7 @@ func (def D) iconSize() size.Size {
 }
 
 func (def D) inputClass() string {
-	class := def.Class.CSSClass(style.Default(Defaults, style.StyleDefault, "Class"))
+	class := def.Class.CSSClass(Defaults, style.StyleDefault, "Class")
 	switch def.Size {
 	case size.S:
 		class += " p-2 text-xs"
@@ -142,5 +142,5 @@ func (def D) inputClass() string {
 }
 
 func (def D) containerClass() string {
-	return def.ContainerClass.CSSClass(style.Default(Defaults, style.StyleDefault, "ContainerClass"))
+	return def.ContainerClass.CSSClass(Defaults, style.StyleDefault, "ContainerClass")
 }

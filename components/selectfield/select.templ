@@ -4,11 +4,11 @@ import "github.com/jfbus/templ-components/components/label"
 
 templ C(def D) {
 	@label.C(def.label())
-	<select id={ def.id() } class={ def.class() }>
+	<select id={ def.id() } name={ def.Name } class={ def.inputClass() } { def.Attributes... }>
 		for _,opt := range def.Options {
 			<option
 				value={ opt.Value }
-				if opt.Value == opt.Selected {
+				if opt.Selected {
 					selected
 				}
 			>{ opt.Label }</option>

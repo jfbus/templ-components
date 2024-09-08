@@ -8,12 +8,12 @@ import (
 var Defaults = style.Defaults{
 	style.StyleDefault: {
 		"TitleClass": {
-			Color: "font-medium text-gray-500 border-gray-200 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 ",
-			Class: "flex items-center justify-between w-full p-5 rtl:text-right border first:rounded-t-xl border-b-0 last:border-b-1 focus:ring-4 gap-3 cursor-pointer",
+			style.Color("font-medium text-gray-500 border-gray-200 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 "),
+			style.Class("flex items-center justify-between w-full p-5 rtl:text-right border first:rounded-t-xl border-b-0 last:border-b-1 focus:ring-4 gap-3 cursor-pointer"),
 		},
 		"ContentClass": {
-			Color: "border-gray-200 dark:border-gray-700",
-			Class: "p-5 border border-b-0",
+			style.Color("border-gray-200 dark:border-gray-700"),
+			style.Class("p-5 border border-b-0"),
 		},
 	},
 }
@@ -29,9 +29,9 @@ type D struct {
 }
 
 func (def D) titleClass() string {
-	return def.TitleClass.CSSClass(style.Default(Defaults, style.StyleDefault, "TitleClass"))
+	return def.TitleClass.CSSClass(Defaults, style.StyleDefault, "TitleClass")
 }
 
 func (def D) contentClass() string {
-	return def.TitleClass.CSSClass(style.Default(Defaults, style.StyleDefault, "ContentClass"))
+	return def.TitleClass.CSSClass(Defaults, style.StyleDefault, "ContentClass")
 }

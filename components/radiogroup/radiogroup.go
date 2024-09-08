@@ -1,7 +1,6 @@
 package radiogroup
 
 import (
-	"github.com/jfbus/templ-components/components/helper"
 	"github.com/jfbus/templ-components/components/label"
 	"github.com/jfbus/templ-components/components/radio"
 	"github.com/jfbus/templ-components/components/style"
@@ -21,19 +20,19 @@ var Defaults = style.Defaults{
 	},
 	StyleBordered: {
 		"ContainerClass": {
-			Class: "space-x-4",
+			style.Class("space-x-4"),
 		},
 	},
 	StyleGrouped: {
 		"ContainerClass": {
-			Class: "border rounded-lg",
-			Color: "border-gray-200 dark:bg-gray-700 dark:border-gray-600",
+			style.Class("border rounded-lg"),
+			style.Color("border-gray-200 dark:bg-gray-700 dark:border-gray-600"),
 		},
 	},
 	StyleGroupedVertical: {
 		"ContainerClass": {
-			Class: "border rounded-lg",
-			Color: "border-gray-200 dark:bg-gray-700 dark:border-gray-600",
+			style.Class("border rounded-lg"),
+			style.Color("border-gray-200 dark:bg-gray-700 dark:border-gray-600"),
 		},
 	},
 }
@@ -41,17 +40,22 @@ var Defaults = style.Defaults{
 type D struct {
 	// Name is the Name of all inputs.
 	Name string
-	//
-	Style               style.Style
-	Radios              []radio.D
-	ContainerClass      style.D
+	// Style is the radiogroup style.
+	Style style.Style
+	// Radios is the list of radios in the group.
+	Radios []radio.D
+	// ContainerClass overrides the class of the div container.
+	ContainerClass style.D
+	// RadioContainerClass overrides the class of each radio div container.
 	RadioContainerClass style.D
-	RadioInputClass     style.D
-	RadioLabelClass     style.D
+	// RadioContainerClass overrides the class of each radio input.
+	RadioInputClass style.D
+	// RadioContainerClass overrides the class of each radio label.
+	RadioLabelClass style.D
 }
 
 func (def D) containerClass() string {
-	return def.ContainerClass.CSSClass(style.Default(Defaults, def.Style, "ContainerClass"))
+	return def.ContainerClass.CSSClass(Defaults, def.Style, "ContainerClass")
 }
 
 func (def D) radios() []radio.D {
@@ -59,14 +63,11 @@ func (def D) radios() []radio.D {
 		def.Radios[i].ID = def.Name + "-" + def.Radios[i].Value
 		def.Radios[i].Name = def.Name
 		def.Radios[i].Style = def.Style
-		def.Radios[i].InputClass.Class = helper.IfEmpty(def.Radios[i].InputClass.Class, def.RadioInputClass.Class)
-		def.Radios[i].InputClass.Color = helper.IfEmpty(def.Radios[i].InputClass.Color, def.RadioInputClass.Color)
-		def.Radios[i].ContainerClass.Class = helper.IfEmpty(def.Radios[i].ContainerClass.Class, def.RadioContainerClass.Class)
-		def.Radios[i].ContainerClass.Color = helper.IfEmpty(def.Radios[i].ContainerClass.Color, def.RadioContainerClass.Color)
+		def.Radios[i].InputClass = append(def.RadioInputClass, def.Radios[i].InputClass...)
+		def.Radios[i].ContainerClass = append(def.RadioContainerClass, def.Radios[i].ContainerClass...)
 		switch l := def.Radios[i].Label.(type) {
 		case label.D:
-			l.Class.Color = helper.IfEmpty(l.Class.Color, def.RadioLabelClass.Color)
-			l.Class.Class = helper.IfEmpty(l.Class.Class, def.RadioLabelClass.Class)
+			l.Class = append(def.RadioLabelClass, l.Class...)
 			def.Radios[i].Label = l
 		default:
 			def.Radios[i].Label = label.D{
@@ -76,8 +77,4 @@ func (def D) radios() []radio.D {
 		}
 	}
 	return def.Radios
-}
-
-func (def D) inputContainerClass() string {
-	return def.RadioContainerClass.CSSClass(style.Default(Defaults, def.Style, "RadioContainerClass"))
 }

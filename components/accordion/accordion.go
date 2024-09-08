@@ -4,13 +4,21 @@ import (
 	"strconv"
 
 	"github.com/jfbus/templ-components/components/accordion/element"
+	"github.com/jfbus/templ-components/components/style"
 )
 
+// D defines an accordion.
 type D struct {
+	// ID is the accordion ID (mandatory).
 	ID string
+	// Children defines the list of elements in the accordion.
 	//templplayground:import:github.com/jfbus/templ-components/components/helper
 	//templplayground:default:[]element.D{{Title: "Section 1", Content:helpers.S("Content 1")},{Title: "Section 2", Content:helpers.S("Content 2")})
 	Children []element.D
+	// TitleClass overrides the class of the elements title.
+	TitleClass style.D
+	// ContentClass overrides the class of the element content.
+	ContentClass style.D
 }
 
 func (def D) id() string {
@@ -43,6 +51,8 @@ func (def D) defaultState() string {
 func (def D) children() []element.D {
 	for i := range def.Children {
 		def.Children[i].ID = def.ID + strconv.Itoa(i+1)
+		def.Children[i].TitleClass = def.TitleClass
+		def.Children[i].ContentClass = def.ContentClass
 	}
 	return def.Children
 }

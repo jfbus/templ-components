@@ -70,7 +70,7 @@ func (def D) iconSize() size.Size {
 }
 
 func (def D) inputClass() string {
-	class := def.Class.CSSClass(style.Default(Defaults, style.StyleDefault, "Class"))
+	class := def.Class.CSSClass(Defaults, style.StyleDefault, "Class")
 	switch def.Size {
 	case size.S:
 		class += " p-2 text-xs"

@@ -19,8 +19,8 @@ var Defaults = style.Defaults{
 	},
 	StyleBorder: {
 		"Class": {
-			Color: "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600",
-			Class: "p-1 rounded-md border",
+			style.Color("bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"),
+			style.Class("p-1 rounded-md border"),
 		},
 	},
 }
@@ -31,14 +31,15 @@ type D struct {
 	// Icon is the SVG string (e.g. icon.Flower).
 	Icon  string
 	Style style.Style
-	// Class is an option CSS class to apply to the SVG tag.
+	// Class overrides the default class..
 	Class style.D
 	// Size is the icon size.
-	Size       size.Size
+	Size size.Size
+	// Attributes adds custom attributes.
 	Attributes templ.Attributes
 }
 
 func (def D) class() string {
-	return def.Class.CSSClass(style.Default(Defaults, def.Style, "Class")) +
+	return def.Class.CSSClass(Defaults, def.Style, "Class") +
 		" " + def.Size.Class()
 }

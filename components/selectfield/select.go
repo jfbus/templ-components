@@ -12,7 +12,7 @@ import (
 )
 
 // Defaults defines the default CSS classes for select.
-// If no values are defines, input.Defaults is used.
+// If no values are defined, input.Defaults is used.
 var Defaults = input.Defaults
 
 // D is the select definition.
@@ -59,7 +59,7 @@ func (def D) label() label.D {
 }
 
 func (def D) inputClass() string {
-	class := def.Class.CSSClass(style.Default(Defaults, style.StyleDefault, "Class"))
+	class := def.Class.CSSClass(Defaults, style.StyleDefault, "Class")
 	switch def.Size {
 	case size.S:
 		class += " p-2 text-xs"
