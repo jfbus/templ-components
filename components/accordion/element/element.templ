@@ -1,0 +1,25 @@
+package element
+
+import (
+	"fmt"
+	"github.com/jfbus/templ-components/components/icon"
+)
+
+templ C(def D) {
+	<h2
+		id={ def.ID + "label" }
+		@click.stop={ "toggle('" + def.ID + "')" }
+		aria-expanded={ fmt.Sprintf("%v", def.Open) }
+		class={ def.titleClass() }
+	>
+		<span>{ def.Title }</span>
+		@icon.C(icon.D{Icon: icon.ChevronUp, Attributes: templ.Attributes{
+			":class": "isOpen('" + def.ID + "') ? '' : 'rotate-180'",
+		}})
+	</h2>
+	<div x-show={ "isOpen('" + def.ID + "')" } aria-labelledby={ def.ID + "label" }>
+		<div class={ def.contentClass() }>
+			@def.Content
+		</div>
+	</div>
+}
