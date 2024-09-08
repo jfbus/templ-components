@@ -309,6 +309,38 @@ import (
 Row contents can either be a slice of strings, a slice of `cell.D` definitions,
 a slice of `templ.Component` components or a `[]any` slice containing any number of these.
 
+### Accordion
+
+```templ
+import (
+    "github.com/jfbus/templ-components/components/accordion"
+    "github.com/jfbus/templ-components/components/accordion/element"
+)
+
+@accordion.C(accordion.D{
+    ID: "accordion",
+    Children: []element.D{{
+        Open:    true,
+        Title:   "First",
+        Content: your.component(),
+    }, {
+        Title:   "Second",
+        Content: your.component(),
+    }},
+})
+```
+
+### Toast
+
+```templ
+import "github.com/jfbus/templ-components/components/toast"
+
+@toast.C(toast.D{
+    Style:   toast.StyleError,
+    Content: "An error occurred !",
+})
+```
+
 ## Helpers
 
 ```
