@@ -1,6 +1,9 @@
 package inline_test
 
 import (
+	"context"
+	"os"
+
 	"github.com/a-h/templ"
 	"github.com/jfbus/templ-components/components/icon"
 	"github.com/jfbus/templ-components/components/inline"
@@ -11,7 +14,7 @@ import (
 )
 
 func ExampleC() {
-	_ = inline.C(inline.D{
+	c := inline.C(inline.D{
 		Value:    "Previous value",
 		IconSize: size.S,
 		Focus:    "itemtitle",
@@ -30,4 +33,5 @@ func ExampleC() {
 			},
 		}),
 	})
+	c.Render(context.TODO(), os.Stdout)
 }

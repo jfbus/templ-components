@@ -1,6 +1,9 @@
 package table_test
 
 import (
+	"context"
+	"os"
+
 	"github.com/a-h/templ"
 	"github.com/jfbus/templ-components/components/button"
 	"github.com/jfbus/templ-components/components/table"
@@ -9,7 +12,7 @@ import (
 )
 
 func ExampleC() {
-	_ = table.C(table.D{
+	c := table.C(table.D{
 		Style: table.StyleStripedRows,
 		Header: &row.D{
 			Cells: []string{"Email", "Name", "Status", ""},
@@ -31,5 +34,5 @@ func ExampleC() {
 			},
 		}},
 	})
-
+	c.Render(context.TODO(), os.Stdout)
 }

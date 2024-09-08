@@ -50,7 +50,7 @@ func C(def D) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		for _, d := range def.inputs() {
+		for _, d := range def.radios() {
 			templ_7745c5c3_Err = radio.C(d).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err

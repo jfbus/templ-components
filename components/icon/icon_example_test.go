@@ -1,14 +1,19 @@
 package icon_test
 
 import (
+	"context"
+	"os"
+
 	"github.com/jfbus/templ-components/components/icon"
 	"github.com/jfbus/templ-components/components/size"
 )
 
 func ExampleC() {
-	_ = icon.C(icon.Flower)
+	c := icon.C(icon.Flower)
+	c.Render(context.TODO(), os.Stdout)
 }
 
 func ExampleC_withSize() {
-	_ = icon.C(icon.D{Icon: icon.Flower, Size: size.NineXL})
+	c := icon.C(icon.D{Icon: icon.Flower, Size: size.NineXL})
+	c.Render(context.TODO(), os.Stdout)
 }

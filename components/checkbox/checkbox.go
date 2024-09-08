@@ -22,7 +22,7 @@ var Defaults = style.Defaults{
 		"ContainerClass": style.D{
 			Class: "flex items-center",
 		},
-		"InputClass": style.D{
+		"RadioInputClass": style.D{
 			Color: "text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600",
 			Class: "ms-2 w-4 h-4 focus:ring-2 rounded",
 		},
@@ -47,7 +47,7 @@ var Defaults = style.Defaults{
 		"ContainerClass": {
 			Class: "inline-flex items-center justify-between",
 		},
-		"InputClass": {
+		"RadioInputClass": {
 			Color: " ",
 			Class: "hidden peer",
 		},
@@ -119,5 +119,5 @@ func (def D) containerClass() string {
 }
 
 func (def D) inputClass() string {
-	return def.InputClass.CSSClass(style.Default(Defaults, def.Style, "InputClass"))
+	return def.InputClass.CSSClass(style.Default(Defaults, def.Style, "RadioInputClass"))
 }
