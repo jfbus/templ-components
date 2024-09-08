@@ -76,10 +76,13 @@ type D struct {
 	// Style is the button style (Normal, Pill, Outline ou Pill|Outline).
 	Style style.Style
 	// Size defines the input size (size.XS, size.S, size.Normal (default) size.L or size.XL).
+	//playground:values:size.Normal,size.XS,size.S,size.L,size.XL
 	Size size.Size
 	// Icon displays an icon on the left side.
+	//playground:values:icon.Flower
 	Icon string
 	// IconPosition can be position.Start (default) or position.End.
+	//playground:values:position.Start,position.End
 	IconPosition position.Position
 	// Disabled disables the input.
 	Disabled bool

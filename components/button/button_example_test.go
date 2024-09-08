@@ -1,6 +1,9 @@
 package button_test
 
 import (
+	"context"
+	"os"
+
 	"github.com/a-h/templ"
 	"github.com/jfbus/templ-components/components/button"
 	"github.com/jfbus/templ-components/components/icon"
@@ -8,7 +11,7 @@ import (
 )
 
 func ExampleC() {
-	_ = button.C(button.D{
+	c := button.C(button.D{
 		ID:     "item_submit",
 		Type:   button.Submit,
 		Label:  "Save",
@@ -20,4 +23,5 @@ func ExampleC() {
 			"hx-target": "#item_list",
 		},
 	})
+	c.Render(context.TODO(), os.Stdout)
 }

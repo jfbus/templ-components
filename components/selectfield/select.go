@@ -3,16 +3,17 @@
 package selectfield
 
 import (
-	"github.com/jfbus/templ-components/components/helper"
+	"github.com/a-h/templ"
 	"github.com/jfbus/templ-components/components/input"
 	"github.com/jfbus/templ-components/components/label"
 	"github.com/jfbus/templ-components/components/selectfield/option"
 	"github.com/jfbus/templ-components/components/size"
+	"github.com/jfbus/templ-components/components/style"
 )
 
 // Defaults defines the default CSS classes for select.
 // If no values are defines, input.Defaults is used.
-var Defaults = D{}
+var Defaults = input.Defaults
 
 // D is the select definition.
 type D struct {
@@ -23,15 +24,16 @@ type D struct {
 	// Label is the label (either a string or a label.D).
 	Label any
 	// Options is the list of options.
+	//playground:import:github.com/jfbus/templ-components/components/selectfield/option
+	//playground:default:[]option.D{{Label:"Select a value"},{Label:"Option 1"},{Label:"Option 2"}}
 	Options []option.D
 	// Select is the selected value.
 	Selected string
 	// Size is the size.
 	Size size.Size
-	// Color overrides the default color CSS classes
-	Color string
 	// Class overrides the default CSS class for the select.
-	Class string
+	Class      style.D
+	Attributes templ.Attributes
 }
 
 func (def D) id() string {
@@ -57,8 +59,7 @@ func (def D) label() label.D {
 }
 
 func (def D) inputClass() string {
-	class := helper.IfEmpty(def.Class, Defaults.Class, input.Defaults.Class)
-	class += " " + helper.IfEmpty(def.Color, Defaults.Color, input.Defaults.Color)
+	class := def.Class.CSSClass(style.Default(Defaults, style.StyleDefault, "Class"))
 	switch def.Size {
 	case size.S:
 		class += " p-2 text-xs"

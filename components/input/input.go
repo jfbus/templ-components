@@ -47,12 +47,15 @@ type D struct {
 	// Disabled disables the input.
 	Disabled bool
 	// Size defines the input size (size.S, size.Normal (default) or size.L).
+	//playground:values:size.S,size.Normal,size.L
 	Size size.Size
 	// Loader displays a spinning loader when an HTMX action is triggered by the input.
 	Loader bool
 	// Icon displays an icon on the left side.
+	//playground:values:icon.Flower
 	Icon string
 	// IconPosition can be position.Start (default) or position.End.
+	//playground:values:position.Start,position.End
 	IconPosition position.Position
 	// Class overrides the default CSS class for the button.
 	Class style.D
@@ -124,6 +127,9 @@ func (def D) inputClass() string {
 		class += " p-4 text-base"
 	default:
 		class += " p-2.5 text-sm"
+	}
+	if def.Disabled {
+		class += " cursor-not-allowed"
 	}
 	switch {
 	case def.Icon == "":

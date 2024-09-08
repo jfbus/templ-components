@@ -19,6 +19,8 @@ var Defaults = D{
 
 type D struct {
 	// Buttons is the list of buttons to display.
+	//playground:import:github.com/jfbus/templ-components/components/button
+	//playground:default:[]button.D{{Label:"A"},{Label:"B"},{Label:"C"}}
 	Buttons []button.D
 	// Size defines the buttons size (shortcut for Buttons.Size).
 	Size size.Size
