@@ -31,10 +31,10 @@ var Defaults = style.Defaults{
 }
 
 const (
-	StyleTopLeft     style.Style = 1
-	StyleTopRight    style.Style = 2
-	StyleBottomLeft  style.Style = 4
-	StyleBottomRight style.Style = 8
+	StyleTopLeft     style.Style = 1 << 8
+	StyleTopRight    style.Style = 1 << 9
+	StyleBottomLeft  style.Style = 1 << 10
+	StyleBottomRight style.Style = 1 << 11
 )
 
 type D struct {

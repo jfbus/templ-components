@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	StyleButtonsRight style.Style = 1
+	StyleButtonsRight style.Style = 1 << 8
 )
 
 var Defaults = style.Defaults{
