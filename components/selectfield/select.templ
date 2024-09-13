@@ -1,6 +1,9 @@
 package selectfield
 
-import "github.com/jfbus/templ-components/components/label"
+import (
+	"github.com/jfbus/templ-components/components/form/validation/message"
+	"github.com/jfbus/templ-components/components/label"
+)
 
 templ C(def D) {
 	@label.C(def.label())
@@ -14,4 +17,7 @@ templ C(def D) {
 			>{ opt.Label }</option>
 		}
 	</select>
+	if def.Message != nil {
+		@message.C(def.message())
+	}
 }

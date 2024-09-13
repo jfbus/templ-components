@@ -4,6 +4,7 @@ package selectfield
 
 import (
 	"github.com/a-h/templ"
+	"github.com/jfbus/templ-components/components/form/validation/message"
 	"github.com/jfbus/templ-components/components/input"
 	"github.com/jfbus/templ-components/components/label"
 	"github.com/jfbus/templ-components/components/selectfield/option"
@@ -21,6 +22,8 @@ type D struct {
 	ID string
 	// Name is the tag name.
 	Name string
+	// Style is the style (style.StyleDefault, style.StyleValid or style.StyleInvalid).
+	Style style.Style
 	// Label is the label (either a string or a label.D).
 	Label any
 	// Options is the list of options.
@@ -29,10 +32,18 @@ type D struct {
 	Options []option.D
 	// Select is the selected value.
 	Selected string
+	// Disabled disables the select.
+	Disabled bool
 	// Size is the size.
 	Size size.Size
+	// Message adds a validation message below the field.
+	// Just add &message.D{} to add automatic validation.
+	//playground:import:github.com/jfbus/templ-components/components/form/validation/message
+	//playground:default:&message.D{Message: "Validation message"}
+	Message *message.D
 	// Class overrides the default CSS class for the select.
-	Class      style.D
+	Class style.D
+	// Attributes add additional attributes.
 	Attributes templ.Attributes
 }
 
@@ -43,12 +54,20 @@ func (def D) id() string {
 	return def.Name
 }
 
+func (def D) style() style.Style {
+	if def.Disabled {
+		return def.Style | style.StyleDisabled
+	}
+	return def.Style
+}
+
 func (def D) label() label.D {
 	switch l := def.Label.(type) {
 	case string:
 		return label.D{
 			InputID: def.id(),
 			Label:   l,
+			Style:   def.style(),
 		}
 	case label.D:
 		l.InputID = def.id()
@@ -59,7 +78,7 @@ func (def D) label() label.D {
 }
 
 func (def D) inputClass() string {
-	class := def.Class.CSSClass(Defaults, style.StyleDefault, "Class")
+	class := def.Class.CSSClass(Defaults, def.style(), "Class")
 	switch def.Size {
 	case size.S:
 		class += " p-2 text-xs"
@@ -69,4 +88,12 @@ func (def D) inputClass() string {
 		class += " p-2.5 text-sm"
 	}
 	return class
+}
+
+func (def D) message() message.D {
+	m := *def.Message
+	m.InputName = def.Name
+	m.Size = def.Size
+	m.Style = def.style()
+	return m
 }

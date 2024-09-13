@@ -1,0 +1,11 @@
+package htmx
+
+const (
+	SwapBeforeEnd = "beforeend"
+)
+
+templ OOBSwap(id, swap string, c templ.Component) {
+	<div id={ id } hx-swap-oob={ swap }>
+		@c
+	</div>
+}

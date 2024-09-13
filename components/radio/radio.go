@@ -9,10 +9,10 @@ import (
 )
 
 const (
-	StyleBordered        style.Style = 2
-	StyleGrouped         style.Style = 4
-	StyleGroupedVertical style.Style = 8
-	StyleLabelOnly       style.Style = 16
+	StyleBordered        style.Style = 1 << 8
+	StyleGrouped         style.Style = 1 << 9
+	StyleGroupedVertical style.Style = 1 << 10
+	StyleLabelOnly       style.Style = 1 << 11
 )
 
 // Defaults defines the default Color/Class.

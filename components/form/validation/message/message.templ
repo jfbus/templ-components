@@ -1,0 +1,12 @@
+package message
+
+templ C(def D) {
+	<p
+		class={ def.class() }
+		if def.Message == "" {
+			x-cloak
+			x-text={ "error('" + def.InputName + "')" }
+			x-show={ "hasError('" + def.InputName + "')" }
+		}
+	>{ def.Message }</p>
+}

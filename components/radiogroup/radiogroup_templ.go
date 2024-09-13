@@ -8,7 +8,10 @@ package radiogroup
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "github.com/jfbus/templ-components/components/radio"
+import (
+	"github.com/jfbus/templ-components/components/form/validation/message"
+	"github.com/jfbus/templ-components/components/radio"
+)
 
 func C(def D) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -62,6 +65,12 @@ func C(def D) templ.Component {
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
+		}
+		if def.Message != nil {
+			templ_7745c5c3_Err = message.C(def.message()).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
 		}
 		return templ_7745c5c3_Err
 	})

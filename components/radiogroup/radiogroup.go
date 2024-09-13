@@ -1,16 +1,17 @@
 package radiogroup
 
 import (
+	"github.com/jfbus/templ-components/components/form/validation/message"
 	"github.com/jfbus/templ-components/components/label"
 	"github.com/jfbus/templ-components/components/radio"
 	"github.com/jfbus/templ-components/components/style"
 )
 
 const (
-	StyleBordered        style.Style = 2
-	StyleGrouped         style.Style = 4
-	StyleGroupedVertical style.Style = 8
-	StyleLabelOnly       style.Style = 16
+	StyleBordered        style.Style = 1 << 8
+	StyleGrouped         style.Style = 1 << 9
+	StyleGroupedVertical style.Style = 1 << 10
+	StyleLabelOnly       style.Style = 1 << 11
 )
 
 var Defaults = style.Defaults{
@@ -20,7 +21,7 @@ var Defaults = style.Defaults{
 	},
 	StyleBordered: {
 		"ContainerClass": {
-			style.Class("space-x-4"),
+			style.Class("gap-4"),
 		},
 	},
 	StyleGrouped: {
@@ -43,7 +44,14 @@ type D struct {
 	// Style is the radiogroup style.
 	Style style.Style
 	// Radios is the list of radios in the group.
+	//playground:import:github.com/jfbus/templ-components/components/radio
+	//playground:default:[]radio.D{{Name: "foo", Value: 1, Label: "Choice 1"},{Name: "foo", Value: 2, Label:"Choice 2"}}
 	Radios []radio.D
+	// Message adds a validation message below the field.
+	// Just add &message.D{} to add automatic validation.
+	//playground:import:github.com/jfbus/templ-components/components/form/validation/message
+	//playground:default:&message.D{Message: "Validation message"}
+	Message *message.D
 	// ContainerClass overrides the class of the div container.
 	ContainerClass style.D
 	// RadioContainerClass overrides the class of each radio div container.
@@ -77,4 +85,11 @@ func (def D) radios() []radio.D {
 		}
 	}
 	return def.Radios
+}
+
+func (def D) message() message.D {
+	m := *def.Message
+	m.InputName = def.Name
+	m.Style = def.Style
+	return m
 }

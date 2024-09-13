@@ -3,7 +3,7 @@
 <a href="https://pkg.go.dev/github.com/jfbus/templ-components"><img src="https://pkg.go.dev/badge/github.com/jfbus/templ-components.svg" alt="Go Reference" /></a>
 <a href="https://goreportcard.com/report/github.com/jfbus/templ-components"><img src="https://goreportcard.com/badge/github.com/jfbus/templ-components" alt="Go Report Card" /></a>
 
-A library of components to be used in a Go/templ/HTMX/AlpineJS project, based on [Flowbite](https://flowbite.com/) components and the [Lucide](https://lucide.dev/) icon
+A library of components to be used in a Go/templ/HTMX/Alpine.js project, based on [Flowbite](https://flowbite.com/) components and the [Lucide](https://lucide.dev/) icon
 library.
 
 _Note: all Flowbite JS code has been rewritten using Alpine._
@@ -58,7 +58,6 @@ it renames the previous config file to `tailwind.config.js.saved`.
 
 ## Roadmap
 
-- [ ] Modal
 - [ ] Rating
 - [ ] Tooltip
 - [ ] Only add used components in tailwind config

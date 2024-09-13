@@ -1,0 +1,82 @@
+package modal
+
+import (
+	"github.com/jfbus/templ-components/components/button"
+	"github.com/jfbus/templ-components/components/form"
+	"github.com/jfbus/templ-components/components/icon"
+	"github.com/jfbus/templ-components/components/size"
+	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templ-components/components/text"
+)
+
+templ C(def D) {
+	<div
+		tabindex="-1"
+		class="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full px-4 py-5 bg-black/40"
+		x-data="{}"
+		x-ref={ def.id() }
+		x-transition
+	>
+		<div
+			class="w-full max-w-screen-md max-h-full rounded-[10px] bg-white dark:bg-dark-2 overflow-y-auto"
+			@click.outside={ "$refs." + def.id() + ".remove()" }
+		>
+			<div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+				<h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+					{ def.Title }
+				</h3>
+				@button.C(button.D{
+					Icon:      icon.X,
+					Label:     "Close",
+					HideLabel: true,
+					Size:      size.Normal,
+					Class: style.D{
+						style.Class("rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 inline-flex items-center justify-center"),
+						style.Color("bg-white text-gray-400 hover:text-gray-900 focus:ring-gray-300 hover:bg-gray-100 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"),
+					},
+					Attributes: templ.Attributes{
+						"@click.stop": "$refs." + def.id() + ".remove()",
+					},
+				})
+			</div>
+			if def.Form != nil {
+				@form.C(def.form()) {
+					@body(def)
+				}
+			} else {
+				<div id={ def.id() } class="w-full">
+					@body(def)
+				</div>
+			}
+		</div>
+	</div>
+}
+
+templ body(def D) {
+	<div class="p-4 md:p-5 space-y-4" id={ def.id() }>
+		if def.Content != nil {
+			if comp, ok := def.Content.(templ.Component); ok {
+				@comp
+			} else {
+				@text.C(def.Content)
+			}
+		} else {
+			{ children... }
+		}
+	</div>
+	if def.Close != nil || def.Confirm != nil {
+		<div class={ def.buttonContainerClass() }>
+			if def.Close != nil {
+				@button.C(def.close())
+			}
+			if def.Confirm != nil {
+				@button.C(def.confirm())
+			}
+		</div>
+	}
+}
+
+// Close closes a modal.
+templ Close(id string) {
+	<div id={ id } hx-swap-oob="true" x-init={ "$refs." + id + ".remove()" }></div>
+}

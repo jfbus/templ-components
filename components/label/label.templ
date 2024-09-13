@@ -1,23 +1,34 @@
 package label
 
-import "github.com/jfbus/templ-components/components/helper"
+import "github.com/jfbus/templ-components/components/text"
 
 templ C(def D) {
 	if def.Label != nil && def.Label != "" {
 		if def.Hide {
-			<label class="sr-only" for={ def.InputID } class={ def.class() }>
+			<label
+				class="sr-only"
+				for={ def.InputID }
+				class={ def.class() }
+				:class={ "hasError('" + def.InputName + "') && '" + def.classInvalid() + "'" }
+				{ def.Attributes... }
+			>
 				if c, ok := def.Label.(templ.Component); ok {
 					@c
 				} else {
-					@helper.S(def.Label)
+					@text.C(def.Label)
 				}
 			</label>
 		} else {
-			<label for={ def.InputID } class={ def.class() }>
+			<label
+				for={ def.InputID }
+				class={ def.class() }
+				:class={ "hasError('" + def.InputName + "') && '" + def.classInvalid() + "'" }
+				{ def.Attributes... }
+			>
 				if c, ok := def.Label.(templ.Component); ok {
 					@c
 				} else {
-					@helper.S(def.Label)
+					@text.C(def.Label)
 				}
 			</label>
 		}

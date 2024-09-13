@@ -1,6 +1,6 @@
 package cell
 
-import "github.com/jfbus/templ-components/components/helper"
+import "github.com/jfbus/templ-components/components/text"
 
 templ C(def D) {
 	if def.Header {
@@ -14,7 +14,7 @@ templ C(def D) {
 			if c, ok := def.Content.(templ.Component); ok {
 				@c
 			} else {
-				@helper.S(def.Content)
+				@text.C(def.Content)
 			}
 		</th>
 	} else {
@@ -27,7 +27,7 @@ templ C(def D) {
 			if c, ok := def.Content.(templ.Component); ok {
 				@c
 			} else {
-				@helper.S(def.Content)
+				@text.C(def.Content)
 			}
 		</td>
 	}

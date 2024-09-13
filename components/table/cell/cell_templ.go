@@ -8,7 +8,7 @@ package cell
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "github.com/jfbus/templ-components/components/helper"
+import "github.com/jfbus/templ-components/components/text"
 
 func C(def D) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -83,7 +83,7 @@ func C(def D) templ.Component {
 					return templ_7745c5c3_Err
 				}
 			} else {
-				templ_7745c5c3_Err = helper.S(def.Content).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = text.C(def.Content).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -144,7 +144,7 @@ func C(def D) templ.Component {
 					return templ_7745c5c3_Err
 				}
 			} else {
-				templ_7745c5c3_Err = helper.S(def.Content).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = text.C(def.Content).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
