@@ -1,16 +1,20 @@
 package toast
 
 import (
+	"context"
+	"errors"
+	"net/http"
 	"time"
 
 	"github.com/jfbus/templ-components/components/icon"
 	"github.com/jfbus/templ-components/components/style"
+	"github.com/rs/xid"
 )
 
 const (
-	StyleOK      style.Style = 2
-	StyleWarning style.Style = 4
-	StyleError   style.Style = 8
+	StyleOK      style.Style = 1 << 8
+	StyleWarning style.Style = 1 << 9
+	StyleError   style.Style = 1 << 10
 )
 
 type Close int
@@ -48,18 +52,36 @@ var Defaults = style.Defaults{
 }
 
 type D struct {
-	ID             string
-	Style          style.Style
-	Icon           string
-	Content        string
+	_id string
+	// ContainerID is the ID of the container.C where the container will be added.
+	// You will have to add a toast container in your page.
+	ContainerID string
+	// Style defines the toast style.
+	Style style.Style
+	// Icon defines an optional icon. StyleOK/StyleWarning/StyleError include a default icon
+	// that can be overriden.
+	Icon string
+	// Content defines the text content of the toast.
+	// You may also define a custom child content :
+	//  @toast.C(toast.D{}){
+	//    // your custom content
+	//  }
+	Content string
+	// ContainerClass stores overrides to the container CSS classes.
 	ContainerClass style.D
-	IconClass      style.D
-	Close          Close
+	// IconClass stores overrides to the icon CSS classes.
+	IconClass style.D
+	// Close defines if a close button will be added or if the toast will close after AutoCloseDelay.
+	Close Close
+	// AutoCloseDelay defines the close delay (default 5s).
 	AutoCloseDelay time.Duration
 }
 
-func (def D) id() string {
-	return def.ID
+func (def *D) id() string {
+	if def._id == "" {
+		def._id = xid.New().String()
+	}
+	return def._id
 }
 
 func (def D) icon() string {
@@ -91,4 +113,19 @@ func (def D) closeDelayMS() int {
 		d = 5 * time.Second
 	}
 	return int(d.Milliseconds())
+}
+
+// Retarget returns a HTMX response that retargets the response to display the response
+// to the toast container, ignoring the initial target.
+// When using error status codes, do not forget to add your error codes to the list of
+// codes for which HTMX swaps the content - https://htmx.org/docs/#requests
+func Retarget(ctx context.Context, def D, w http.ResponseWriter, statusCode int) error {
+	if def.ContainerID == "" {
+		return errors.New("container id is required")
+	}
+	w.Header().Set("Content-Type", "text/html, charset=UTF-8")
+	w.Header().Set("HX-Retarget", "#"+def.ContainerID)
+	w.Header().Set("HX-Reswap", "beforeend")
+	w.WriteHeader(statusCode)
+	return C(def).Render(ctx, w)
 }

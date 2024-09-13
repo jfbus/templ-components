@@ -1,6 +1,9 @@
 package radiogroup
 
-import "github.com/jfbus/templ-components/components/radio"
+import (
+	"github.com/jfbus/templ-components/components/form/validation/message"
+	"github.com/jfbus/templ-components/components/radio"
+)
 
 templ C(def D) {
 	<div class={ def.containerClass() }>
@@ -8,4 +11,7 @@ templ C(def D) {
 			@radio.C(d)
 		}
 	</div>
+	if def.Message != nil {
+		@message.C(def.message())
+	}
 }

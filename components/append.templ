@@ -1,0 +1,8 @@
+package components
+
+// Appends adds a component. It may be used to add an out of band response to a standard one.
+templ Append(l ...templ.Component) {
+	for _, c := range l {
+		@c
+	}
+}

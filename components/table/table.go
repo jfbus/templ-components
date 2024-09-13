@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	StyleStripedRows       style.Style = 1
-	StyleNoBorder          style.Style = 2
-	StyleAddHighlightHover style.Style = 32
+	StyleStripedRows       style.Style = 1 << 8
+	StyleNoBorder          style.Style = 1 << 9
+	StyleAddHighlightHover style.Style = 1 << 10
 )
 
 // Defaults are default CSS classes for each style. The are overriden by D.TableClass/D.HeaderClass/D.BodyClass/D.CellClass.

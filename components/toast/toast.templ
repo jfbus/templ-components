@@ -4,18 +4,25 @@ import (
 	"github.com/jfbus/templ-components/components/button"
 	"github.com/jfbus/templ-components/components/icon"
 	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templ-components/htmx"
 	"strconv"
 )
 
 templ C(def D) {
+if def.ContainerID != "" {
+  @htmx.OOBSwap(def.ContainerID, htmx.SwapBeforeEnd,c(def))
+} else {
+	@c(def)
+}
+}
+
+templ c(def D) {
 	<div
-		id="toast-default"
+		x-ref={ def.id() }
 		class={ def.containerClass() }
 		role="alert"
-		x-data="{show: true}"
-		x-show="show"
 		if def.Close == CloseAuto {
-			x-init={ "setTimeout(() => show = false, " + strconv.Itoa(def.closeDelayMS()) + ")" }
+			x-init={ "setTimeout(() => $refs." + def.id() + ".remove(), " + strconv.Itoa(def.closeDelayMS()) + ")" }
 		}
 	>
 		if def.icon() != "" {
@@ -33,14 +40,14 @@ templ C(def D) {
 		if def.Close != CloseAuto {
 			@button.C(button.D{
 				Icon:      icon.X,
-				Label:     "Fermer",
+				Label:     "Close",
 				HideLabel: true,
 				Class: style.D{
 					style.Class("ms-auto -mx-1.5 -my-1.5 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 inline-flex items-center justify-center h-8 w-8"),
 					style.Color("bg-white text-gray-400 hover:text-gray-900 focus:ring-gray-300 hover:bg-gray-100 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"),
 				},
 				Attributes: templ.Attributes{
-					"@click": "show=false",
+					"@click": "$refs." + def.id() + ".remove()",
 				},
 			})
 		}

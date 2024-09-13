@@ -1,6 +1,7 @@
 package textarea
 
 import (
+	"github.com/jfbus/templ-components/components/form/validation/message"
 	"github.com/jfbus/templ-components/components/icon"
 	"github.com/jfbus/templ-components/components/label"
 	"strconv"
@@ -39,5 +40,8 @@ templ C(def D) {
 				{ def.Attributes... }
 			>{ def.Value }</textarea>
 		</div>
+		if def.Message != nil {
+			@message.C(def.message())
+		}
 	</div>
 }

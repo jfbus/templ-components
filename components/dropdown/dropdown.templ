@@ -1,0 +1,50 @@
+package dropdown
+
+import (
+	"github.com/jfbus/templ-components/components/a"
+	"github.com/jfbus/templ-components/components/button"
+)
+
+templ C(def D) {
+	<div
+		x-data="{
+            open: false,
+            toggle() {
+                this.open = !this.open
+            },
+            close() {
+                this.open = false
+            }
+        }"
+		x-id="['dropdown']"
+		@focusin.window="!$refs[$id('dropdown')].contains($event.target) && close()"
+		@keydown.escape.stop="close()"
+	>
+		@button.C(def.button())
+		<div
+			x-refs="$id('dropdown')"
+			x-cloak
+			x-show="open"
+			@click.outside="close()"
+			style="display: none;"
+			class={ def.class() }
+		>
+			if def.Header != nil {
+				<div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+					if def.Header != nil {
+						@def.Header
+					}
+				</div>
+			}
+			for _, s := range def.links() {
+				<ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+					for _, l := range s {
+						<li>
+							@a.C(l)
+						</li>
+					}
+				</ul>
+			}
+		</div>
+	</div>
+}

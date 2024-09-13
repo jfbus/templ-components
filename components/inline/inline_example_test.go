@@ -25,6 +25,7 @@ func ExampleC() {
 			Icon:         icon.CornerDownLeft,
 			IconPosition: position.End,
 			Size:         size.S,
+			NoValidation: true,
 			Loader:       true,
 			Attributes: templ.Attributes{
 				"hx-post":   "/items/update_title/24",

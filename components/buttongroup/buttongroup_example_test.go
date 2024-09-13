@@ -21,7 +21,7 @@ func ExampleC() {
 				Label:     "Sort",
 				HideLabel: true,
 				Class: style.D{
-					Color: "text-gray-800 bg-gray-100 border-gray-300 hover:bg-gray-200 focus:ring-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-700 dark:hover:bg-gray-600 dark:hover:border-gray-600 dark:focus:ring-gray-700",
+					style.ReplaceColor("bg", "bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600"),
 				},
 				Attributes: templ.Attributes{
 					"@click": "$dispatch('input', '')",

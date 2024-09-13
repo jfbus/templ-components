@@ -17,12 +17,11 @@ const (
 )
 
 const (
-	StylePill        style.Style = 1
-	StyleOutline     style.Style = 2
-	StyleOutlinePill style.Style = 4
-	StyleNoBorder    style.Style = 8
-
-	StyleFullWidth style.Style = 32
+	StylePill        style.Style = 1 << 8
+	StyleOutline     style.Style = 1 << 9
+	StyleOutlinePill style.Style = 1 << 10
+	StyleNoBorder    style.Style = 1 << 11
+	StyleFullWidth   style.Style = 1 << 12
 )
 
 // Defaults defines the default Color/Class values, and may be changed. They are overriden by D.Color/D.Class.

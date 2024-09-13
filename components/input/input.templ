@@ -1,6 +1,7 @@
 package input
 
 import (
+	"github.com/jfbus/templ-components/components/form/validation/message"
 	"github.com/jfbus/templ-components/components/icon"
 	"github.com/jfbus/templ-components/components/label"
 	"github.com/jfbus/templ-components/components/loader"
@@ -34,9 +35,22 @@ templ C(def D) {
 				if def.Disabled {
 					disabled
 				}
+				if def.Invalid {
+					invalid
+				} else {
+					if def.Message != nil {
+						:invalid={ "hasError('" + def.Name + "')" }
+					}
+				}
+				if def.Message != nil {
+					:class={ "hasError('" + def.Name + "') && '" + def.inputClassInvalid() + "'" }
+				}
 				class={ def.inputClass() }
 				{ def.Attributes... }
 			/>
 		</div>
+		if def.Message != nil {
+			@message.C(def.message())
+		}
 	</div>
 }

@@ -3,6 +3,7 @@ package textarea
 
 import (
 	"github.com/a-h/templ"
+	"github.com/jfbus/templ-components/components/form/validation/message"
 	"github.com/jfbus/templ-components/components/input"
 	"github.com/jfbus/templ-components/components/label"
 	"github.com/jfbus/templ-components/components/position"
@@ -17,7 +18,8 @@ var Defaults = input.Defaults
 type D struct {
 	ID string
 	// Name is the input name.
-	Name string
+	Name  string
+	Style style.Style
 	// Type is the input type (text, password, ...).
 	Label any
 	// Value is the input value.
@@ -36,14 +38,29 @@ type D struct {
 	Icon string
 	// IconPosition can be position.Start (default) or position.End.
 	IconPosition position.Position
+	// Message adds a validation message below the field.
+	// Just add &message.D{} to add automatic validation.
+	//playground:import:github.com/jfbus/templ-components/components/form/validation/message
+	//playground:default:&message.D{Message: "Validation message"}
+	Message *message.D
 	// Class overrides the default CSS class for the textarea.
 	Class style.D
+	// Class overrides the default CSS class for the icon.
+	IconClass style.D
 	// Attributes stores additional attributes (e.g. HTMX attributes).
 	Attributes templ.Attributes
 }
 
+func (def D) style() style.Style {
+	if def.Disabled {
+		return def.Style | style.StyleDisabled
+	}
+	return def.Style
+}
+
 func (def D) iconClass() string {
-	class := "absolute inset-y-0 flex items-top pointer-events-none"
+	def.IconClass = append(def.IconClass, style.ReplaceClass("items-center", "items-top"))
+	class := def.IconClass.CSSClass(Defaults, def.style(), "IconClass")
 	switch def.Size {
 	case size.S:
 		class += " pt-2"
@@ -70,7 +87,7 @@ func (def D) iconSize() size.Size {
 }
 
 func (def D) inputClass() string {
-	class := def.Class.CSSClass(Defaults, style.StyleDefault, "Class")
+	class := def.Class.CSSClass(Defaults, def.style(), "Class")
 	switch def.Size {
 	case size.S:
 		class += " p-2 text-xs"
@@ -102,11 +119,23 @@ func (def D) label() label.D {
 		return label.D{
 			InputID: def.id(),
 			Label:   l,
+			Style:   def.style(),
 		}
 	case label.D:
 		l.InputID = def.id()
+		if l.Style == style.StyleDefault {
+			l.Style = def.style()
+		}
 		return l
 	default:
 		return label.D{}
 	}
+}
+
+func (def D) message() message.D {
+	m := *def.Message
+	m.InputName = def.Name
+	m.Size = def.Size
+	m.Style = def.style()
+	return m
 }

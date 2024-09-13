@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"path"
+	"path/filepath"
 	"runtime"
 	"strings"
 )
@@ -25,13 +25,18 @@ module.exports = {
 
 func main() {
 	_, p, _, _ := runtime.Caller(0)
-	p = path.Dir(p)
-	err := updateConfig(p)
-	if errors.Is(err, os.ErrNotExist) {
-		err = createConfig(p, defaultConfig)
+	cur, err := os.Getwd()
+	if err == nil {
+		p, err = filepath.Rel(cur, filepath.Dir(p))
+		if err == nil {
+			err = updateConfig(p)
+			if errors.Is(err, os.ErrNotExist) {
+				err = createConfig(p, defaultConfig)
+			}
+		}
 	}
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+		fmt.Fprintln(os.Stderr, err) //nolint:errcheck
 		os.Exit(1)
 	}
 }
@@ -48,12 +53,17 @@ func updateConfig(path string) error {
 	return createConfig(path, string(content))
 }
 
-func createConfig(path string, content string) error {
+func createConfig(path string, content string) (rerr error) {
 	fd, err := os.Create("tailwind.config.js")
 	if err != nil {
 		return fmt.Errorf("create tailwind.config.js: %w", err)
 	}
-	defer fd.Close()
+	defer func() {
+		err := fd.Close()
+		if rerr == nil {
+			rerr = err
+		}
+	}()
 	var tabs string
 	incontent := false
 	scanner := bufio.NewScanner(strings.NewReader(content))
@@ -66,7 +76,8 @@ func createConfig(path string, content string) error {
 		case incontent && strings.Contains(line, "]"):
 			_, err := fmt.Fprintln(fd, tabs+tabs+`"`+path+`/**/*.{templ,go}",`)
 			if err != nil {
-				return fmt.Errorf("write tailwind.config.js: %w", err)
+				rerr = fmt.Errorf("write tailwind.config.js: %w", err)
+				return
 			}
 			incontent = false
 		case incontent && strings.Contains(line, path):
@@ -76,11 +87,13 @@ func createConfig(path string, content string) error {
 		}
 		_, err := fmt.Fprintln(fd, line)
 		if err != nil {
-			return fmt.Errorf("write tailwind.config.js: %w", err)
+			rerr = fmt.Errorf("write tailwind.config.js: %w", err)
+			return
 		}
 	}
 	if err := scanner.Err(); err != nil {
-		return fmt.Errorf("rewriting: %w", err)
+		rerr = fmt.Errorf("rewriting: %w", err)
+		return
 	}
 	return nil
 }

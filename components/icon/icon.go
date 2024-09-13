@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	StyleBorder style.Style = 1
+	StyleBorder style.Style = 1 << 8
 )
 
 var Defaults = style.Defaults{

@@ -1,0 +1,15 @@
+package form
+
+templ C(def D) {
+	<form
+		id={ def.ID }
+		x-data="{
+      errors:{},
+      hasError(field) { return field in this.errors },
+      error(field) { return this.errors[field] },
+    }"
+		{ def.Attributes... }
+	>
+		{ children... }
+	</form>
+}
