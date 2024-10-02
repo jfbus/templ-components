@@ -306,7 +306,7 @@ func label(def D) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		if def.HideLabel {
+		if def.HideLabel != HideLabelNever {
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span class=\"sr-only\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
