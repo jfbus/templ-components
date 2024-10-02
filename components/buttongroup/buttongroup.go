@@ -17,7 +17,7 @@ var Defaults = style.Defaults{
 		},
 		"ButtonClass": {
 			style.Color("text-gray-900 bg-white border-gray-300 hover:bg-gray-100 focus:ring-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"),
-			style.Class("border-t border-b first:border first:rounded-s-lg last:border last:rounded-e-lg"),
+			style.Class("border-t border-b border-e first:border first:rounded-s-lg last:border-t last:border-b last:border-e last:rounded-e-lg"),
 		},
 	},
 }
@@ -25,7 +25,7 @@ var Defaults = style.Defaults{
 type D struct {
 	// Buttons is the list of buttons to display.
 	//playground:import:github.com/jfbus/templ-components/components/button
-	//playground:default:[]button.D{{Label:"A"},{Label:"B"},{Label:"C"}}
+	//playground:default:[]button.D{{Label:"A"},{Label:"B"},{Label:"C"},{Label:"D"}}
 	Buttons []button.D
 	// Size defines the buttons size (shortcut for Buttons.Size).
 	Size size.Size
