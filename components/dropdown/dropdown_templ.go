@@ -34,7 +34,7 @@ func C(def D) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div x-data=\"{\n            open: false,\n            toggle() {\n                this.open = !this.open\n            },\n            close() {\n                this.open = false\n            }\n        }\" x-id=\"[&#39;dropdown&#39;]\" @focusin.window=\"!$refs[$id(&#39;dropdown&#39;)].contains($event.target) &amp;&amp; close()\" @keydown.escape.stop=\"close()\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div x-data=\"{\n            open: false,\n            toggle() {\n                this.open = !this.open\n            },\n            close() {\n                this.open = false\n            }\n        }\" x-id=\"[&#39;dropdown&#39;]\" @keydown.escape.stop=\"close()\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
