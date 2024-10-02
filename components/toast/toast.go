@@ -2,12 +2,12 @@ package toast
 
 import (
 	"context"
-	"errors"
 	"net/http"
 	"time"
 
 	"github.com/jfbus/templ-components/components/icon"
 	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templ-components/components/toast/container"
 	"github.com/rs/xid"
 )
 
@@ -53,8 +53,8 @@ var Defaults = style.Defaults{
 
 type D struct {
 	_id string
-	// ContainerID is the ID of the container.C where the container will be added.
-	// You will have to add a toast container in your page.
+	// ContainerID is the ID of the container.C where the toast will be added.
+	//playground:default:"toasts"
 	ContainerID string
 	// Style defines the toast style.
 	Style style.Style
@@ -82,6 +82,13 @@ func (def *D) id() string {
 		def._id = xid.New().String()
 	}
 	return def._id
+}
+
+func (def D) containerID() string {
+	if def.ContainerID != "" {
+		return def.ContainerID
+	}
+	return container.DefaultID
 }
 
 func (def D) icon() string {
@@ -120,11 +127,8 @@ func (def D) closeDelayMS() int {
 // When using error status codes, do not forget to add your error codes to the list of
 // codes for which HTMX swaps the content - https://htmx.org/docs/#requests
 func Retarget(ctx context.Context, def D, w http.ResponseWriter, statusCode int) error {
-	if def.ContainerID == "" {
-		return errors.New("container id is required")
-	}
 	w.Header().Set("Content-Type", "text/html, charset=UTF-8")
-	w.Header().Set("HX-Retarget", "#"+def.ContainerID)
+	w.Header().Set("HX-Retarget", "#"+def.containerID())
 	w.Header().Set("HX-Reswap", "beforeend")
 	w.WriteHeader(statusCode)
 	return C(def).Render(ctx, w)
