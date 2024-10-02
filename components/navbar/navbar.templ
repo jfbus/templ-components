@@ -1,0 +1,11 @@
+package navbar
+
+templ C(def D) {
+	<nav class={ def.containerClass() }>
+		<div class={ def.class() }>
+			for _, s := range def.Sections {
+				@s
+			}
+		</div>
+	</nav>
+}
