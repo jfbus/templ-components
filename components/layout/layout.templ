@@ -1,0 +1,20 @@
+package layout
+
+import (
+"github.com/jfbus/templ-components/components/navbar"
+"github.com/jfbus/templ-components/components/sidebar"
+"github.com/jfbus/templ-components/components/toast/container"
+)
+
+templ C(def D) {
+<div x-data={def.state()}>
+if def.Navbar != nil {
+  @navbar.C(*def.Navbar)
+}
+if def.Sidebar != nil {
+  @sidebar.C(def.sidebar())
+}
+{ children... }
+@container.C(def.toasts())
+</div>
+}
