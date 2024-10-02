@@ -101,8 +101,8 @@ func trimSpaces(s string) string {
 // D defines a style as a list of Opt (Color/Class/Add/ReplaceXXX calls).
 type D []Opt
 
-func (ds D) apply(d d) d {
-	for _, opt := range ds {
+func (def D) apply(d d) d {
+	for _, opt := range def {
 		d = opt(d)
 	}
 	return d
@@ -112,6 +112,19 @@ type d struct {
 	Class string
 	Color string
 	Add   string
+}
+
+func (d d) String() string {
+	class := d.Class
+	if class != "" && d.Color != "" {
+		class += " "
+	}
+	class += d.Color
+	if class != "" && d.Add != "" {
+		class += " "
+	}
+	class += d.Add
+	return class
 }
 
 // Default finds the default style from Defaults.
@@ -126,20 +139,19 @@ func Default(defaults Defaults, style Style, k string) D {
 	return defs
 }
 
+func (def D) String() string {
+	return def.apply(d{}).String()
+}
+
+// WithDefault returns the D including defaults.
+func (def D) WithDefault(defaults Defaults, style Style, k string) D {
+	return append(Default(defaults, style, k), def...)
+}
+
 // CSSClass returns the CSS class string.
 func (def D) CSSClass(defaults Defaults, style Style, k string) string {
 	d := Default(defaults, style, k).apply(d{})
-	d = def.apply(d)
-	class := d.Class
-	if class != "" && d.Color != "" {
-		class += " "
-	}
-	class += d.Color
-	if class != "" && d.Add != "" {
-		class += " "
-	}
-	class += d.Add
-	return class
+	return def.apply(d).String()
 }
 
 // Delta returns all classes added by dst.
