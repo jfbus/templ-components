@@ -84,7 +84,7 @@ func C(def D) templ.Component {
 		templ_7745c5c3_Err = button.C(button.D{
 			Icon:      icon.X,
 			Label:     "Close",
-			HideLabel: true,
+			HideLabel: button.HideLabelAlways,
 			Size:      size.Normal,
 			Class: style.D{
 				style.Class("rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 inline-flex items-center justify-center"),
