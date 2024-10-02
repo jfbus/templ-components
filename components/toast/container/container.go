@@ -5,7 +5,7 @@ import "github.com/jfbus/templ-components/components/style"
 var Defaults = style.Defaults{
 	style.StyleDefault: {
 		"Class": {
-			style.Class("z-10 fixed top-0 left-0 m-2 space-y-2"),
+			style.Class("z-10 fixed top-0 right-0 m-2 space-y-2"),
 		},
 	},
 	StyleTopLeft: {
@@ -37,6 +37,8 @@ const (
 	StyleBottomRight style.Style = 1 << 11
 )
 
+var DefaultID = "toasts"
+
 type D struct {
 	ID    string
 	Style style.Style
@@ -44,7 +46,10 @@ type D struct {
 }
 
 func (def D) id() string {
-	return def.ID
+	if def.ID != "" {
+		return def.ID
+	}
+	return DefaultID
 }
 
 func (def D) class() string {
