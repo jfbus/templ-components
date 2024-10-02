@@ -17,7 +17,6 @@ templ C(def D) {
             }
         }"
 		x-id="['dropdown']"
-		@focusin.window="!$refs[$id('dropdown')].contains($event.target) && close()"
 		@keydown.escape.stop="close()"
 	>
 		@button.C(def.button())
