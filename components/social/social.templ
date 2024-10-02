@@ -1,0 +1,12 @@
+package social
+
+import "github.com/jfbus/templ-components/components/button"
+
+templ C(def D) {
+	@button.C(button.D{
+		Type:  button.A,
+		Style: button.StyleNoBorder,
+		Icon:  def.icon(),
+		Size:  def.Size,
+	})
+}
