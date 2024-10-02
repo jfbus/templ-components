@@ -1,0 +1,17 @@
+package checkboxgroup
+
+import (
+	"github.com/jfbus/templ-components/components/checkbox"
+	"github.com/jfbus/templ-components/components/form/validation/message"
+)
+
+templ C(def D) {
+	<div class={ def.containerClass() }>
+		for _, d := range def.radios() {
+			@checkbox.C(d)
+		}
+	</div>
+	if def.Message != nil {
+		@message.C(def.message())
+	}
+}

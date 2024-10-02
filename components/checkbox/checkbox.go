@@ -4,15 +4,7 @@ package checkbox
 import (
 	"github.com/a-h/templ"
 	"github.com/jfbus/templ-components/components/label"
-	"github.com/jfbus/templ-components/components/size"
 	"github.com/jfbus/templ-components/components/style"
-)
-
-const (
-	StyleBordered        style.Style = 2
-	StyleGrouped         style.Style = 4
-	StyleGroupedVertical style.Style = 8
-	StyleLabelOnly       style.Style = 16
 )
 
 // Defaults defines the default Color/Class values.
@@ -26,33 +18,12 @@ var Defaults = style.Defaults{
 			style.Class("ms-2 w-4 h-4 focus:ring-2 rounded"),
 		},
 	},
-	StyleBordered: {
-		"ContainerClass": {
-			style.Color("border-gray-200 dark:border-gray-700"),
-			style.Class("flex items-center ps-4 border rounded"),
+	style.StyleDisabled: {
+		"LabelClass": style.D{
+			style.ReplaceColor("text", "text-gray-400 dark:text-gray-500"),
 		},
-	},
-	StyleGrouped: {
-		"ContainerClass": {
-			style.Class("border-b rounded-t-lg last:border-0 flex items-center ps-3"),
-		},
-	},
-	StyleGroupedVertical: {
-		"ContainerClass": {
-			style.Class("border-b rounded-t-lg last:border-0 items-center ps-3"),
-		},
-	},
-	StyleLabelOnly: {
-		"ContainerClass": {
-			style.Class("inline-flex items-center justify-between"),
-		},
-		"InputClass": {
-			style.Color(""),
-			style.Class("hidden peer"),
-		},
-		"LabelClass": {
-			style.Class("border p-2 rounded-lg cursor-pointer"),
-			style.Color("text-gray-500 bg-white border-gray-200 dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"),
+		"InputClass": style.D{
+			style.Add("cursor-not-allowed"),
 		},
 	},
 }
@@ -63,8 +34,6 @@ type D struct {
 	ID string
 	// Name is the input name.
 	Name string
-	// Style is the input style.
-	Style style.Style
 	// Label is the input label (either a string, a label.D or a templ.Component).
 	//playground:edit:input
 	Label any
@@ -73,18 +42,25 @@ type D struct {
 	Checked bool
 	// Disabled disables the input.
 	Disabled bool
-	// Size defines the input size (size.S, size.Normal (default) or size.L).
-	Size size.Size
 	// ContainerClass overrides the class of the div container.
 	ContainerClass style.D
 	// InputClass overrides the class of the input tag.
 	InputClass style.D
+	// LabelClass overrides the class of the label tag.
+	LabelClass style.D
 	// Attributes stores additional attributes (e.g. HTMX attributes).
 	Attributes templ.Attributes
 }
 
+func (def D) style() style.Style {
+	if def.Disabled {
+		return style.StyleDefault | style.StyleDisabled
+	}
+	return style.StyleDefault
+}
+
 func (def D) label() label.D {
-	defaults := style.Default(Defaults, def.Style, "LabelClass")
+	defaults := def.LabelClass.WithDefault(Defaults, def.style(), "LabelClass")
 	switch l := def.Label.(type) {
 	case string:
 		return label.D{
@@ -117,9 +93,9 @@ func (def D) id() string {
 }
 
 func (def D) containerClass() string {
-	return def.ContainerClass.CSSClass(Defaults, def.Style, "ContainerClass")
+	return def.ContainerClass.CSSClass(Defaults, def.style(), "ContainerClass")
 }
 
 func (def D) inputClass() string {
-	return def.InputClass.CSSClass(Defaults, def.Style, "InputClass")
+	return def.InputClass.CSSClass(Defaults, def.style(), "InputClass")
 }
