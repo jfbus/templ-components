@@ -53,7 +53,7 @@ templ label(def D) {
 		@icon.C(icon.D{Icon: def.Icon, Size: def.iconSize(), Class: def.iconClass()})
 	}
 	if def.HideLabel != HideLabelNever {
-		<span class="sr-only">{ def.Label }</span>
+		<span class={ def.labelClass() }>{ def.Label }</span>
 	} else {
 		{ def.Label }
 	}
