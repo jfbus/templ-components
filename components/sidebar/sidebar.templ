@@ -1,0 +1,13 @@
+package sidebar
+
+templ C(def D) {
+	<aside class={ def.containerClass() } :class={ "{ '-translate-x-0':sidebar, '-translate-x-full':!sidebar }" } aria-label="Sidebar">
+		<div class={ def.class() }>
+			if def.Content != nil {
+				@def.Content
+			} else {
+				{ children... }
+			}
+		</div>
+	</aside>
+}
