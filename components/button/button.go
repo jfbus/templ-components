@@ -24,6 +24,14 @@ const (
 	StyleFullWidth   style.Style = 1 << 12
 )
 
+type HideLabel int
+
+const (
+	HideLabelNever = iota
+	HideLabelAlways
+	HideLabelSmall
+)
+
 // Defaults defines the default Color/Class values, and may be changed. They are overriden by D.Color/D.Class.
 var Defaults = style.Defaults{
 	style.StyleDefault: map[string]style.D{
@@ -60,6 +68,12 @@ var Defaults = style.Defaults{
 			style.Add("block w-full text-center"),
 		},
 	},
+	style.StyleDisabled: map[string]style.D{
+		"Button": {
+			style.ReplaceColor("bg", "bg-blue-400 dark:bg-blue-500"),
+			style.Add("cursor-not-allowed"),
+		},
+	},
 }
 
 // D is the button definition.
@@ -70,8 +84,8 @@ type D struct {
 	Type Type
 	// Label is the button label.
 	Label string
-	// HideLabel defines if the label is only available to screenreaders.
-	HideLabel bool
+	// HideLabel defines if the label is displayed or only available to screenreaders.
+	HideLabel HideLabel
 	// Style is the button style (Normal, Pill, Outline ou Pill|Outline).
 	Style style.Style
 	// Size defines the input size (size.XS, size.S, size.Normal (default) size.L or size.XL).
@@ -93,6 +107,13 @@ type D struct {
 	Attributes templ.Attributes
 }
 
+func (def D) style() style.Style {
+	if def.Disabled {
+		return def.Style | style.StyleDisabled
+	}
+	return def.Style
+}
+
 func (def D) buttonType() string {
 	if def.Type == "" {
 		return string(Button)
@@ -101,7 +122,7 @@ func (def D) buttonType() string {
 }
 
 func (def D) buttonClass() string {
-	class := def.Class.CSSClass(Defaults, def.Style, "Button")
+	class := def.Class.CSSClass(Defaults, def.style(), "Button")
 	switch {
 	case def.noLabel() && def.Size >= size.Normal:
 		class += " p-2.5 text-sm"
@@ -110,15 +131,15 @@ func (def D) buttonClass() string {
 	case def.noLabel():
 		class += " p-1.5 text-sm"
 	case def.Size == size.XS:
-		class += " px-3 py-2 text-xs"
+		class += " p-2 text-xs"
 	case def.Size == size.S:
-		class += " px-3 py-2 text-sm"
+		class += " p-2 text-sm"
 	case def.Size == size.L:
-		class += " px-5 py-3 text-base"
+		class += " p-3 text-base"
 	case def.Size == size.XL:
-		class += " px-6 py-3.5 text-base"
+		class += " p-3.5 text-base"
 	default:
-		class += " px-5 py-2.5 text-sm"
+		class += " p-2.5 text-sm"
 	}
 	if def.Icon != "" || def.Loader {
 		class += " inline-flex items-center justify-center"
@@ -127,11 +148,22 @@ func (def D) buttonClass() string {
 }
 
 func (def D) noLabel() bool {
-	return def.HideLabel || def.Label == ""
+	return def.HideLabel == HideLabelAlways || def.Label == ""
+}
+
+func (def D) labelClass() string {
+	switch def.HideLabel {
+	case HideLabelAlways:
+		return "sr-only"
+	case HideLabelSmall:
+		return "hidden sm:block"
+	default:
+		return ""
+	}
 }
 
 func (def D) iconSize() size.Size {
-	if def.HideLabel || def.Label == "" {
+	if def.HideLabel == HideLabelAlways || def.Label == "" {
 		return def.Size + 1
 	}
 	switch def.Size {
@@ -148,8 +180,15 @@ func (def D) iconClass() style.D {
 	if def.noLabel() {
 		return style.D{}
 	}
-	if def.IconPosition == position.End {
+	switch {
+	case def.HideLabel == HideLabelSmall && def.IconPosition == position.End:
+		return style.D{style.Class("sm:ms-2")}
+	case def.IconPosition == position.End:
 		return style.D{style.Class("ms-2")}
+	case def.HideLabel == HideLabelSmall:
+		return style.D{style.Class("sm:me-2")}
+	default:
+		return style.D{style.Class("me-2")}
+
 	}
-	return style.D{style.Class("me-2")}
 }
