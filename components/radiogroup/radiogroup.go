@@ -14,60 +14,53 @@ const (
 	StyleLabelOnly         style.Style = 1 << 12
 )
 
-var Defaults = style.Defaults{
-	style.StyleDefault: {
-		"RadioContainerClass": {
-			style.Class("flex items-center"),
+func init() {
+	style.SetDefaults(style.Defaults{
+		"radiogroup": {
+			StyleHorizontal: {
+				style.Set("flex flex-col sm:flex-row sm:gap-4"),
+			},
+			StyleBordered: {
+				style.Set("flex flex-col sm:flex-row gap-4"),
+			},
+			StyleGrouped: {
+				style.Set("border rounded-lg"),
+			},
+			StyleGroupedHorizontal: {
+				style.Set("sm:flex border rounded-lg"),
+			},
+			StyleLabelOnly: {
+				style.Set("inline-flex items-center justify-between"),
+			},
 		},
-		"RadioLabelClass": {
-			style.Add("py-3"),
+		"radiogroup/radio": {
+			style.StyleDefault: {
+				style.Set("flex items-center"),
+			},
+			StyleBordered: {
+				style.Set("flex items-center px-4 border rounded w-full"),
+			},
+			StyleGrouped: {
+				style.Set("flex items-center border-b last:border-b-0 px-4"),
+			},
+			StyleGroupedHorizontal: {
+				style.Set("flex items-center border-b sm:border-b-0 sm:border-r last:border-0 px-4 sm:w-full"),
+			},
 		},
-	},
-	StyleHorizontal: {
-		"ContainerClass": {
-			style.Class("flex flex-col sm:flex-row sm:gap-4"),
+		"radiogroup/radio/input": {
+			StyleLabelOnly: {
+				style.Set("hidden peer"),
+			},
 		},
-	},
-	StyleBordered: {
-		"RadioContainerClass": {
-			style.Class("flex items-center px-4 border rounded w-full"),
-			style.Color("border-gray-200 dark:border-gray-700"),
+		"radiogroup/radio/label": {
+			style.StyleDefault: {
+				style.Add("py-3"),
+			},
+			StyleLabelOnly: {
+				style.Set("border p-2 rounded-lg cursor-pointer"),
+			},
 		},
-		"ContainerClass": {
-			style.Class("flex flex-col sm:flex-row gap-4"),
-		},
-	},
-	StyleGrouped: {
-		"ContainerClass": {
-			style.Class("border rounded-lg"),
-			style.Color("border-gray-200 dark:bg-gray-700 dark:border-gray-600"),
-		},
-		"RadioContainerClass": {
-			style.Class("flex items-center border-b last:border-b-0 px-4"),
-		},
-	},
-	StyleGroupedHorizontal: {
-		"ContainerClass": {
-			style.Class("sm:flex border rounded-lg"),
-			style.Color("border-gray-200 dark:bg-gray-700 dark:border-gray-600"),
-		},
-		"RadioContainerClass": {
-			style.Class("flex items-center border-b sm:border-b-0 sm:border-r last:border-0 px-4 sm:w-full"),
-		},
-	},
-	StyleLabelOnly: {
-		"RadioContainerClass": {
-			style.Class("inline-flex items-center justify-between"),
-		},
-		"RadioInputClass": {
-			style.Color(""),
-			style.Class("hidden peer"),
-		},
-		"RadioLabelClass": {
-			style.Class("border p-2 rounded-lg cursor-pointer"),
-			style.Color("text-gray-500 bg-white border-gray-200 dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"),
-		},
-	},
+	})
 }
 
 type D struct {
@@ -95,16 +88,19 @@ type D struct {
 }
 
 func (def D) containerClass() string {
-	return def.ContainerClass.CSSClass(Defaults, def.Style, "ContainerClass")
+	return def.ContainerClass.CSSClass(def.Style, "radiogroup")
 }
 
 func (def D) radios() []radio.D {
+	ric := def.RadioInputClass.WithDefault(def.Style, "radiogroup/radio/input")
+	rcc := def.RadioContainerClass.WithDefault(def.Style, "radiogroup/radio")
+	rlc := def.RadioLabelClass.WithDefault(def.Style, "radiogroup/radio/label")
 	for i := range def.Radios {
 		def.Radios[i].ID = def.Name + "-" + def.Radios[i].Value
 		def.Radios[i].Name = def.Name
-		def.Radios[i].InputClass = append(def.RadioInputClass.WithDefault(Defaults, def.Style, "RadioInputClass"), def.Radios[i].InputClass...)
-		def.Radios[i].ContainerClass = append(def.RadioContainerClass.WithDefault(Defaults, def.Style, "RadioContainerClass"), def.Radios[i].ContainerClass...)
-		def.Radios[i].LabelClass = append(def.RadioLabelClass.WithDefault(Defaults, def.Style, "RadioLabelClass"), def.Radios[i].LabelClass...)
+		def.Radios[i].InputClass = append(ric, def.Radios[i].InputClass...)
+		def.Radios[i].ContainerClass = append(rcc, def.Radios[i].ContainerClass...)
+		def.Radios[i].LabelClass = append(rlc, def.Radios[i].LabelClass...)
 	}
 	return def.Radios
 }

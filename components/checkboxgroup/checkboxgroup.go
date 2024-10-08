@@ -14,60 +14,53 @@ const (
 	StyleLabelOnly         style.Style = 1 << 12
 )
 
-var Defaults = style.Defaults{
-	style.StyleDefault: {
-		"CheckboxContainerClass": {
-			style.Class("flex items-center"),
+func init() {
+	style.SetDefaults(style.Defaults{
+		"checkboxgroup": {
+			StyleHorizontal: {
+				style.Set("flex flex-col sm:flex-row sm:gap-4"),
+			},
+			StyleBordered: {
+				style.Set("flex flex-col sm:flex-row sm:gap-4"),
+			},
+			StyleGrouped: {
+				style.Set("border rounded-lg"),
+			},
+			StyleGroupedHorizontal: {
+				style.Set("sm:flex border rounded-lg"),
+			},
+			StyleLabelOnly: {
+				style.Set("inline-flex items-center justify-between"),
+			},
 		},
-		"CheckboxLabelClass": {
-			style.Add("py-3"),
+		"checkboxgroup/checkbox": {
+			style.StyleDefault: {
+				style.Set("flex items-center"),
+			},
+			StyleBordered: {
+				style.Set("flex items-center px-4 border rounded w-full"),
+			},
+			StyleGrouped: {
+				style.Set("flex items-center border-b last:border-b-0 px-4"),
+			},
+			StyleGroupedHorizontal: {
+				style.Set("flex items-center border-b sm:border-b-0 sm:border-r last:border-0 px-4 sm:w-full"),
+			},
 		},
-	},
-	StyleHorizontal: {
-		"ContainerClass": {
-			style.Class("flex flex-col sm:flex-row sm:gap-4"),
+		"checkboxgroup/checkbox/input": {
+			StyleLabelOnly: {
+				style.Set("hidden peer"),
+			},
 		},
-	},
-	StyleBordered: {
-		"CheckboxContainerClass": {
-			style.Class("flex items-center px-4 border rounded w-full"),
-			style.Color("border-gray-200 dark:border-gray-700"),
+		"checkboxgroup/checkbox/label": {
+			style.StyleDefault: {
+				style.Add("py-3"),
+			},
+			StyleLabelOnly: {
+				style.Set("border p-2 rounded-lg cursor-pointer"),
+			},
 		},
-		"ContainerClass": {
-			style.Class("flex flex-col sm:flex-row sm:gap-4"),
-		},
-	},
-	StyleGrouped: {
-		"ContainerClass": {
-			style.Class("border rounded-lg"),
-			style.Color("border-gray-200 dark:bg-gray-700 dark:border-gray-600"),
-		},
-		"CheckboxContainerClass": {
-			style.Class("flex items-center border-b last:border-b-0 px-4"),
-		},
-	},
-	StyleGroupedHorizontal: {
-		"ContainerClass": {
-			style.Class("sm:flex border rounded-lg"),
-			style.Color("border-gray-200 dark:bg-gray-700 dark:border-gray-600"),
-		},
-		"CheckboxContainerClass": {
-			style.Class("flex items-center border-b sm:border-b-0 sm:border-r last:border-0 px-4 sm:w-full"),
-		},
-	},
-	StyleLabelOnly: {
-		"CheckboxContainerClass": {
-			style.Class("inline-flex items-center justify-between"),
-		},
-		"CheckboxInputClass": {
-			style.Color(""),
-			style.Class("hidden peer"),
-		},
-		"CheckboxLabelClass": {
-			style.Class("border p-2 rounded-lg cursor-pointer"),
-			style.Color("text-gray-500 bg-white border-gray-200 dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"),
-		},
-	},
+	})
 }
 
 type D struct {
@@ -95,16 +88,19 @@ type D struct {
 }
 
 func (def D) containerClass() string {
-	return def.ContainerClass.CSSClass(Defaults, def.Style, "ContainerClass")
+	return def.ContainerClass.CSSClass(def.Style, "checkboxgroup")
 }
 
 func (def D) radios() []checkbox.D {
+	ccc := def.CheckboxContainerClass.WithDefault(def.Style, "checkboxgroup/checkbox")
+	cic := def.CheckboxInputClass.WithDefault(def.Style, "checkboxgroup/checkbox/input")
+	clc := def.CheckboxLabelClass.WithDefault(def.Style, "checkboxgroup/checkbox/label")
 	for i := range def.Checkboxes {
 		def.Checkboxes[i].ID = def.Name + "-" + def.Checkboxes[i].Value
 		def.Checkboxes[i].Name = def.Name
-		def.Checkboxes[i].InputClass = append(def.CheckboxInputClass.WithDefault(Defaults, def.Style, "CheckboxInputClass"), def.Checkboxes[i].InputClass...)
-		def.Checkboxes[i].ContainerClass = append(def.CheckboxContainerClass.WithDefault(Defaults, def.Style, "CheckboxContainerClass"), def.Checkboxes[i].ContainerClass...)
-		def.Checkboxes[i].LabelClass = append(def.CheckboxLabelClass.WithDefault(Defaults, def.Style, "CheckboxLabelClass"), def.Checkboxes[i].LabelClass...)
+		def.Checkboxes[i].ContainerClass = append(ccc, def.Checkboxes[i].ContainerClass...)
+		def.Checkboxes[i].InputClass = append(cic, def.Checkboxes[i].InputClass...)
+		def.Checkboxes[i].LabelClass = append(clc, def.Checkboxes[i].LabelClass...)
 	}
 	return def.Checkboxes
 }

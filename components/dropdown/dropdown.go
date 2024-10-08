@@ -7,17 +7,19 @@ import (
 	"github.com/jfbus/templ-components/components/style"
 )
 
-var Defaults = style.Defaults{
-	style.StyleDefault: {
-		"Class": {
-			style.Class("absolute z-10 divide-y rounded-lg shadow w-44 mt-2"),
-			style.Color("bg-white divide-gray-100 dark:bg-gray-700 dark:divide-gray-600 mt-2"),
+func init() {
+	style.SetDefaults(style.Defaults{
+		"dropdown": {
+			style.StyleDefault: {
+				style.Set("absolute z-10 divide-y rounded-lg border shadow w-44 mt-2"),
+			},
 		},
-		"LinkClass": {
-			style.Class("block px-4 py-2"),
-			style.Color("hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"),
+		"dropdown/link": {
+			style.StyleDefault: {
+				style.Set("block px-4 py-2"),
+			},
 		},
-	},
+	})
 }
 
 type D struct {
@@ -42,11 +44,11 @@ func (def D) button() button.D {
 }
 
 func (def D) class() string {
-	return def.Class.CSSClass(Defaults, style.StyleDefault, "Class")
+	return def.Class.CSSClass(style.StyleDefault, "dropdown")
 }
 
 func (def D) links() [][]a.D {
-	lc := append(Defaults[style.StyleDefault]["LinkClass"], def.LinkClass...)
+	lc := def.LinkClass.WithDefault(style.StyleDefault, "dropdown/link")
 	for i := range def.Links {
 		for j := range def.Links[i] {
 			def.Links[i][j].Class = append(lc, def.Links[i][j].Class...)

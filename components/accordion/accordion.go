@@ -51,8 +51,8 @@ func (def D) defaultState() string {
 func (def D) children() []element.D {
 	for i := range def.Children {
 		def.Children[i].ID = def.ID + strconv.Itoa(i+1)
-		def.Children[i].TitleClass = def.TitleClass
-		def.Children[i].ContentClass = def.ContentClass
+		def.Children[i].TitleClass = append(def.TitleClass, def.Children[i].TitleClass...)
+		def.Children[i].ContentClass = append(def.ContentClass, def.Children[i].ContentClass...)
 	}
 	return def.Children
 }

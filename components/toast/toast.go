@@ -24,31 +24,19 @@ const (
 	CloseAuto
 )
 
-var Defaults = style.Defaults{
-	style.StyleDefault: {
-		"ContainerClass": {
-			style.Color("text-gray-500 bg-white dark:text-gray-400 dark:bg-gray-800"),
-			style.Class("flex items-center w-full max-w-xs p-4 rounded-lg shadow"),
+func init() {
+	style.SetDefaults(style.Defaults{
+		"toast": {
+			style.StyleDefault: {
+				style.Set("flex items-center w-full max-w-xs p-4 rounded-lg shadow"),
+			},
 		},
-		"IconClass": {
-			style.Class("inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg"),
+		"toast/icon": {
+			style.StyleDefault: {
+				style.Set("inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg"),
+			},
 		},
-	},
-	StyleOK: {
-		"IconClass": {
-			style.Color("text-green-500 bg-green-100 dark:bg-green-800 dark:text-green-200"),
-		},
-	},
-	StyleWarning: {
-		"IconClass": {
-			style.Color("text-orange-500 bg-orange-100 dark:bg-orange-700 dark:text-orange-200"),
-		},
-	},
-	StyleError: {
-		"IconClass": {
-			style.Color("text-red-500 bg-red-100 dark:bg-red-800 dark:text-red-200"),
-		},
-	},
+	})
 }
 
 type D struct {
@@ -107,11 +95,11 @@ func (def D) icon() string {
 }
 
 func (def D) containerClass() string {
-	return def.ContainerClass.CSSClass(Defaults, def.Style, "ContainerClass")
+	return def.ContainerClass.CSSClass(def.Style, "toast")
 }
 
 func (def D) iconClass() string {
-	return def.IconClass.CSSClass(Defaults, def.Style, "IconClass")
+	return def.IconClass.CSSClass(def.Style, "toast/icon")
 }
 
 func (def D) closeDelayMS() int {

@@ -13,16 +13,14 @@ const (
 	StyleBorder style.Style = 1 << 8
 )
 
-var Defaults = style.Defaults{
-	style.StyleDefault: {
-		"Class": {},
-	},
-	StyleBorder: {
-		"Class": {
-			style.Color("bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"),
-			style.Class("p-1 rounded-md border"),
+func init() {
+	style.SetDefaults(style.Defaults{
+		"icon": {
+			StyleBorder: {
+				style.Set("p-1 rounded-md border"),
+			},
 		},
-	},
+	})
 }
 
 // D is the definition of icons.
@@ -40,6 +38,6 @@ type D struct {
 }
 
 func (def D) class() string {
-	return def.Class.CSSClass(Defaults, def.Style, "Class") +
+	return def.Class.CSSClass(def.Style, "icon") +
 		" " + def.Size.Class()
 }

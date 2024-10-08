@@ -7,25 +7,22 @@ import (
 	"github.com/jfbus/templ-components/components/style"
 )
 
-// Defaults defines the default Color/Class.
-var Defaults = style.Defaults{
-	style.StyleDefault: {
-		"ContainerClass": style.D{
-			style.Class("flex items-center"),
+func init() {
+	style.SetDefaults(style.Defaults{
+		"radio": {
+			style.StyleDefault: {
+				style.Set("flex items-center"),
+			},
+			style.StyleDisabled: {
+				style.Add("cursor-not-allowed"),
+			},
 		},
-		"InputClass": style.D{
-			style.Class("w-4 h-4 focus:ring-2"),
-			style.Color("text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"),
+		"radio/input": {
+			style.StyleDefault: {
+				style.Set("w-4 h-4 focus:ring-2"),
+			},
 		},
-	},
-	style.StyleDisabled: {
-		"LabelClass": style.D{
-			style.ReplaceColor("text", "text-gray-400 dark:text-gray-500"),
-		},
-		"InputClass": style.D{
-			style.Add("cursor-not-allowed"),
-		},
-	},
+	})
 }
 
 // D is the definition for radio fields.
@@ -59,7 +56,7 @@ func (def D) style() style.Style {
 }
 
 func (def D) label() label.D {
-	defaults := def.LabelClass.WithDefault(Defaults, def.style(), "LabelClass")
+	defaults := def.LabelClass.WithDefault(def.style(), "radio/label")
 	switch l := def.Label.(type) {
 	case string:
 		return label.D{
@@ -92,9 +89,9 @@ func (def D) id() string {
 }
 
 func (def D) containerClass() string {
-	return def.ContainerClass.CSSClass(Defaults, def.style(), "ContainerClass")
+	return def.ContainerClass.CSSClass(def.style(), "radio")
 }
 
 func (def D) inputClass() string {
-	return def.InputClass.CSSClass(Defaults, def.style(), "InputClass")
+	return def.InputClass.CSSClass(def.style(), "radio/input")
 }

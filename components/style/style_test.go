@@ -17,12 +17,12 @@ func TestDefaults(t *testing.T) {
 	defaults := style.Defaults{
 		style.StyleDefault: {
 			"Test": {
-				style.Class("class"), style.Color("color"),
+				style.Set("class"), style.Color("color"),
 			},
 		},
 		StyleOverrideClass: {
 			"Test": {
-				style.Class("override"),
+				style.Set("override"),
 			},
 		},
 		StyleOverrideColor: {
@@ -46,12 +46,12 @@ func TestOverrides(t *testing.T) {
 	defaults := style.Defaults{
 		style.StyleDefault: {
 			"Test": {
-				style.Class("class"), style.Color("color"),
+				style.Set("class"), style.Color("color"),
 			},
 		},
 	}
 	{
-		over := style.D{style.Class("override")}
+		over := style.D{style.Set("override")}
 		assert.Equal(t, "override color", over.CSSClass(defaults, style.StyleDefault, "Test"))
 	}
 	{
@@ -68,7 +68,7 @@ func TestReplace(t *testing.T) {
 	defaults := style.Defaults{
 		style.StyleDefault: {
 			"Test": {
-				style.Class("text-normal mb-4 hover:mb-2 w-2 dark:focus:mb-5 emb-2 mbt-2"), style.Color("text-normal mb-4 w-2"),
+				style.Set("text-normal mb-4 hover:mb-2 w-2 dark:focus:mb-5 emb-2 mbt-2"), style.Color("text-normal mb-4 w-2"),
 			},
 		},
 	}

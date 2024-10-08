@@ -154,7 +154,7 @@ func c(def D) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = icon.C(icon.D{Icon: def.icon(), Class: style.D{style.Class("w-4 h-4")}}).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = icon.C(icon.D{Icon: def.icon(), Class: style.D{style.Set("w-4 h-4")}}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -191,9 +191,9 @@ func c(def D) templ.Component {
 				Icon:      icon.X,
 				Label:     "Close",
 				HideLabel: button.HideLabelAlways,
+				Style:     button.StyleNoBorder,
 				Class: style.D{
-					style.Class("ms-auto -mx-1.5 -my-1.5 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 inline-flex items-center justify-center h-8 w-8"),
-					style.Color("bg-white text-gray-400 hover:text-gray-900 focus:ring-gray-300 hover:bg-gray-100 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"),
+					style.Set("ms-auto -mx-1.5 -my-1.5 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 inline-flex items-center justify-center h-8 w-8"),
 				},
 				Attributes: templ.Attributes{
 					"@click": "$refs." + def.id() + ".remove()",

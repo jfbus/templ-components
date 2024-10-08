@@ -25,7 +25,7 @@ func (def D) button() button.D {
 	return button.D{
 		Icon:  icon.Menu,
 		Style: button.StyleOutline,
-		Class: style.D{style.Class("md:hidden")},
+		Class: style.D{style.Set("md:hidden")},
 		Size:  size.L,
 		Attributes: templ.Attributes{
 			"@click.stop": "sidebar = !sidebar",

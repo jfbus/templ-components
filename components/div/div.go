@@ -5,12 +5,6 @@ import (
 	"github.com/jfbus/templ-components/components/style"
 )
 
-var Defaults = style.Defaults{
-	style.StyleDefault: {
-		"Class": {},
-	},
-}
-
 type D struct {
 	//playground:import:github.com/jfbus/templ-components/components/button
 	//playground:default:button.C(button.D{Label:"Button"})
@@ -19,5 +13,5 @@ type D struct {
 }
 
 func (def D) class() string {
-	return style.Default(Defaults, style.StyleDefault, "Class").String()
+	return def.Class.CSSClass(style.StyleDefault, "div")
 }

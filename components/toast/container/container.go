@@ -3,29 +3,21 @@ package container
 import "github.com/jfbus/templ-components/components/style"
 
 var Defaults = style.Defaults{
-	style.StyleDefault: {
-		"Class": {
-			style.Class("z-10 fixed top-0 right-0 m-2 space-y-2"),
+	"toast/container": {
+		style.StyleDefault: {
+			style.Set("z-10 fixed top-0 right-0 m-2 space-y-2"),
 		},
-	},
-	StyleTopLeft: {
-		"Class": {
-			style.Class("z-10 fixed top-0 left-0 m-2 space-y-2"),
+		StyleTopLeft: {
+			style.Set("z-10 fixed top-0 left-0 m-2 space-y-2"),
 		},
-	},
-	StyleTopRight: {
-		"Class": {
-			style.Class("z-10 fixed top-0 right-0 m-2 space-y-2"),
+		StyleTopRight: {
+			style.Set("z-10 fixed top-0 right-0 m-2 space-y-2"),
 		},
-	},
-	StyleBottomLeft: {
-		"Class": {
-			style.Class("z-10 fixed bottom-0 left-0 m-2 space-y-2"),
+		StyleBottomLeft: {
+			style.Set("z-10 fixed bottom-0 left-0 m-2 space-y-2"),
 		},
-	},
-	StyleBottomRight: {
-		"Class": {
-			style.Class("z-10 fixed bottom-0 right-0 m-2 space-y-2"),
+		StyleBottomRight: {
+			style.Set("z-10 fixed bottom-0 right-0 m-2 space-y-2"),
 		},
 	},
 }
@@ -53,5 +45,5 @@ func (def D) id() string {
 }
 
 func (def D) class() string {
-	return def.Class.CSSClass(Defaults, def.Style, "Class")
+	return def.Class.CSSClass(def.Style, "toast/container")
 }

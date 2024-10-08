@@ -18,10 +18,11 @@ const (
 
 const (
 	StylePill        style.Style = 1 << 8
-	StyleOutline     style.Style = 1 << 9
-	StyleOutlinePill style.Style = 1 << 10
-	StyleNoBorder    style.Style = 1 << 11
-	StyleFullWidth   style.Style = 1 << 12
+	StyleAlternative style.Style = 1 << 9
+	StyleOutline     style.Style = 1 << 10
+	StyleOutlinePill style.Style = 1 << 11
+	StyleNoBorder    style.Style = 1 << 12
+	StyleFullWidth   style.Style = 1 << 13
 )
 
 type HideLabel int
@@ -32,48 +33,32 @@ const (
 	HideLabelSmall
 )
 
-// Defaults defines the default Color/Class values, and may be changed. They are overriden by D.Color/D.Class.
-var Defaults = style.Defaults{
-	style.StyleDefault: map[string]style.D{
-		"Button": {
-			style.Color("text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"),
-			style.Class("rounded-lg font-medium focus:ring-4 focus:outline-none"),
+func init() {
+	style.SetDefaults(style.Defaults{
+		"button": {
+			style.StyleDefault: {
+				style.Set("rounded-lg font-medium focus:ring-4 focus:outline-none"),
+			},
+			StylePill: {
+				style.Set("rounded-full font-medium focus:ring-4 focus:outline-none"),
+			},
+			StyleAlternative: {
+				style.Set("rounded-lg font-medium focus:ring-4 focus:outline-none border"),
+			},
+			StyleOutline: {
+				style.Set("rounded-lg font-medium focus:ring-4 focus:outline-none border"),
+			},
+			StyleOutlinePill: {
+				style.Set("rounded-full font-medium focus:ring-4 focus:outline-none border"),
+			},
+			StyleFullWidth: {
+				style.Add("block w-full text-center"),
+			},
+			style.StyleDisabled: {
+				style.Add("cursor-not-allowed"),
+			},
 		},
-	},
-	StylePill: map[string]style.D{
-		"Button": {
-			style.Color("text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"),
-			style.Class("rounded-full font-medium focus:ring-4 focus:outline-none"),
-		},
-	},
-	StyleOutline: map[string]style.D{
-		"Button": {
-			style.Color("text-gray-900 bg-white border-gray-300 hover:bg-gray-100 focus:ring-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"),
-			style.Class("rounded-lg font-medium focus:ring-4 focus:outline-none border"),
-		},
-	},
-	StyleOutlinePill: map[string]style.D{
-		"Button": {
-			style.Color("text-gray-900 bg-white border-gray-300 hover:bg-gray-100 focus:ring-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"),
-			style.Class("rounded-full font-medium focus:ring-4 focus:outline-none border"),
-		},
-	},
-	StyleNoBorder: map[string]style.D{
-		"Button": {
-			style.Color("text-gray-900 bg-white hover:bg-gray-100 focus:ring-gray-100 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"),
-		},
-	},
-	StyleFullWidth: map[string]style.D{
-		"Button": {
-			style.Add("block w-full text-center"),
-		},
-	},
-	style.StyleDisabled: map[string]style.D{
-		"Button": {
-			style.ReplaceColor("bg", "bg-blue-400 dark:bg-blue-500"),
-			style.Add("cursor-not-allowed"),
-		},
-	},
+	})
 }
 
 // D is the button definition.
@@ -122,7 +107,7 @@ func (def D) buttonType() string {
 }
 
 func (def D) buttonClass() string {
-	class := def.Class.CSSClass(Defaults, def.style(), "Button")
+	class := def.Class.CSSClass(def.style(), "button")
 	switch {
 	case def.noLabel() && def.Size >= size.Normal:
 		class += " p-2.5 text-sm"
@@ -182,13 +167,13 @@ func (def D) iconClass() style.D {
 	}
 	switch {
 	case def.HideLabel == HideLabelSmall && def.IconPosition == position.End:
-		return style.D{style.Class("sm:ms-2")}
+		return style.D{style.Set("sm:ms-2")}
 	case def.IconPosition == position.End:
-		return style.D{style.Class("ms-2")}
+		return style.D{style.Set("ms-2")}
 	case def.HideLabel == HideLabelSmall:
-		return style.D{style.Class("sm:me-2")}
+		return style.D{style.Set("sm:me-2")}
 	default:
-		return style.D{style.Class("me-2")}
+		return style.D{style.Set("me-2")}
 
 	}
 }

@@ -12,41 +12,32 @@ const (
 	StyleAddHighlightHover style.Style = 1 << 10
 )
 
-// Defaults are default CSS classes for each style. The are overriden by D.TableClass/D.HeaderClass/D.BodyClass/D.CellClass.
-var Defaults = style.Defaults{
-	style.StyleDefault: {
-		"Class": {
-			style.Class("w-full text-sm text-left"),
+func init() {
+	style.SetDefaults(style.Defaults{
+		"table": {
+			style.StyleDefault: {
+				style.Set("w-full text-sm text-left"),
+			},
 		},
-		"HeaderClass": {
-			style.Class("text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"),
+		"table/header": {
+			style.StyleDefault: {
+				style.Set("text-xs"),
+			},
 		},
-		"BodyClass": {
-			style.Class("bg-white border-b dark:bg-gray-800 dark:border-gray-700"),
+		"table/row": {
+			style.StyleDefault: {
+				style.Set("border-b"),
+			},
+			StyleNoBorder: {
+				style.Set(""),
+			},
 		},
-		"CellClass": {
-			style.Class("px-6 py-4"),
+		"table/cell": {
+			style.StyleDefault: {
+				style.Set("px-6 py-4"),
+			},
 		},
-	},
-	StyleStripedRows: {
-		"BodyClass": {
-			style.Class("odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"),
-		},
-	},
-	StyleNoBorder: {
-		"HeaderClass": {
-			style.Class("text-gray-900 uppercase dark:text-gray-400"),
-		},
-		"BodyClass": {
-			style.Class("text-gray-900 whitespace-nowrap dark:text-white"),
-		},
-	},
-	StyleAddHighlightHover: {
-		// This style is added to the previous class or to D.Class
-		"BodyClass": {
-			style.Class("hover:bg-gray-50 dark:hover:bg-gray-600"),
-		},
-	},
+	})
 }
 
 // D is the table definition.
@@ -75,7 +66,7 @@ type D struct {
 }
 
 func (def D) cellClass() string {
-	return def.CellClass.CSSClass(Defaults, def.Style, "CellClass")
+	return def.CellClass.CSSClass(def.Style, "table/cell")
 }
 
 func (def D) rows() []row.D {
@@ -90,7 +81,7 @@ func (def D) rows() []row.D {
 }
 
 func (def D) tableClass() string {
-	return def.Class.CSSClass(Defaults, def.Style, "Class")
+	return def.Class.CSSClass(def.Style, "table")
 }
 
 func (def D) header() row.D {
@@ -109,11 +100,11 @@ func (def D) headerClass() string {
 	if def.Header == nil {
 		return ""
 	}
-	return def.HeaderClass.CSSClass(Defaults, def.Style, "HeaderClass")
+	return def.HeaderClass.CSSClass(def.Style, "table/header")
 }
 
 func (def D) trClass() string {
-	return def.BodyClass.CSSClass(Defaults, def.Style, "BodyClass")
+	return def.BodyClass.CSSClass(def.Style, "table/row")
 }
 
 func (def D) footer() row.D {
@@ -131,5 +122,5 @@ func (def D) footerClass() string {
 	if def.Footer == nil {
 		return ""
 	}
-	return def.FooterClass.CSSClass(Defaults, def.Style, "FooterClass")
+	return def.FooterClass.CSSClass(def.Style, "table/footer")
 }

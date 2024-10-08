@@ -22,6 +22,7 @@ type D struct {
 	Toasts       *container.D
 	State        map[string]string
 	NavbarHeight NavbarHeight
+	Class        style.D
 }
 
 func (def D) state() string {
@@ -51,4 +52,8 @@ func (def D) toasts() container.D {
 	d := *def.Toasts
 	d.Class = append(d.Class, style.Add(def.NavbarHeight.paddingTop()))
 	return d
+}
+
+func (def D) class() string {
+	return def.Class.CSSClass(style.StyleDefault, "layout")
 }

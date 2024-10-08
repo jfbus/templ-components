@@ -4,15 +4,17 @@ package textarea
 import (
 	"github.com/a-h/templ"
 	"github.com/jfbus/templ-components/components/form/validation/message"
-	"github.com/jfbus/templ-components/components/input"
+	_ "github.com/jfbus/templ-components/components/input"
 	"github.com/jfbus/templ-components/components/label"
 	"github.com/jfbus/templ-components/components/position"
 	"github.com/jfbus/templ-components/components/size"
 	"github.com/jfbus/templ-components/components/style"
 )
 
-// Defaults defines no defaults, you can set them, otherwise, input.Defaults are used.
-var Defaults = input.Defaults
+func init() {
+	style.CopyDefaults("input/input", "textarea/input")
+	style.CopyDefaults("input/icon", "textarea/icon")
+}
 
 // D is the definition for textarea fields.
 type D struct {
@@ -59,8 +61,8 @@ func (def D) style() style.Style {
 }
 
 func (def D) iconClass() string {
-	def.IconClass = append(def.IconClass, style.ReplaceClass("items-center", "items-top"))
-	class := def.IconClass.CSSClass(Defaults, def.style(), "IconClass")
+	def.IconClass = append(def.IconClass, style.Replace("items-center", "items-top"))
+	class := def.IconClass.CSSClass(def.style(), "textarea/icon")
 	switch def.Size {
 	case size.S:
 		class += " pt-2"
@@ -87,7 +89,7 @@ func (def D) iconSize() size.Size {
 }
 
 func (def D) inputClass() string {
-	class := def.Class.CSSClass(Defaults, def.style(), "Class")
+	class := def.Class.CSSClass(def.style(), "textarea/input")
 	switch def.Size {
 	case size.S:
 		class += " p-2 text-xs"

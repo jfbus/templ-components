@@ -5,16 +5,16 @@ package selectfield
 import (
 	"github.com/a-h/templ"
 	"github.com/jfbus/templ-components/components/form/validation/message"
-	"github.com/jfbus/templ-components/components/input"
+	_ "github.com/jfbus/templ-components/components/input"
 	"github.com/jfbus/templ-components/components/label"
 	"github.com/jfbus/templ-components/components/selectfield/option"
 	"github.com/jfbus/templ-components/components/size"
 	"github.com/jfbus/templ-components/components/style"
 )
 
-// Defaults defines the default CSS classes for select.
-// If no values are defined, input.Defaults is used.
-var Defaults = input.Defaults
+func init() {
+	style.CopyDefaults("input/input", "select")
+}
 
 // D is the select definition.
 type D struct {
@@ -78,7 +78,7 @@ func (def D) label() label.D {
 }
 
 func (def D) inputClass() string {
-	class := def.Class.CSSClass(Defaults, def.style(), "Class")
+	class := def.Class.CSSClass(def.style(), "select")
 	switch def.Size {
 	case size.S:
 		class += " p-2 text-xs"

@@ -5,12 +5,6 @@ import (
 	"github.com/jfbus/templ-components/components/style"
 )
 
-var Defaults = style.Defaults{
-	style.StyleDefault: {
-		"Class": {},
-	},
-}
-
 type D struct {
 	Href       string
 	Text       string
@@ -19,5 +13,5 @@ type D struct {
 }
 
 func (def D) class() string {
-	return def.Class.CSSClass(Defaults, style.StyleDefault, "Class")
+	return def.Class.CSSClass(style.StyleDefault, "a")
 }

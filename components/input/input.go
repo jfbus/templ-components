@@ -10,8 +10,6 @@ import (
 	"github.com/jfbus/templ-components/components/style"
 )
 
-const ()
-
 type Type string
 
 const (
@@ -22,40 +20,22 @@ const (
 	TypeURL      Type = "url"
 )
 
-// Defaults defines the default Color/Class.
-var Defaults = style.Defaults{
-	style.StyleDefault: {
-		"Class": {
-			style.Color("bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"),
-			style.Class("block w-full border rounded-lg"),
+func init() {
+	style.SetDefaults(style.Defaults{
+		"input/input": {
+			style.StyleDefault: {
+				style.Set("block w-full border rounded-lg"),
+			},
+			style.StyleDisabled: {
+				style.Add("cursor-not-allowed"),
+			},
 		},
-		"ContainerClass": {},
-		"IconClass": {
-			style.Class("absolute inset-y-0 flex items-center pointer-events-none"),
+		"input/icon": {
+			style.StyleDefault: {
+				style.Set("absolute inset-y-0 flex items-center pointer-events-none"),
+			},
 		},
-	},
-	style.StyleDisabled: {
-		"Class": {
-			style.ReplaceColor("bg", "bg-gray-100 dark:bg-gray-700"),
-			style.Add("cursor-not-allowed"),
-		},
-	},
-	style.StyleValid: {
-		"Class": {
-			style.Color("bg-green-50 border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500"),
-		},
-		"IconClass": {
-			style.Color("text-green-700 dark:text-green-500"),
-		},
-	},
-	style.StyleInvalid: {
-		"Class": {
-			style.Add("bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500"),
-		},
-		"IconClass": {
-			style.Color("text-red-700 dark:text-red-500"),
-		},
-	},
+	})
 }
 
 // D is the definition for input fields.
@@ -161,7 +141,7 @@ func (def D) inputType() string {
 }
 
 func (def D) iconClass() string {
-	class := def.IconClass.CSSClass(Defaults, def.style(), "IconClass")
+	class := def.IconClass.CSSClass(def.style(), "input/icon")
 	switch {
 	case def.Icon == "":
 		return ""
@@ -180,7 +160,7 @@ func (def D) iconSize() size.Size {
 }
 
 func (def D) inputClass() string {
-	class := def.Class.CSSClass(Defaults, def.style(), "Class")
+	class := def.Class.CSSClass(def.style(), "input/input")
 	switch def.Size {
 	case size.S:
 		class += " p-2 text-xs"
@@ -200,11 +180,11 @@ func (def D) inputClass() string {
 }
 
 func (def D) containerClass() string {
-	return def.ContainerClass.CSSClass(Defaults, def.style(), "ContainerClass")
+	return def.ContainerClass.CSSClass(def.style(), "input")
 }
 
 func (def D) inputClassInvalid() string {
-	return def.Class.Delta(Defaults, def.Style, style.StyleInvalid, "Class")
+	return def.Class.Delta(def.Style, style.StyleInvalid, "input/input")
 }
 
 func (def D) message() message.D {

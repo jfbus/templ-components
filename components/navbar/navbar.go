@@ -9,24 +9,25 @@ const (
 	StyleSticky style.Style = 1 << 8
 )
 
-var Defaults = style.Defaults{
-	style.StyleDefault: {
-		"ContainerClass": {
-			style.Class("w-full"),
+func init() {
+	style.SetDefaults(style.Defaults{
+		"navbar": {
+			style.StyleDefault: {
+				style.Set("w-full"),
+			},
+			StyleSticky: {
+				style.Set("fixed w-full z-40 top-0 start-0 border-b"),
+			},
 		},
-		"Class": {
-			style.Class("max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"),
+		"navbar/div": {
+			style.StyleDefault: {
+				style.Set("max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"),
+			},
+			StyleSticky: {
+				style.Set("max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"),
+			},
 		},
-	},
-	StyleSticky: {
-		"ContainerClass": {
-			style.Class("fixed w-full z-40 top-0 start-0 border-b"),
-			style.Color("bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-600"),
-		},
-		"Class": {
-			style.Class("max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"),
-		},
-	},
+	})
 }
 
 // D defines a navbar component.
@@ -45,9 +46,9 @@ type D struct {
 }
 
 func (def D) containerClass() string {
-	return def.ContainerClass.CSSClass(Defaults, def.Style, "ContainerClass")
+	return def.ContainerClass.CSSClass(def.Style, "navbar")
 }
 
 func (def D) class() string {
-	return def.Class.CSSClass(Defaults, def.Style, "Class")
+	return def.Class.CSSClass(def.Style, "navbar/div")
 }

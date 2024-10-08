@@ -8,29 +8,17 @@ import (
 
 const StyleInline style.Style = 1 << 8
 
-// Defaults defines the default Color/Class. They are overriden by D.Color/D.Class.
-var Defaults = style.Defaults{
-	style.StyleDefault: {
-		"Class": {
-			style.Color("text-gray-900 dark:text-white"),
-			style.Class("block mb-2 text-sm font-medium"),
+func init() {
+	style.SetDefaults(style.Defaults{
+		"label": {
+			style.StyleDefault: {
+				style.Set("block mb-2 text-sm font-medium"),
+			},
+			StyleInline: {
+				style.Set("ms-2 text-sm font-medium"),
+			},
 		},
-	},
-	StyleInline: {
-		"Class": {
-			style.Class("ms-2 text-sm font-medium"),
-		},
-	},
-	style.StyleValid: {
-		"Class": {
-			style.Color("text-green-700 dark:text-green-500"),
-		},
-	},
-	style.StyleInvalid: {
-		"Class": {
-			style.Color("text-red-700 dark:text-red-500"),
-		},
-	},
+	})
 }
 
 // D is the label definition.
@@ -55,9 +43,9 @@ type D struct {
 }
 
 func (def D) class() string {
-	return def.Class.CSSClass(Defaults, def.Style, "Class")
+	return def.Class.CSSClass(def.Style, "label")
 }
 
 func (def D) classInvalid() string {
-	return def.Class.Delta(Defaults, def.Style, style.StyleInvalid, "Class")
+	return def.Class.Delta(def.Style, def.Style|style.StyleInvalid, "label")
 }

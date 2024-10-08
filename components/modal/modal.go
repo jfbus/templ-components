@@ -14,19 +14,17 @@ const (
 	StyleButtonsRight style.Style = 1 << 8
 )
 
-var Defaults = style.Defaults{
-	style.StyleDefault: {
-		"Class": {},
-		"ButtonContainerClass": {
-			style.Class("flex items-center p-4 md:p-5 border-t rounded-b gap-3"),
-			style.Color("border-gray-200 dark:border-gray-600"),
+func init() {
+	style.SetDefaults(style.Defaults{
+		"modal/buttons": {
+			style.StyleDefault: {
+				style.Set("flex items-center p-4 md:p-5 border-t rounded-b gap-3"),
+			},
+			StyleButtonsRight: {
+				style.Add("justify-end"),
+			},
 		},
-	},
-	StyleButtonsRight: {
-		"ButtonContainerClass": {
-			style.Add("justify-end"),
-		},
-	},
+	})
 }
 
 type D struct {
@@ -59,11 +57,11 @@ func (def D) id() string {
 }
 
 func (def D) class() string {
-	return def.Class.CSSClass(Defaults, def.Style, "Class")
+	return def.Class.CSSClass(def.Style, "modal")
 }
 
 func (def D) buttonContainerClass() string {
-	return def.Class.CSSClass(Defaults, def.Style, "ButtonContainerClass")
+	return def.Class.CSSClass(def.Style, "modal/buttons")
 }
 
 func (def D) close() button.D {

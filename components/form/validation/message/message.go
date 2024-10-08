@@ -5,23 +5,14 @@ import (
 	"github.com/jfbus/templ-components/components/style"
 )
 
-var Defaults = style.Defaults{
-	style.StyleDefault: {
-		"Class": {
-			style.Class("mt-2"),
-			style.Color("text-red-600 dark:text-red-500"),
+func init() {
+	style.SetDefaults(style.Defaults{
+		"form/validation/message": {
+			style.StyleDefault: {
+				style.Set("mt-2"),
+			},
 		},
-	},
-	style.StyleValid: {
-		"Class": {
-			style.Color("text-green-600 dark:text-green-500"),
-		},
-	},
-	style.StyleInvalid: {
-		"Class": {
-			style.Color("text-red-600 dark:text-red-500"),
-		},
-	},
+	})
 }
 
 type D struct {
@@ -33,7 +24,7 @@ type D struct {
 }
 
 func (def D) class() string {
-	class := def.Class.CSSClass(Defaults, def.Style, "Class")
+	class := def.Class.CSSClass(def.Style, "form/validation/message")
 	switch def.Size {
 	case size.S:
 		class += " text-xs"

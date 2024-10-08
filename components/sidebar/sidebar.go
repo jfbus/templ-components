@@ -7,16 +7,19 @@ import (
 
 var DefaultID = "sidebar"
 
-var Defaults = style.Defaults{
-	style.StyleDefault: {
-		"ContainerClass": {
-			style.Class("fixed top-0 left-0 z-20 w-64 h-screen transition-transform sm:translate-x-0"),
+func init() {
+	style.SetDefaults(style.Defaults{
+		"sidebar": {
+			style.StyleDefault: {
+				style.Set("fixed top-0 left-0 z-20 w-64 h-screen transition-transform sm:translate-x-0"),
+			},
 		},
-		"Class": {
-			style.Class("h-full px-3 py-4 overflow-y-auto"),
-			style.Color("bg-gray-50 dark:bg-gray-800"),
+		"sidebar/div": {
+			style.StyleDefault: {
+				style.Set("h-full px-3 py-4 overflow-y-auto"),
+			},
 		},
-	},
+	})
 }
 
 type D struct {
@@ -36,9 +39,9 @@ func (def D) id() string {
 }
 
 func (def D) containerClass() string {
-	return def.ContainerClass.CSSClass(Defaults, style.StyleDefault, "ContainerClass")
+	return def.ContainerClass.CSSClass(style.StyleDefault, "sidebar")
 }
 
 func (def D) class() string {
-	return def.Class.CSSClass(Defaults, style.StyleDefault, "Class")
+	return def.Class.CSSClass(style.StyleDefault, "sidebar/div")
 }
