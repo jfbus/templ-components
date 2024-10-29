@@ -6,19 +6,19 @@ func init() {
 	style.SetDefaults(style.Defaults{
 		"toast/container": {
 			style.StyleDefault: {
-				style.Set("z-10 fixed top-0 right-0 m-2 space-y-2"),
+				style.Set("z-50 fixed top-0 right-0 m-2 space-y-2"),
 			},
 			StyleTopLeft: {
-				style.Set("z-10 fixed top-0 left-0 m-2 space-y-2"),
+				style.Set("z-50 fixed top-0 left-0 m-2 space-y-2"),
 			},
 			StyleTopRight: {
-				style.Set("z-10 fixed top-0 right-0 m-2 space-y-2"),
+				style.Set("z-50 fixed top-0 right-0 m-2 space-y-2"),
 			},
 			StyleBottomLeft: {
-				style.Set("z-10 fixed bottom-0 left-0 m-2 space-y-2"),
+				style.Set("z-50 fixed bottom-0 left-0 m-2 space-y-2"),
 			},
 			StyleBottomRight: {
-				style.Set("z-10 fixed bottom-0 right-0 m-2 space-y-2"),
+				style.Set("z-50 fixed bottom-0 right-0 m-2 space-y-2"),
 			},
 		},
 	})

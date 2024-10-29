@@ -18,7 +18,7 @@ func init() {
 	style.SetDefaults(style.Defaults{
 		"modal/background": {
 			style.StyleDefault: {
-				style.Set("fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full px-4 py-5 bg-black/40"),
+				style.Set("fixed top-0 left-0 z-40 flex items-center justify-center w-full h-full px-4 py-5 bg-black/40"),
 			},
 		},
 		"modal/container": {

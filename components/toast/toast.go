@@ -20,8 +20,8 @@ const (
 type Close int
 
 const (
-	CloseButton Close = iota
-	CloseAuto
+	CloseAuto Close = iota
+	CloseButton
 )
 
 func init() {
