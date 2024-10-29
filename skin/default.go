@@ -181,6 +181,11 @@ var Default = style.Defaults{
 			style.Set("text-red-700 dark:text-red-500"),
 		},
 	},
+	"toast": {
+		style.StyleDefault: {
+			style.Set("bg-white"),
+		},
+	},
 	"toast/icon": {
 		toast.StyleOK: {
 			style.Set("text-green-500 bg-green-100 dark:bg-green-800 dark:text-green-200"),
