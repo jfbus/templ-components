@@ -16,6 +16,26 @@ const (
 
 func init() {
 	style.SetDefaults(style.Defaults{
+		"modal/background": {
+			style.StyleDefault: {
+				style.Set("fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full px-4 py-5 bg-black/40"),
+			},
+		},
+		"modal/container": {
+			style.StyleDefault: {
+				style.Set("w-full max-w-screen-md max-h-full rounded-[10px] bg-white dark:bg-dark-2 overflow-y-auto"),
+			},
+		},
+		"modal/title/container": {
+			style.StyleDefault: {
+				style.Set("flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"),
+			},
+		},
+		"modal/title/title": {
+			style.StyleDefault: {
+				style.Set("text-xl font-semibold text-gray-900 dark:text-white"),
+			},
+		},
 		"modal/buttons": {
 			style.StyleDefault: {
 				style.Set("flex items-center p-4 md:p-5 border-t rounded-b gap-3"),
@@ -27,11 +47,20 @@ func init() {
 	})
 }
 
+type MaxWidth string
+
+const (
+	MaxWidthScreenMD MaxWidth = "max-w-screen-md"
+	MaxWidthScreenSM MaxWidth = "max-w-screen-sm"
+)
+
 type D struct {
 	// ID is the modal ID. It is mandatory.
 	ID string
 	// Style defines the modal style.
 	Style style.Style
+	// MaxWidth defines the modal max width ("max-w-screen-md" by default).
+	MaxWidth MaxWidth
 	// Title is the modal title.
 	Title string
 	// Form defines the optional form tag that will enclose both content and buttons.
@@ -54,6 +83,26 @@ type D struct {
 
 func (def D) id() string {
 	return def.ID
+}
+
+func (def D) bgClass() string {
+	return style.D{}.CSSClass(def.Style, "modal/background")
+}
+
+func (def D) containerClass() string {
+	if def.MaxWidth != "" {
+		return style.D{style.Replace(string(MaxWidthScreenMD), string(def.MaxWidth))}.
+			CSSClass(def.Style, "modal/container")
+	}
+	return style.D{}.CSSClass(def.Style, "modal/container")
+}
+
+func (def D) titleContainerClass() string {
+	return style.D{}.CSSClass(def.Style, "modal/title/container")
+}
+
+func (def D) titleTitleClass() string {
+	return style.D{}.CSSClass(def.Style, "modal/title/title")
 }
 
 func (def D) class() string {
