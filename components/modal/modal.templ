@@ -12,17 +12,17 @@ import (
 templ C(def D) {
 	<div
 		tabindex="-1"
-		class="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full px-4 py-5 bg-black/40"
+		class={ def.bgClass() }
 		x-data="{}"
 		x-ref={ def.id() }
 		x-transition
 	>
 		<div
-			class="w-full max-w-screen-md max-h-full rounded-[10px] bg-white dark:bg-dark-2 overflow-y-auto"
+			class={ def.containerClass() }
 			@click.outside={ "$refs." + def.id() + ".remove()" }
 		>
-			<div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-				<h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+			<div class={ def.titleContainerClass() }>
+				<h3 class={ def.titleTitleClass() }>
 					{ def.Title }
 				</h3>
 				@button.C(button.D{
