@@ -36,6 +36,9 @@ func C(def D) templ.Component {
 			Style: button.StyleNoBorder,
 			Icon:  def.icon(),
 			Size:  def.Size,
+			Attributes: templ.Attributes{
+				"href": def.Link,
+			},
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err

@@ -3,6 +3,7 @@ package skin
 import (
 	"github.com/jfbus/templ-components/components/button"
 	"github.com/jfbus/templ-components/components/checkboxgroup"
+	"github.com/jfbus/templ-components/components/footer"
 	"github.com/jfbus/templ-components/components/icon"
 	"github.com/jfbus/templ-components/components/radiogroup"
 	"github.com/jfbus/templ-components/components/style"
@@ -53,6 +54,39 @@ var Default = style.Defaults{
 	"dropdown/link": {
 		style.StyleDefault: {
 			style.Set("hover:bg-gray-100 dark:hover:bg-gray-600"),
+		},
+	},
+	"footer": {
+		style.StyleDefault: {
+			style.Set("bg-white dark:bg-gray-800"),
+		},
+		footer.StyleSticky: {
+			style.Add("border-gray-200 dark:border-gray-600"),
+		},
+	},
+	"footer/separator": {
+		style.StyleDefault: {
+			style.Set("border-gray-200 dark:border-gray-700"),
+		},
+	},
+	"footer/copyright": {
+		style.StyleDefault: {
+			style.Set("text-gray-500 dark:text-gray-400"),
+		},
+	},
+	"footer/social": {
+		style.StyleDefault: {
+			style.Set("flex mt-4 sm:justify-center sm:mt-0"),
+		},
+	},
+	"footer/section/title": {
+		style.StyleDefault: {
+			style.Set("text-gray-900 dark:text-white"),
+		},
+	},
+	"footer/section/link": {
+		style.StyleDefault: {
+			style.Set("text-gray-500 dark:text-gray-400"),
 		},
 	},
 	"form/validation/message": {
@@ -138,6 +172,11 @@ var Default = style.Defaults{
 	"sidebar": {
 		style.StyleDefault: {
 			style.Set("bg-gray-50 dark:bg-gray-800"),
+		},
+	},
+	"social": {
+		style.StyleDefault: {
+			style.Set("text-gray-500 hover:text-gray-900 dark:hover:text-white"),
 		},
 	},
 	"table/header": {

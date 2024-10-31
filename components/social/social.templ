@@ -8,5 +8,8 @@ templ C(def D) {
 		Style: button.StyleNoBorder,
 		Icon:  def.icon(),
 		Size:  def.Size,
+		Attributes: templ.Attributes{
+			"href": def.Link,
+		},
 	})
 }

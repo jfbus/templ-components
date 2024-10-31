@@ -3,6 +3,7 @@ package layout
 import (
 	"strconv"
 
+	"github.com/jfbus/templ-components/components/footer"
 	"github.com/jfbus/templ-components/components/navbar"
 	"github.com/jfbus/templ-components/components/sidebar"
 	"github.com/jfbus/templ-components/components/size"
@@ -20,6 +21,7 @@ type D struct {
 	Navbar       *navbar.D
 	Sidebar      *sidebar.D
 	Toasts       *container.D
+	Footer       *footer.D
 	State        map[string]string
 	NavbarHeight NavbarHeight
 	Class        style.D
@@ -51,6 +53,11 @@ func (def D) toasts() container.D {
 	}
 	d := *def.Toasts
 	d.Class = append(d.Class, style.Add(def.NavbarHeight.paddingTop()))
+	return d
+}
+
+func (def D) footer() footer.D {
+	d := *def.Footer
 	return d
 }
 
