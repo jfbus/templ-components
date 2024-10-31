@@ -1,6 +1,7 @@
 package layout
 
 import (
+	"github.com/jfbus/templ-components/components/footer"
 	"github.com/jfbus/templ-components/components/navbar"
 	"github.com/jfbus/templ-components/components/sidebar"
 	"github.com/jfbus/templ-components/components/toast/container"
@@ -15,6 +16,9 @@ templ C(def D) {
 			@sidebar.C(def.sidebar())
 		}
 		{ children... }
+		if def.Footer != nil {
+			@footer.C(def.footer())
+		}
 		@container.C(def.toasts())
 	</div>
 }

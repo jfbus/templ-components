@@ -1,0 +1,56 @@
+package footer
+
+import (
+	"github.com/jfbus/templ-components/components/a"
+	"github.com/jfbus/templ-components/components/footer/section"
+	"github.com/jfbus/templ-components/components/social"
+)
+
+templ C(def D) {
+	<footer class={ def.containerClass() }>
+		<div class={ def.class() }>
+			if def.Brand != nil {
+				@def.Brand
+			} else {
+				if def.Copyright != nil && len(def.Social) == 0 {
+					<span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+						@def.Copyright
+					</span>
+				}
+			}
+			switch s := def.Sections.(type) {
+				case []a.D:
+					<ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0 gap-4 md:gap-6">
+						for _,l := range s {
+							<li>
+								@a.C(l)
+							</li>
+						}
+					</ul>
+				case []section.D:
+					<div class="grid grid-cols-2 gap-8 sm:gap-6 sm:auto-cols-max">
+						for _,l := range s {
+							<div>
+								@section.C(l)
+							</div>
+						}
+					</div>
+			}
+		</div>
+		if (def.Brand != nil && def.Copyright != nil) || len(def.Social)>0 {
+			if def.Brand != nil || def.Sections != nil {
+				<hr class={ def.separatorClass() }/>
+			}
+			<div class={ def.footerClass() }>
+				<span class={ def.copyrightClass() }>
+					@def.Copyright
+				</span>
+				<div class={ def.socialClass() }>
+					for _, s := range def.Social {
+						@social.C(s)
+					}
+				</div>
+			</div>
+		}
+	</footer>
+}

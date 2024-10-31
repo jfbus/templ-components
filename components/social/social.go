@@ -9,38 +9,43 @@ import (
 type Type int
 
 const (
-	TypeFacebook Type = iota
-	TypeInstagram
-	TypeGithub
-	TypeTwitch
-	TypeLinkedIn
-	TypeYoutube
-	TypeDribble
+	Facebook Type = iota
+	Instagram
+	Github
+	Twitch
+	LinkedIn
+	Youtube
+	Dribble
 )
 
 // D is a button.D preset that renders social links.
 type D struct {
 	Type  Type
+	Link  string
 	Size  size.Size
 	Class style.D
 }
 
 func (def D) icon() string {
 	switch def.Type {
-	case TypeFacebook:
+	case Facebook:
 		return icon.Facebook
-	case TypeInstagram:
+	case Instagram:
 		return icon.Instagram
-	case TypeGithub:
+	case Github:
 		return icon.Github
-	case TypeTwitch:
+	case Twitch:
 		return icon.Twitch
-	case TypeLinkedIn:
+	case LinkedIn:
 		return icon.Linkedin
-	case TypeYoutube:
+	case Youtube:
 		return icon.Youtube
-	case TypeDribble:
+	case Dribble:
 		return icon.Dribbble
 	}
 	return ""
+}
+
+func (def D) class() string {
+	return def.Class.CSSClass(style.StyleDefault, "social")
 }
