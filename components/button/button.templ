@@ -62,7 +62,7 @@ templ label(def D) {
 	}
 	if def.Loader {
 		<span id={ def.ID + "-indicator" } class="htmx-indicator">
-			@loader.C()
+			@loader.C(loader.D{Size: def.iconSize()})
 		</span>
 	}
 }
