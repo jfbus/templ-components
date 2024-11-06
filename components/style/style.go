@@ -8,6 +8,8 @@ import (
 	"slices"
 )
 
+const customSelf = "self"
+
 type Opt func(string) string
 
 // Set sets/replace the class attribute.
@@ -112,6 +114,9 @@ func Compute(style Style, k string, custom Custom) D {
 	d := defs(defaults, style, k)
 	s := defs(skin, style, k).String()
 	d = append(d, Add(s))
+	if !strings.Contains(k, "/") {
+		d = append(d, custom[customSelf]...)
+	}
 	return append(d, custom[k]...)
 }
 
@@ -149,24 +154,7 @@ const (
 // Defaults defines the default styles for a component.
 type Defaults map[string]map[Style]D
 
-// Custom defines custom styles for a component.
-type Custom map[string]D
-
-func (c Custom) AddBefore(cc Custom) Custom {
-	if cc == nil {
-		return c
-	}
-	if c == nil {
-		c = make(Custom, len(cc))
-	}
-	for k, v := range cc {
-		c[k] = append(c[k], v...)
-	}
-	return c
-}
-
 var defaults = Defaults{}
-var skin = Defaults{}
 
 func SetDefaults(d Defaults) {
 	for c, cdefs := range d {
@@ -183,6 +171,56 @@ func CopyDefaults(src, dst string) {
 	defaults[dst] = defaults[src]
 }
 
+var skin = Defaults{}
+
 func SetSkin(d Defaults) {
 	skin = d
+}
+
+// Custom defines custom styles for a component.
+type Custom map[string]D
+
+func (c Custom) AddBefore(cc Custom) Custom {
+	if cc == nil {
+		return c
+	}
+	if c == nil {
+		c = make(Custom, len(cc))
+	}
+	for k, v := range cc {
+		c[k] = append(c[k], v...)
+	}
+	return c
+}
+
+// CustomSet sets css classes as a CustomStyle for the current component.
+// It is the equivalent of style.Custom{"component name":{style.Set(class)})
+func CustomSet(class string) Custom {
+	return Custom{
+		customSelf: {Set(class)},
+	}
+}
+
+// CustomAdd adds css classes as a CustomStyle for the current component.
+// It is the equivalent of style.Custom{"component name":{style.Add(class)})
+func CustomAdd(class string) Custom {
+	return Custom{
+		customSelf: {Add(class)},
+	}
+}
+
+// CustomReplace replaces css classes as a CustomStyle for the current component.
+// It is the equivalent of style.Custom{"component name":{style.Replace(old, new)})
+func CustomReplace(old, new string) Custom {
+	return Custom{
+		customSelf: {Replace(old, new)},
+	}
+}
+
+// CustomReplaceVariants adds css classes as a CustomStyle for the current component.
+// It is the equivalent of style.Custom{"component name":{style.ReplaceVariants(class)})
+func CustomReplaceVariants(pattern, replace string) Custom {
+	return Custom{
+		customSelf: {ReplaceVariants(pattern, replace)},
+	}
 }
