@@ -9,29 +9,33 @@ import (
 )
 
 templ C(def D) {
-if def.ContainerID != "" {
-  @htmx.OOBSwap(def.ContainerID, htmx.SwapBeforeEnd,c(def))
-} else {
-	@c(def)
-}
+	if def.ContainerID != "" {
+		@htmx.OOBSwap(def.ContainerID, htmx.SwapBeforeEnd, c(def))
+	} else {
+		@c(def)
+	}
 }
 
 templ c(def D) {
 	<div
 		x-ref={ def.id() }
-		class={ def.containerClass() }
+		class={ def.class("toast") }
 		role="alert"
 		if def.Close == CloseAuto {
 			x-init={ "setTimeout(() => $refs." + def.id() + ".remove(), " + strconv.Itoa(def.closeDelayMS()) + ")" }
 		}
 	>
 		if def.icon() != "" {
-			<div class={ def.iconClass() }>
-				@icon.C(icon.D{Icon: def.icon(), Class: style.D{style.Set("w-4 h-4")}})
+			<div class={ def.class("toast/icon") }>
+				@icon.C(icon.D{
+					Icon: def.icon(), CustomStyle: style.Custom{
+						"icon": style.D{style.Set("w-4 h-4")},
+					},
+				})
 				//<span class="sr-only">Fire icon</span>
 			</div>
 		}
-		<div class="ms-3 text-sm font-normal">
+		<div class={ def.class("toast/content") }>
 			if def.Content != "" {
 				{ def.Content }
 			}
@@ -39,12 +43,13 @@ templ c(def D) {
 		</div>
 		if def.Close != CloseAuto {
 			@button.C(button.D{
-				Icon:      icon.X,
-				Label:     "Close",
-				HideLabel: button.HideLabelAlways,
-				Style: button.StyleNoBorder,
-				Class: style.D{
-					style.Set("ms-auto -mx-1.5 -my-1.5 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 inline-flex items-center justify-center h-8 w-8"),
+				Icon:  icon.X,
+				Label: "Close",
+				Style: button.StyleNoBorder | button.StyleHideLabelAlways,
+				CustomStyle: style.Custom{
+					"button": style.D{
+						style.Set("ms-auto -mx-1.5 -my-1.5 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 inline-flex items-center justify-center h-8 w-8"),
+					},
 				},
 				Attributes: templ.Attributes{
 					"@click": "$refs." + def.id() + ".remove()",

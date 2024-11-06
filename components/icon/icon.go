@@ -29,15 +29,18 @@ type D struct {
 	// Icon is the SVG string (e.g. icon.Flower).
 	Icon  string
 	Style style.Style
-	// Class overrides the default class..
-	Class style.D
 	// Size is the icon size.
 	Size size.Size
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"icon": style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
 	// Attributes adds custom attributes.
 	Attributes templ.Attributes
 }
 
 func (def D) class() string {
-	return def.Class.CSSClass(def.Style, "icon") +
+	return style.CSSClass(def.Style, "icon", def.CustomStyle) +
 		" " + def.Size.Class()
 }

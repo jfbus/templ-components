@@ -39,7 +39,7 @@ func C(def any) templ.Component {
 					return templ_7745c5c3_Err
 				}
 			} else {
-				templ_7745c5c3_Err = icon(D{Icon: NameToIcon[def.Icon], Style: def.Style, Class: def.Class, Size: def.Size, Attributes: def.Attributes}).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = icon(D{Icon: NameToIcon[def.Icon], Style: def.Style, CustomStyle: def.CustomStyle, Size: def.Size, Attributes: def.Attributes}).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

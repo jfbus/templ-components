@@ -1,8 +1,8 @@
 package navbar
 
 templ C(def D) {
-	<nav class={ def.containerClass() }>
-		<div class={ def.class() }>
+	<nav class={ def.class("navbar") }>
+		<div class={ def.class("navbar/content") }>
 			for _, s := range def.Sections {
 				@s
 			}

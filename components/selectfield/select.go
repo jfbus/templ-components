@@ -13,7 +13,7 @@ import (
 )
 
 func init() {
-	style.CopyDefaults("input/input", "select")
+	style.CopyDefaults("input/input", "select/input")
 }
 
 // D is the select definition.
@@ -41,8 +41,13 @@ type D struct {
 	//playground:import:github.com/jfbus/templ-components/components/form/validation/message
 	//playground:default:&message.D{Message: "Validation message"}
 	Message *message.D
-	// Class overrides the default CSS class for the select.
-	Class style.D
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"select":       style.D{style.Add("...")},
+	// 		"select/input": style.D{style.Add("...")},
+	// 		"select/label": style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
 	// Attributes add additional attributes.
 	Attributes templ.Attributes
 }
@@ -77,8 +82,12 @@ func (def D) label() label.D {
 	}
 }
 
+func (def D) class(k string) string {
+	return style.CSSClass(def.style(), k, def.CustomStyle)
+}
+
 func (def D) inputClass() string {
-	class := def.Class.CSSClass(def.style(), "select")
+	class := style.CSSClass(def.style(), "select/input", def.CustomStyle)
 	switch def.Size {
 	case size.S:
 		class += " p-2 text-xs"
@@ -95,5 +104,6 @@ func (def D) message() message.D {
 	m.InputName = def.Name
 	m.Size = def.Size
 	m.Style = def.style()
+	m.CustomStyle = def.CustomStyle
 	return m
 }

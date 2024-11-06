@@ -18,6 +18,7 @@ const (
 	TypePassword Type = "password"
 	TypeText     Type = "text"
 	TypeURL      Type = "url"
+	TypeHidden   Type = "hidden"
 )
 
 func init() {
@@ -74,13 +75,14 @@ type D struct {
 	// IconPosition can be position.Start (default) or position.End.
 	//playground:values:position.Start,position.End
 	IconPosition position.Position
-	// Class overrides the default CSS class for the button.
-	Class     style.D
-	IconClass style.D
-	// ContainerClass overrides the default CSS class for the div container.
-	ContainerClass style.D
-	// MessageClass overrides the default CSS class for the validation error container.
-	MessageClass style.D
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"input":       style.D{style.Add("...")},
+	// 		"input/input": style.D{style.Add("...")},
+	// 		"input/icon":  style.D{style.Add("...")},
+	// 		"input/label": style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
 	// Attributes stores additional attributes (e.g. HTMX attributes).
 	Attributes templ.Attributes
 }
@@ -96,6 +98,9 @@ func (def D) style() style.Style {
 }
 
 func (def D) label() label.D {
+	cc := style.Custom{
+		"label": style.Compute(def.Style, "input/label", def.CustomStyle),
+	}
 	switch l := def.Label.(type) {
 	case string:
 		return label.D{
@@ -104,6 +109,7 @@ func (def D) label() label.D {
 			Label:        l,
 			Style:        def.style(),
 			NoValidation: def.Message == nil,
+			CustomStyle:  cc,
 		}
 	case templ.Component:
 		return label.D{
@@ -112,6 +118,7 @@ func (def D) label() label.D {
 			Label:        l,
 			Style:        def.style(),
 			NoValidation: def.Message == nil,
+			CustomStyle:  cc,
 		}
 	case label.D:
 		l.InputID = def.id()
@@ -120,6 +127,7 @@ func (def D) label() label.D {
 			l.Style = def.style()
 		}
 		l.NoValidation = def.Message == nil
+		l.CustomStyle = l.CustomStyle.AddBefore(cc)
 		return l
 	default:
 		return label.D{}
@@ -141,7 +149,7 @@ func (def D) inputType() string {
 }
 
 func (def D) iconClass() string {
-	class := def.IconClass.CSSClass(def.style(), "input/icon")
+	class := style.CSSClass(def.style(), "input/icon", def.CustomStyle)
 	switch {
 	case def.Icon == "":
 		return ""
@@ -160,7 +168,7 @@ func (def D) iconSize() size.Size {
 }
 
 func (def D) inputClass() string {
-	class := def.Class.CSSClass(def.style(), "input/input")
+	class := style.CSSClass(def.style(), "input/input", def.CustomStyle)
 	switch def.Size {
 	case size.S:
 		class += " p-2 text-xs"
@@ -180,11 +188,11 @@ func (def D) inputClass() string {
 }
 
 func (def D) containerClass() string {
-	return def.ContainerClass.CSSClass(def.style(), "input")
+	return style.CSSClass(def.style(), "input", def.CustomStyle)
 }
 
 func (def D) inputClassInvalid() string {
-	return def.Class.Delta(def.Style, style.StyleInvalid, "input/input")
+	return style.Delta(def.Style, style.StyleInvalid, "input/input", def.CustomStyle)
 }
 
 func (def D) message() message.D {
@@ -192,5 +200,6 @@ func (def D) message() message.D {
 	m.InputName = def.Name
 	m.Size = def.Size
 	m.Style = def.style()
+	m.CustomStyle = def.CustomStyle
 	return m
 }

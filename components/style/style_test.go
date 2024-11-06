@@ -8,80 +8,77 @@ import (
 )
 
 const (
-	StyleOverrideClass = 2
-	StyleOverrideColor = 4
-	StyleAdd           = 8
+	StyleOverride = 2
+	StyleAdd      = 8
 )
 
 func TestDefaults(t *testing.T) {
-	defaults := style.Defaults{
-		style.StyleDefault: {
-			"Test": {
-				style.Set("class"), style.Color("color"),
+	style.SetDefaults(style.Defaults{
+		"TestDefaults": {
+			style.StyleDefault: {
+				style.Set("class color"),
 			},
-		},
-		StyleOverrideClass: {
-			"Test": {
+			StyleOverride: {
 				style.Set("override"),
 			},
-		},
-		StyleOverrideColor: {
-			"Test": {
-				style.Color("override"),
-			},
-		},
-		StyleAdd: {
-			"Test": {
+			StyleAdd: {
 				style.Add("add"),
 			},
 		},
-	}
-	assert.Equal(t, "class color", style.D{}.CSSClass(defaults, style.StyleDefault, "Test"))
-	assert.Equal(t, "override color", style.D{}.CSSClass(defaults, StyleOverrideClass, "Test"))
-	assert.Equal(t, "class override", style.D{}.CSSClass(defaults, StyleOverrideColor, "Test"))
-	assert.Equal(t, "class color add", style.D{}.CSSClass(defaults, StyleAdd, "Test"))
+	})
+	assert.Equal(t, "class color", style.CSSClass(style.StyleDefault, "TestDefaults", nil))
+	assert.Equal(t, "override", style.CSSClass(StyleOverride, "TestDefaults", nil))
+	assert.Equal(t, "class color add", style.CSSClass(StyleAdd, "TestDefaults", nil))
 }
 
-func TestOverrides(t *testing.T) {
-	defaults := style.Defaults{
-		style.StyleDefault: {
-			"Test": {
-				style.Set("class"), style.Color("color"),
+func TestSkin(t *testing.T) {
+	style.SetDefaults(style.Defaults{
+		"TestSkin": {
+			style.StyleDefault: {
+				style.Set("class"),
 			},
 		},
+	})
+	style.SetSkin(style.Defaults{
+		"TestSkin": {
+			style.StyleDefault: {
+				style.Set("color"),
+			},
+		},
+	})
+	assert.Equal(t, "class color", style.CSSClass(style.StyleDefault, "TestSkin", nil))
+}
+
+func TestCustom(t *testing.T) {
+	style.SetDefaults(style.Defaults{
+		"TestCustom": {
+			style.StyleDefault: {
+				style.Set("class color"),
+			},
+		},
+	})
+	{
+		custom := style.Custom{"TestCustom": {style.Set("override")}}
+		assert.Equal(t, "override", style.CSSClass(style.StyleDefault, "TestCustom", custom))
 	}
 	{
-		over := style.D{style.Set("override")}
-		assert.Equal(t, "override color", over.CSSClass(defaults, style.StyleDefault, "Test"))
+		custom := style.Custom{"TestCustom": {style.Add("add")}}
+		assert.Equal(t, "class color add", style.CSSClass(style.StyleDefault, "TestCustom", custom))
 	}
 	{
-		over := style.D{style.Color("override")}
-		assert.Equal(t, "class override", over.CSSClass(defaults, style.StyleDefault, "Test"))
-	}
-	{
-		over := style.D{style.Add("add")}
-		assert.Equal(t, "class color add", over.CSSClass(defaults, style.StyleDefault, "Test"))
+		custom := style.Custom{"TestCustom": {style.Replace("class", "override")}}
+		assert.Equal(t, "override color", style.CSSClass(style.StyleDefault, "TestCustom", custom))
 	}
 }
 
-func TestReplace(t *testing.T) {
-	defaults := style.Defaults{
-		style.StyleDefault: {
-			"Test": {
-				style.Set("text-normal mb-4 hover:mb-2 w-2 dark:focus:mb-5 emb-2 mbt-2"), style.Color("text-normal mb-4 w-2"),
+func TestReplaceVariants(t *testing.T) {
+	style.SetDefaults(style.Defaults{
+		"TestReplaceVariants": {
+			style.StyleDefault: {
+				style.Set("text-normal mb-4 hover:mb-2 w-2 mb-2/50 dark:focus:mb-5 emb-2 mbt-2"),
 			},
 		},
-	}
-	{
-		over := style.D{style.ReplaceClass("mb", "replaced")}
-		assert.Equal(t, "text-normal w-2 emb-2 mbt-2 replaced text-normal mb-4 w-2", over.CSSClass(defaults, style.StyleDefault, "Test"))
-	}
-	{
-		over := style.D{style.ReplaceColor("mb", "replaced")}
-		assert.Equal(t, "text-normal mb-4 hover:mb-2 w-2 dark:focus:mb-5 emb-2 mbt-2 text-normal w-2 replaced", over.CSSClass(defaults, style.StyleDefault, "Test"))
-	}
-	{
-		over := style.D{style.Replace("mb", "replaced")}
-		assert.Equal(t, "text-normal w-2 emb-2 mbt-2 replaced text-normal w-2 replaced", over.CSSClass(defaults, style.StyleDefault, "Test"))
-	}
+	})
+	custom := style.Custom{"TestReplaceVariants": {style.ReplaceVariants("mb", "replaced")}}
+	assert.Equal(t, "text-normal w-2 emb-2 mbt-2 replaced", style.CSSClass(style.StyleDefault, "TestReplaceVariants", custom))
 }

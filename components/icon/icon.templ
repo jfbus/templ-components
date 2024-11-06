@@ -8,7 +8,7 @@ templ C(def any) {
 			if strings.HasPrefix(def.Icon, "<") {
 				@icon(def)
 			} else {
-				@icon(D{Icon: NameToIcon[def.Icon], Style: def.Style, Class: def.Class, Size: def.Size, Attributes: def.Attributes})
+				@icon(D{Icon: NameToIcon[def.Icon], Style: def.Style, CustomStyle: def.CustomStyle, Size: def.Size, Attributes: def.Attributes})
 			}
 		case string:
 			if strings.HasPrefix(def, "<") {

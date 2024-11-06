@@ -19,7 +19,7 @@ func init() {
 				style.Set("fixed w-full z-40 top-0 start-0 border-b"),
 			},
 		},
-		"navbar/div": {
+		"navbar/content": {
 			style.StyleDefault: {
 				style.Set("max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"),
 			},
@@ -40,15 +40,15 @@ type D struct {
 	//playground:import:github.com/jfbus/templ-components/components/icon
 	//playground:import:github.com/jfbus/templ-components/components/size
 	//playground:default:[]templ.Component{a.C(a.D{Text:"Your Brand"}), dropdown.C(dropdown.D{Button: button.D{Style: button.StyleNoBorder, Icon: icon.CircleUserRound, Size: size.XL}, Links: [][]a.D{{{Text: "Profile"}}, {{Text: "Logout"}}}})}
-	Sections       []templ.Component
-	ContainerClass style.D
-	Class          style.D
+	Sections []templ.Component
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"navbar":         style.D{style.Add("...")},
+	// 		"navbar/content": style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
 }
 
-func (def D) containerClass() string {
-	return def.ContainerClass.CSSClass(def.Style, "navbar")
-}
-
-func (def D) class() string {
-	return def.Class.CSSClass(def.Style, "navbar/div")
+func (def D) class(k string) string {
+	return style.CSSClass(def.Style, k, def.CustomStyle)
 }

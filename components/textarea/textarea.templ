@@ -8,7 +8,7 @@ import (
 )
 
 templ C(def D) {
-	<div>
+	<div class={ def.class("textarea") }>
 		@label.C(def.label())
 		<div class="relative">
 			if def.Icon != "" {

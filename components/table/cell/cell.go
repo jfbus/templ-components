@@ -1,8 +1,18 @@
 package cell
 
+import "github.com/jfbus/templ-components/components/style"
+
 type D struct {
 	Header  bool
 	Content any
-	Class   string
 	ColSpan string
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"table/cell":     style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
+}
+
+func (def D) class() string {
+	return style.CSSClass(style.StyleDefault, "table/cell", def.CustomStyle)
 }

@@ -12,5 +12,5 @@ func ExampleD() {
 		Name:  "accept",
 		Label: "Title",
 	})
-	c.Render(context.TODO(), os.Stdout)
+	_ = c.Render(context.TODO(), os.Stdout)
 }

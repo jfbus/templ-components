@@ -14,7 +14,7 @@ func init() {
 				style.Set("fixed top-0 left-0 z-20 w-64 h-screen transition-transform sm:translate-x-0"),
 			},
 		},
-		"sidebar/div": {
+		"sidebar/content": {
 			style.StyleDefault: {
 				style.Set("h-full px-3 py-4 overflow-y-auto"),
 			},
@@ -26,9 +26,13 @@ type D struct {
 	ID string
 	//playground:import:github.com/jfbus/templ-components/components/button
 	//playground:default:button.C(button.D{Label:"Button"})
-	Content        templ.Component
-	ContainerClass style.D
-	Class          style.D
+	Content templ.Component
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"sidebar":         style.D{style.Add("...")},
+	// 		"sidebar/content": style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
 }
 
 func (def D) id() string {
@@ -38,10 +42,6 @@ func (def D) id() string {
 	return DefaultID
 }
 
-func (def D) containerClass() string {
-	return def.ContainerClass.CSSClass(style.StyleDefault, "sidebar")
-}
-
-func (def D) class() string {
-	return def.Class.CSSClass(style.StyleDefault, "sidebar/div")
+func (def D) class(k string) string {
+	return style.CSSClass(style.StyleDefault, k, def.CustomStyle)
 }

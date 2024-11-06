@@ -13,7 +13,13 @@ import (
 
 func init() {
 	style.CopyDefaults("input/input", "textarea/input")
-	style.CopyDefaults("input/icon", "textarea/icon")
+	style.SetDefaults(style.Defaults{
+		"textarea/icon": {
+			style.StyleDefault: {
+				style.Set("absolute inset-y-0 flex items-top pointer-events-none"),
+			},
+		},
+	})
 }
 
 // D is the definition for textarea fields.
@@ -45,12 +51,15 @@ type D struct {
 	//playground:import:github.com/jfbus/templ-components/components/form/validation/message
 	//playground:default:&message.D{Message: "Validation message"}
 	Message *message.D
-	// Class overrides the default CSS class for the textarea.
-	Class style.D
-	// Class overrides the default CSS class for the icon.
-	IconClass style.D
-	// Attributes stores additional attributes (e.g. HTMX attributes).
-	Attributes templ.Attributes
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"textarea":       style.D{style.Add("...")},
+	// 		"textarea/input": style.D{style.Add("...")},
+	// 		"textarea/icon":  style.D{style.Add("...")},
+	// 		"textarea/label":  style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
+	Attributes  templ.Attributes
 }
 
 func (def D) style() style.Style {
@@ -60,9 +69,12 @@ func (def D) style() style.Style {
 	return def.Style
 }
 
+func (def D) class(k string) string {
+	return style.CSSClass(def.style(), k, def.CustomStyle)
+}
+
 func (def D) iconClass() string {
-	def.IconClass = append(def.IconClass, style.Replace("items-center", "items-top"))
-	class := def.IconClass.CSSClass(def.style(), "textarea/icon")
+	class := style.CSSClass(def.style(), "textarea/icon", def.CustomStyle)
 	switch def.Size {
 	case size.S:
 		class += " pt-2"
@@ -89,7 +101,7 @@ func (def D) iconSize() size.Size {
 }
 
 func (def D) inputClass() string {
-	class := def.Class.CSSClass(def.style(), "textarea/input")
+	class := style.CSSClass(def.style(), "textarea/input", def.CustomStyle)
 	switch def.Size {
 	case size.S:
 		class += " p-2 text-xs"
@@ -116,18 +128,23 @@ func (def D) id() string {
 }
 
 func (def D) label() label.D {
+	cc := style.Custom{
+		"label": style.Compute(def.Style, "textarea/label", def.CustomStyle),
+	}
 	switch l := def.Label.(type) {
 	case string:
 		return label.D{
-			InputID: def.id(),
-			Label:   l,
-			Style:   def.style(),
+			InputID:     def.id(),
+			Label:       l,
+			Style:       def.style(),
+			CustomStyle: cc,
 		}
 	case label.D:
 		l.InputID = def.id()
 		if l.Style == style.StyleDefault {
 			l.Style = def.style()
 		}
+		l.CustomStyle = l.CustomStyle.AddBefore(cc)
 		return l
 	default:
 		return label.D{}
@@ -139,5 +156,6 @@ func (def D) message() message.D {
 	m.InputName = def.Name
 	m.Size = def.Size
 	m.Style = def.style()
+	m.CustomStyle = def.CustomStyle
 	return m
 }

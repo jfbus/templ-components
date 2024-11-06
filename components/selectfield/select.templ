@@ -6,7 +6,7 @@ import (
 )
 
 templ C(def D) {
-	<div>
+	<div class={ def.class("select") }>
 		@label.C(def.label())
 		<select id={ def.id() } name={ def.Name } class={ def.inputClass() } { def.Attributes... }>
 			for _,opt := range def.Options {

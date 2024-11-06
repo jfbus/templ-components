@@ -30,9 +30,13 @@ type D struct {
 	Header templ.Component
 	//playground:import:github.com/jfbus/templ-components/components/a
 	//playground:default:[][]a.D{{{Href:"#", Text: "Section 1 link 1"},{Href:"#", Text: "Section 1 link 2"}},{{Href:"#", Text: "Section 2 link 1"}}}
-	Links     [][]a.D
-	Class     style.D
-	LinkClass style.D
+	Links [][]a.D
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"dropdown": style.D{style.Add("...")},
+	// 		"dropdown/link": style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
 }
 
 func (def D) button() button.D {
@@ -44,14 +48,16 @@ func (def D) button() button.D {
 }
 
 func (def D) class() string {
-	return def.Class.CSSClass(style.StyleDefault, "dropdown")
+	return style.CSSClass(style.StyleDefault, "dropdown", def.CustomStyle)
 }
 
 func (def D) links() [][]a.D {
-	lc := def.LinkClass.WithDefault(style.StyleDefault, "dropdown/link")
+	cc := style.Custom{
+		"a": style.Compute(style.StyleDefault, "dropdown/link", def.CustomStyle),
+	}
 	for i := range def.Links {
 		for j := range def.Links[i] {
-			def.Links[i][j].Class = append(lc, def.Links[i][j].Class...)
+			def.Links[i][j].CustomStyle = def.Links[i][j].CustomStyle.AddBefore(cc)
 		}
 	}
 	return def.Links

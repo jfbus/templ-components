@@ -31,7 +31,7 @@ func C(def D) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		var templ_7745c5c3_Var2 = []any{def.titleClass()}
+		var templ_7745c5c3_Var2 = []any{def.class("footer/section/title")}
 		templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var2...)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -56,7 +56,7 @@ func C(def D) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(def.Title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/footer/section/section.templ`, Line: 6, Col: 43}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/footer/section/section.templ`, Line: 6, Col: 60}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -67,7 +67,7 @@ func C(def D) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		for _, l := range def.Links {
-			var templ_7745c5c3_Var5 = []any{def.linkClass()}
+			var templ_7745c5c3_Var5 = []any{def.class("footer/section/link")}
 			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var5...)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err

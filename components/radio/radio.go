@@ -38,12 +38,13 @@ type D struct {
 	Checked bool
 	// Disabled disables the input.
 	Disabled bool
-	// ContainerClass overrides the class of the div container.
-	ContainerClass style.D
-	// InputClass overrides the class of the input tag.
-	InputClass style.D
-	// LabelClass overrides the class of the label tag.
-	LabelClass style.D
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"radio":       style.D{style.Add("...")},
+	// 		"radio/input": style.D{style.Add("...")},
+	// 		"radio/label": style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
 	// Attributes stores additional attributes (e.g. HTMX attributes).
 	Attributes templ.Attributes
 }
@@ -56,25 +57,27 @@ func (def D) style() style.Style {
 }
 
 func (def D) label() label.D {
-	defaults := def.LabelClass.WithDefault(def.style(), "radio/label")
+	cc := style.Custom{
+		"label": style.Compute(def.style(), "radio/label", def.CustomStyle),
+	}
 	switch l := def.Label.(type) {
 	case string:
 		return label.D{
-			Style:   label.StyleInline,
-			InputID: def.id(),
-			Label:   l,
-			Class:   defaults,
+			Style:       label.StyleInline,
+			InputID:     def.id(),
+			Label:       l,
+			CustomStyle: cc,
 		}
 	case templ.Component:
 		return label.D{
-			Style:   label.StyleInline,
-			InputID: def.id(),
-			Label:   l,
-			Class:   defaults,
+			Style:       label.StyleInline,
+			InputID:     def.id(),
+			Label:       l,
+			CustomStyle: cc,
 		}
 	case label.D:
 		l.InputID = def.id()
-		l.Class = append(defaults, l.Class...)
+		l.CustomStyle = l.CustomStyle.AddBefore(cc)
 		return l
 	default:
 		return label.D{}
@@ -88,10 +91,6 @@ func (def D) id() string {
 	return def.Name
 }
 
-func (def D) containerClass() string {
-	return def.ContainerClass.CSSClass(def.style(), "radio")
-}
-
-func (def D) inputClass() string {
-	return def.InputClass.CSSClass(def.style(), "radio/input")
+func (def D) class(k string) string {
+	return style.CSSClass(def.style(), k, def.CustomStyle)
 }

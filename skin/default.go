@@ -142,7 +142,7 @@ var Default = style.Defaults{
 	},
 	"radio/input": {
 		style.StyleDefault: {
-			style.Set("border-gray-300 dark:border-gray-600 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"),
+			style.Set("border-gray-300 dark:border-gray-600 text-blue-600 bg-gray-100 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700"),
 		},
 	},
 	"radio/label": {
@@ -155,7 +155,7 @@ var Default = style.Defaults{
 			style.Set("dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700"),
 		},
 	},
-	"select": {
+	"select/input": {
 		style.StyleDefault: {
 			style.Set("border-gray-300 dark:border-gray-600 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"),
 		},

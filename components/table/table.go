@@ -44,16 +44,6 @@ func init() {
 type D struct {
 	// Style defines the table style.
 	Style style.Style
-	// Class defines the CSS classes for the table tag.
-	Class style.D
-	// HeaderClass defines the CSS classes for the thead tag.
-	HeaderClass style.D
-	// BodyClass defines the CSS classes for the tr tags within tbody.
-	BodyClass style.D
-	// FooterClass defines the CSS classes for the tfoot tag.
-	FooterClass style.D
-	// CellClass defines the CSS classes tor all td tags.
-	CellClass style.D
 	// Header defines an optional header row (thead).
 	//playground:import:github.com/jfbus/templ-components/components/table/row
 	//playground:default:&row.D{Cells: []string{"Name", "Description", ""}}
@@ -63,36 +53,43 @@ type D struct {
 	Rows []row.D
 	// Footer defines an optional footer fow (tfoot).
 	Footer *row.D
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"table":             style.D{style.Add("...")},
+	// 		"table/header":       style.D{style.Add("...")},
+	// 		"table/row": style.D{style.Add("...")},
+	// 		"table/cell":     style.D{style.Add("...")},
+	// 		"table/footer":       style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
 }
 
-func (def D) cellClass() string {
-	return def.CellClass.CSSClass(def.Style, "table/cell")
+func (def D) class(k string) string {
+	return style.CSSClass(def.Style, k, def.CustomStyle)
 }
 
 func (def D) rows() []row.D {
-	class := def.cellClass()
+	cc := style.Custom{
+		"table/row":  style.Compute(def.Style, "table/row", def.CustomStyle),
+		"table/cell": style.Compute(def.Style, "table/cell", def.CustomStyle),
+	}
 	for i := range def.Rows {
-		if def.Rows[i].Class == "" {
-			def.Rows[i].Class = def.trClass()
-			def.Rows[i].DefaultCellClass = class
-		}
+		def.Rows[i].CustomStyle = def.Rows[i].CustomStyle.AddBefore(cc)
 	}
 	return def.Rows
-}
-
-func (def D) tableClass() string {
-	return def.Class.CSSClass(def.Style, "table")
 }
 
 func (def D) header() row.D {
 	if def.Header == nil {
 		return row.D{}
 	}
+	cc := style.Custom{
+		"table/header": style.Compute(def.Style, "table/header", def.CustomStyle),
+		"table/cell":   style.Compute(def.Style, "table/cell", def.CustomStyle),
+	}
 	fd := *def.Header
 	fd.Header = true
-	if fd.DefaultCellClass == "" {
-		fd.DefaultCellClass = def.cellClass()
-	}
+	fd.CustomStyle = fd.CustomStyle.AddBefore(cc)
 	return fd
 }
 
@@ -100,21 +97,19 @@ func (def D) headerClass() string {
 	if def.Header == nil {
 		return ""
 	}
-	return def.HeaderClass.CSSClass(def.Style, "table/header")
-}
-
-func (def D) trClass() string {
-	return def.BodyClass.CSSClass(def.Style, "table/row")
+	return style.CSSClass(def.Style, "table/header", def.CustomStyle)
 }
 
 func (def D) footer() row.D {
 	if def.Footer == nil {
 		return row.D{}
 	}
-	fd := *def.Footer
-	if fd.DefaultCellClass == "" {
-		fd.DefaultCellClass = def.cellClass()
+	cc := style.Custom{
+		"table/footer": style.Compute(def.Style, "table/footer", def.CustomStyle),
+		"table/cell":   style.Compute(def.Style, "table/cell", def.CustomStyle),
 	}
+	fd := *def.Footer
+	fd.CustomStyle = fd.CustomStyle.AddBefore(cc)
 	return fd
 }
 
@@ -122,5 +117,5 @@ func (def D) footerClass() string {
 	if def.Footer == nil {
 		return ""
 	}
-	return def.FooterClass.CSSClass(def.Style, "table/footer")
+	return style.CSSClass(def.Style, "table/footer", def.CustomStyle)
 }

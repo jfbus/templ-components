@@ -39,14 +39,14 @@ type D struct {
 	Checked bool
 	// Disabled disables the input.
 	Disabled bool
-	// ContainerClass overrides the class of the div container.
-	ContainerClass style.D
-	// InputClass overrides the class of the input tag.
-	InputClass style.D
-	// LabelClass overrides the class of the label tag.
-	LabelClass style.D
-	// Attributes stores additional attributes (e.g. HTMX attributes).
-	Attributes templ.Attributes
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"checkbox":       style.D{style.Add("...")},
+	// 		"checkbox/input": style.D{style.Add("...")},
+	// 		"checkbox/label": style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
+	Attributes  templ.Attributes
 }
 
 func (def D) style() style.Style {
@@ -57,27 +57,27 @@ func (def D) style() style.Style {
 }
 
 func (def D) label() label.D {
-	defaults := def.LabelClass.WithDefault(def.style(), "checkbox/label")
+	defaults := style.Custom{
+		"label": style.Compute(def.style(), "checkbox/label", def.CustomStyle),
+	}
 	switch l := def.Label.(type) {
 	case string:
 		return label.D{
-			InputID: def.id(),
-			Style:   label.StyleInline,
-			Label:   l,
-			Class:   defaults,
+			InputID:     def.id(),
+			Style:       label.StyleInline,
+			Label:       l,
+			CustomStyle: defaults,
 		}
 	case templ.Component:
 		return label.D{
-			InputID: def.id(),
-			Style:   label.StyleInline,
-			Label:   l,
-			Class:   defaults,
+			InputID:     def.id(),
+			Style:       label.StyleInline,
+			Label:       l,
+			CustomStyle: defaults,
 		}
 	case label.D:
 		l.InputID = def.id()
-		if len(l.Class) == 0 {
-			l.Class = defaults
-		}
+		l.CustomStyle = l.CustomStyle.AddBefore(defaults)
 		return l
 	default:
 		return label.D{}
@@ -91,10 +91,6 @@ func (def D) id() string {
 	return def.Name
 }
 
-func (def D) containerClass() string {
-	return def.ContainerClass.CSSClass(def.style(), "checkbox")
-}
-
-func (def D) inputClass() string {
-	return def.InputClass.CSSClass(def.style(), "checkbox/input")
+func (def D) class(k string) string {
+	return style.CSSClass(def.style(), k, def.CustomStyle)
 }

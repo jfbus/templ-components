@@ -47,10 +47,20 @@ func ReplaceVariants(pattern, replace string) Opt {
 	}
 }
 
-// Replace replaces both in class and color.
+// Replace replaces a CSS class.
 func Replace(old, new string) Opt {
 	return func(d string) string {
 		d = strings.ReplaceAll(d, old, new)
+		return d
+	}
+}
+
+// Remove removes.
+func Remove(remove ...string) Opt {
+	return func(d string) string {
+		for _, r := range remove {
+			d = strings.ReplaceAll(d, r, "")
+		}
 		return d
 	}
 }
@@ -98,28 +108,21 @@ func (def D) String() string {
 	return def.apply("")
 }
 
-// WithDefault returns the D including defaults.
-func (def D) WithDefault(style Style, k string) D {
+func Compute(style Style, k string, custom Custom) D {
 	d := defs(defaults, style, k)
-	d = append(d, def...)
 	s := defs(skin, style, k).String()
-	return append(d, Add(s))
+	d = append(d, Add(s))
+	return append(d, custom[k]...)
 }
 
-// CSSClass returns the CSS class string.
-func (def D) CSSClass(style Style, k string) string {
-	d := defs(defaults, style, k).apply("")
-	s := defs(skin, style, k).apply("")
-	if d != "" && s != "" {
-		return def.apply(d + " " + s)
-	}
-	return def.apply(d + s)
+func CSSClass(style Style, k string, custom Custom) string {
+	return Compute(style, k, custom).String()
 }
 
 // Delta returns all classes added by dst.
-func (def D) Delta(src, dst Style, k string) string {
-	ssrc := strings.Split(def.CSSClass(src, k), " ")
-	sdst := strings.Split(def.CSSClass(dst, k), " ")
+func Delta(src, dst Style, k string, custom Custom) string {
+	ssrc := strings.Split(CSSClass(src, k, custom), " ")
+	sdst := strings.Split(CSSClass(dst, k, custom), " ")
 	delta := make([]string, 0, len(sdst))
 	for _, s := range sdst {
 		if !slices.Contains(ssrc, s) {
@@ -143,8 +146,44 @@ const (
 	StyleInvalid Style = 1 << 2
 )
 
-// Defaults define the default styles for a component.
+// Defaults defines the default styles for a component.
 type Defaults map[string]map[Style]D
+
+// Custom defines custom styles for a component.
+type Custom map[string]D
+
+func (c Custom) AddBefore(cc Custom) Custom {
+	if cc == nil {
+		return c
+	}
+	if c == nil {
+		c = make(Custom, len(cc))
+	}
+	for k, v := range cc {
+		c[k] = append(c[k], v...)
+	}
+	return c
+}
+
+func (c Custom) StripPrefix(stripPrefix string) Custom {
+	if c == nil {
+		return nil
+	}
+	if stripPrefix != "" {
+		stripPrefix += "/"
+	}
+	cc := make(Custom, len(c))
+	for k, v := range c {
+		if stripPrefix != "" {
+			if !strings.HasPrefix(k, stripPrefix) {
+				continue
+			}
+			k = strings.TrimPrefix(k, stripPrefix)
+		}
+		cc[k] = v
+	}
+	return cc
+}
 
 var defaults = Defaults{}
 var skin = Defaults{}

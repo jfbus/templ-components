@@ -6,6 +6,7 @@ import (
 
 	"github.com/a-h/templ"
 	"github.com/jfbus/templ-components/components/button"
+	"github.com/jfbus/templ-components/components/style"
 	"github.com/jfbus/templ-components/components/table"
 	"github.com/jfbus/templ-components/components/table/cell"
 	"github.com/jfbus/templ-components/components/table/row"
@@ -23,7 +24,6 @@ func ExampleC() {
 				"john.doe@example.com",
 				"active",
 				cell.D{
-					Class: "text-center",
 					Content: button.C(button.D{
 						Label: "disable",
 						Attributes: templ.Attributes{
@@ -33,6 +33,11 @@ func ExampleC() {
 				},
 			},
 		}},
+		CustomStyle: style.Custom{
+			"table/cell": style.D{
+				style.Set("text-center"),
+			},
+		},
 	})
-	c.Render(context.TODO(), os.Stdout)
+	_ = c.Render(context.TODO(), os.Stdout)
 }

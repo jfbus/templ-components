@@ -20,10 +20,14 @@ const (
 
 // D is a button.D preset that renders social links.
 type D struct {
-	Type  Type
-	Link  string
-	Size  size.Size
-	Class style.D
+	Type Type
+	Link string
+	Size size.Size
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"social": style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
 }
 
 func (def D) icon() string {
@@ -47,5 +51,5 @@ func (def D) icon() string {
 }
 
 func (def D) class() string {
-	return def.Class.CSSClass(style.StyleDefault, "social")
+	return style.CSSClass(style.StyleDefault, "social", def.CustomStyle)
 }

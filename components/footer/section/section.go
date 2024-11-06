@@ -23,12 +23,14 @@ func init() {
 type D struct {
 	Title string
 	Links []a.D
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"footer/section/link":  style.D{style.Add("...")},
+	// 		"footer/section/title": style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
 }
 
-func (def D) titleClass() string {
-	return style.D{}.CSSClass(style.StyleDefault, "footer/section/title")
-}
-
-func (def D) linkClass() string {
-	return style.D{}.CSSClass(style.StyleDefault, "footer/section/link")
+func (def D) class(k string) string {
+	return style.CSSClass(style.StyleDefault, k, def.CustomStyle)
 }

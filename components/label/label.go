@@ -34,18 +34,21 @@ type D struct {
 	Label any
 	// Hide hides the label.
 	Hide bool
-	// Class overrides the CSS classes.
-	Class style.D
 	// NoValidation removes the validation code.
 	NoValidation bool
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"label":       style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
 	// Attributes defines additional attributes.
 	Attributes templ.Attributes
 }
 
 func (def D) class() string {
-	return def.Class.CSSClass(def.Style, "label")
+	return style.CSSClass(def.Style, "label", def.CustomStyle)
 }
 
 func (def D) classInvalid() string {
-	return def.Class.Delta(def.Style, def.Style|style.StyleInvalid, "label")
+	return style.Delta(def.Style, def.Style|style.StyleInvalid, "label", def.CustomStyle)
 }

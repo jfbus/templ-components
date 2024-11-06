@@ -77,30 +77,30 @@ type D struct {
 	//playground:import:github.com/jfbus/templ-components/components/form/validation/message
 	//playground:default:&message.D{Message: "Validation message"}
 	Message *message.D
-	// ContainerClass overrides the class of the div container.
-	ContainerClass style.D
-	// RadioContainerClass overrides the class of each radio div container.
-	RadioContainerClass style.D
-	// RadioContainerClass overrides the class of each radio input.
-	RadioInputClass style.D
-	// RadioContainerClass overrides the class of each radio label.
-	RadioLabelClass style.D
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"radiogroup":       style.D{style.Add("...")},
+	// 		"radiogroup/radio":       style.D{style.Add("...")},
+	// 		"radiogroup/radio/input": style.D{style.Add("...")},
+	// 		"radiogroup/radio/label": style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
 }
 
-func (def D) containerClass() string {
-	return def.ContainerClass.CSSClass(def.Style, "radiogroup")
+func (def D) class() string {
+	return style.CSSClass(def.Style, "radiogroup", def.CustomStyle)
 }
 
 func (def D) radios() []radio.D {
-	ric := def.RadioInputClass.WithDefault(def.Style, "radiogroup/radio/input")
-	rcc := def.RadioContainerClass.WithDefault(def.Style, "radiogroup/radio")
-	rlc := def.RadioLabelClass.WithDefault(def.Style, "radiogroup/radio/label")
+	cc := style.Custom{
+		"radio":       style.Compute(def.Style, "radiogroup/radio", def.CustomStyle),
+		"radio/input": style.Compute(def.Style, "radiogroup/radio/input", def.CustomStyle),
+		"radio/label": style.Compute(def.Style, "radiogroup/radio/label", def.CustomStyle),
+	}
 	for i := range def.Radios {
 		def.Radios[i].ID = def.Name + "-" + def.Radios[i].Value
 		def.Radios[i].Name = def.Name
-		def.Radios[i].InputClass = append(ric, def.Radios[i].InputClass...)
-		def.Radios[i].ContainerClass = append(rcc, def.Radios[i].ContainerClass...)
-		def.Radios[i].LabelClass = append(rlc, def.Radios[i].LabelClass...)
+		def.Radios[i].CustomStyle = def.Radios[i].CustomStyle.AddBefore(cc)
 	}
 	return def.Radios
 }
@@ -109,5 +109,6 @@ func (def D) message() message.D {
 	m := *def.Message
 	m.InputName = def.Name
 	m.Style = def.Style
+	m.CustomStyle = def.CustomStyle
 	return m
 }

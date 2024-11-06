@@ -77,30 +77,30 @@ type D struct {
 	//playground:import:github.com/jfbus/templ-components/components/form/validation/message
 	//playground:default:&message.D{Message: "Validation message"}
 	Message *message.D
-	// ContainerClass overrides the class of the div container.
-	ContainerClass style.D
-	// CheckboxContainerClass overrides the class of each radio div container.
-	CheckboxContainerClass style.D
-	// CheckboxContainerClass overrides the class of each radio input.
-	CheckboxInputClass style.D
-	// CheckboxContainerClass overrides the class of each radio label.
-	CheckboxLabelClass style.D
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"checkboxgroup":       style.D{style.Add("...")},
+	// 		"checkboxgroup/checkbox":       style.D{style.Add("...")},
+	// 		"checkboxgroup/checkbox/input": style.D{style.Add("...")},
+	// 		"checkboxgroup/checkbox/label": style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
 }
 
-func (def D) containerClass() string {
-	return def.ContainerClass.CSSClass(def.Style, "checkboxgroup")
+func (def D) class() string {
+	return style.CSSClass(def.Style, "checkboxgroup", def.CustomStyle)
 }
 
 func (def D) radios() []checkbox.D {
-	ccc := def.CheckboxContainerClass.WithDefault(def.Style, "checkboxgroup/checkbox")
-	cic := def.CheckboxInputClass.WithDefault(def.Style, "checkboxgroup/checkbox/input")
-	clc := def.CheckboxLabelClass.WithDefault(def.Style, "checkboxgroup/checkbox/label")
+	cc := style.Custom{
+		"checkbox":       style.Compute(def.Style, "checkboxgroup/checkbox", def.CustomStyle),
+		"checkbox/input": style.Compute(def.Style, "checkboxgroup/checkbox/input", def.CustomStyle),
+		"checkbox/label": style.Compute(def.Style, "checkboxgroup/checkbox/label", def.CustomStyle),
+	}
 	for i := range def.Checkboxes {
 		def.Checkboxes[i].ID = def.Name + "-" + def.Checkboxes[i].Value
 		def.Checkboxes[i].Name = def.Name
-		def.Checkboxes[i].ContainerClass = append(ccc, def.Checkboxes[i].ContainerClass...)
-		def.Checkboxes[i].InputClass = append(cic, def.Checkboxes[i].InputClass...)
-		def.Checkboxes[i].LabelClass = append(clc, def.Checkboxes[i].LabelClass...)
+		def.Checkboxes[i].CustomStyle = def.Checkboxes[i].CustomStyle.AddBefore(cc)
 	}
 	return def.Checkboxes
 }
@@ -109,5 +109,6 @@ func (def D) message() message.D {
 	m := *def.Message
 	m.InputName = def.Name
 	m.Style = def.Style
+	m.CustomStyle = def.CustomStyle
 	return m
 }

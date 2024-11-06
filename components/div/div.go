@@ -8,10 +8,10 @@ import (
 type D struct {
 	//playground:import:github.com/jfbus/templ-components/components/button
 	//playground:default:button.C(button.D{Label:"Button"})
-	Content templ.Component
-	Class   style.D
+	Content     templ.Component
+	CustomStyle style.Custom
 }
 
 func (def D) class() string {
-	return def.Class.CSSClass(style.StyleDefault, "div")
+	return style.CSSClass(style.StyleDefault, "div", def.CustomStyle)
 }

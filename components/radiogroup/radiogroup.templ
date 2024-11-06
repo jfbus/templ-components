@@ -6,7 +6,7 @@ import (
 )
 
 templ C(def D) {
-	<div class={ def.containerClass() }>
+	<div class={ def.class() }>
 		for _, d := range def.radios() {
 			@radio.C(d)
 		}

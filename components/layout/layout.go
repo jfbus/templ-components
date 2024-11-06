@@ -24,7 +24,11 @@ type D struct {
 	Footer       *footer.D
 	State        map[string]string
 	NavbarHeight NavbarHeight
-	Class        style.D
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"layout":       style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
 }
 
 func (def D) state() string {
@@ -41,18 +45,18 @@ func (def D) state() string {
 
 func (def D) sidebar() sidebar.D {
 	d := *def.Sidebar
-	d.ContainerClass = append(d.ContainerClass, style.Add(def.NavbarHeight.paddingTop()))
+	d.CustomStyle = d.CustomStyle.AddBefore(style.Custom{"sidebar": {style.Add(def.NavbarHeight.paddingTop())}})
 	return d
 }
 
 func (def D) toasts() container.D {
 	if def.Toasts == nil {
 		return container.D{
-			Class: style.D{style.Add(def.NavbarHeight.paddingTop())},
+			CustomStyle: style.Custom{"sidebar": {style.Add(def.NavbarHeight.paddingTop())}},
 		}
 	}
 	d := *def.Toasts
-	d.Class = append(d.Class, style.Add(def.NavbarHeight.paddingTop()))
+	d.CustomStyle = d.CustomStyle.AddBefore(style.Custom{"toast/container": {style.Add(def.NavbarHeight.paddingTop())}})
 	return d
 }
 
@@ -62,5 +66,5 @@ func (def D) footer() footer.D {
 }
 
 func (def D) class() string {
-	return def.Class.CSSClass(style.StyleDefault, "layout")
+	return style.CSSClass(style.StyleDefault, "layout", def.CustomStyle)
 }

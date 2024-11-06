@@ -17,28 +17,30 @@ func ExampleC() {
 		Size: size.S,
 		Buttons: []button.D{
 			{
-				Icon:      icon.ArrowDownNarrowWide,
-				Label:     "Sort",
-				HideLabel: true,
-				Class: style.D{
-					style.ReplaceColor("bg", "bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600"),
+				Icon:  icon.ArrowDownNarrowWide,
+				Label: "Sort",
+				Style: button.StyleHideLabelAlways,
+				CustomStyle: style.Custom{
+					"button": style.D{
+						style.ReplaceVariants("bg", "bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600"),
+					},
 				},
 				Attributes: templ.Attributes{
 					"@click": "$dispatch('input', '')",
 				},
 			},
 			{
-				Icon:      icon.Heart,
-				Label:     "Rating",
-				HideLabel: true,
+				Icon:  icon.Heart,
+				Label: "Rating",
+				Style: button.StyleHideLabelAlways,
 				Attributes: templ.Attributes{
 					"@click": "$dispatch('input', 'rating')",
 				},
 			},
 			{
-				Icon:      icon.Banknote,
-				Label:     "Price",
-				HideLabel: true,
+				Icon:  icon.Banknote,
+				Label: "Price",
+				Style: button.StyleHideLabelAlways,
 				Attributes: templ.Attributes{
 					"@click": "$dispatch('input', 'price')",
 				},
@@ -48,5 +50,5 @@ func ExampleC() {
 			"x-model": "sort",
 		},
 	})
-	c.Render(context.TODO(), os.Stdout)
+	_ = c.Render(context.TODO(), os.Stdout)
 }

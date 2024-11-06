@@ -6,7 +6,7 @@ templ C(def D) {
 	if def.Header {
 		<th
 			scope="col"
-			class={ def.Class }
+			class={ def.class() }
 			if def.ColSpan != "" {
 				colspan={ def.ColSpan }
 			}
@@ -19,7 +19,7 @@ templ C(def D) {
 		</th>
 	} else {
 		<td
-			class={ def.Class }
+			class={ def.class() }
 			if def.ColSpan != "" {
 				colspan={ def.ColSpan }
 			}

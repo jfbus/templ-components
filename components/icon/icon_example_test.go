@@ -9,5 +9,5 @@ import (
 
 func ExampleC() {
 	c := icon.C(icon.Flower)
-	c.Render(context.TODO(), os.Stdout)
+	_ = c.Render(context.TODO(), os.Stdout)
 }

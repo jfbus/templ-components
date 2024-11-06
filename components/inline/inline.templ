@@ -9,7 +9,7 @@ templ C(def D) {
 	<div x-data={ def.defaultState() } @click.outside="edit = false">
 		<div :class="edit ? 'hidden' : 'block'" @click={ def.click() } class="cursor-pointer">
 			{ def.Value }
-			@icon.C(icon.D{Icon: icon.Pencil, Class: style.D{style.Set("inline-block ml-1")}, Size: def.IconSize})
+			@icon.C(icon.D{Icon: icon.Pencil, CustomStyle: style.Custom{"icon": style.D{style.Set("inline-block ml-1")}}, Size: def.IconSize})
 		</div>
 		<div :class="edit ? 'block' : 'hidden'">
 			@def.Edit
