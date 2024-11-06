@@ -165,26 +165,6 @@ func (c Custom) AddBefore(cc Custom) Custom {
 	return c
 }
 
-func (c Custom) StripPrefix(stripPrefix string) Custom {
-	if c == nil {
-		return nil
-	}
-	if stripPrefix != "" {
-		stripPrefix += "/"
-	}
-	cc := make(Custom, len(c))
-	for k, v := range c {
-		if stripPrefix != "" {
-			if !strings.HasPrefix(k, stripPrefix) {
-				continue
-			}
-			k = strings.TrimPrefix(k, stripPrefix)
-		}
-		cc[k] = v
-	}
-	return cc
-}
-
 var defaults = Defaults{}
 var skin = Defaults{}
 
