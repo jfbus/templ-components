@@ -1,0 +1,66 @@
+package dropzone
+
+import (
+	"github.com/jfbus/templ-components/components/form/validation/message"
+	"github.com/jfbus/templ-components/components/icon"
+	"github.com/jfbus/templ-components/components/loader"
+)
+
+templ C(def D) {
+	<div class={ def.class("dropzone") } x-data="{drag: false}">
+		<label
+			for={ def.id() }
+			class={ def.class("dropzone/label") }
+			:class={ "drag && '" + def.class("dropzone/label/drag") + "'" }
+			@dragover="drag=true"
+			@dragleave="drag=false"
+			@drop="drag=false"
+		>
+			@icon.C(def.icon())
+			@icon.C(def.dropIcon())
+			<p class={ def.class("dropzone/label/label") } :class="drag && 'hidden'">
+				@templ.Raw(def.dragMessage())
+			</p>
+			<p class={ def.class("dropzone/label/label") } :class="drag || 'hidden'">
+				@templ.Raw(def.dropMessage())
+			</p>
+			if def.AllowedTypesMessage != "" {
+				<p class={ def.class("dropzone/label/allowed") }>{ def.AllowedTypesMessage }</p>
+			}
+			if def.Loader {
+				<div id={ def.id() + "-indicator" } class="absolute top-0 left-0 flex items-center justify-center htmx-indicator">
+					@loader.C(loader.D{Size: def.IconSize})
+				</div>
+			}
+			if def.Message != nil {
+				@message.C(def.message())
+			}
+			<input
+				type="file"
+				id={ def.id() }
+				name={ def.Name }
+				if def.Multiple {
+					multiple
+				}
+				if def.Disabled {
+					disabled
+				}
+				if def.Invalid {
+					invalid
+				} else {
+					if def.Message != nil {
+						:invalid={ "hasError('" + def.Name + "')" }
+					}
+				}
+				if def.Message != nil {
+					:class={ "hasError('" + def.Name + "') && '" + def.inputClassInvalid() + "'" }
+				}
+				class={ def.class("dropzone/input") }
+				if def.Loader {
+					hx-indicator={ "#" + def.id() + "-indicator" }
+				}
+				{ def.Attributes... }
+			/>
+		</label>
+	</div>
+}
