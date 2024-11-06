@@ -32,7 +32,7 @@ func C(def D) templ.Component {
 		}
 		ctx = templ.ClearChildren(ctx)
 		if def.Header {
-			var templ_7745c5c3_Var2 = []any{def.Class}
+			var templ_7745c5c3_Var2 = []any{def.class()}
 			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var2...)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -93,7 +93,7 @@ func C(def D) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		} else {
-			var templ_7745c5c3_Var5 = []any{def.Class}
+			var templ_7745c5c3_Var5 = []any{def.class()}
 			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var5...)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err

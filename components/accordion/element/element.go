@@ -21,19 +21,14 @@ func init() {
 }
 
 type D struct {
-	ID           string
-	Open         bool
-	Title        string
-	Content      templ.Component
-	TitleClass   style.D
-	ContentClass style.D
-	Attributes   templ.Attributes
+	ID          string
+	Open        bool
+	Title       string
+	Content     templ.Component
+	CustomStyle style.Custom
+	Attributes  templ.Attributes
 }
 
-func (def D) titleClass() string {
-	return def.TitleClass.CSSClass(style.StyleDefault, "accordion/element/title")
-}
-
-func (def D) contentClass() string {
-	return def.TitleClass.CSSClass(style.StyleDefault, "accordion/element/content")
+func (def D) class(k string) string {
+	return style.CSSClass(style.StyleDefault, k, def.CustomStyle)
 }

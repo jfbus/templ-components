@@ -20,11 +20,15 @@ type D struct {
 	Style     style.Style
 	Message   string
 	Size      size.Size
-	Class     style.D
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"form/validation/message": style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
 }
 
 func (def D) class() string {
-	class := def.Class.CSSClass(def.Style, "form/validation/message")
+	class := style.CSSClass(def.Style, "form/validation/message", def.CustomStyle)
 	switch def.Size {
 	case size.S:
 		class += " text-xs"

@@ -35,7 +35,7 @@ func C(def D) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		var templ_7745c5c3_Var2 = []any{def.containerClass()}
+		var templ_7745c5c3_Var2 = []any{def.class("footer")}
 		templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var2...)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -57,7 +57,7 @@ func C(def D) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var4 = []any{def.class()}
+		var templ_7745c5c3_Var4 = []any{def.class("footer/content")}
 		templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var4...)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -100,7 +100,7 @@ func C(def D) templ.Component {
 				}
 			}
 		}
-		switch s := def.Sections.(type) {
+		switch s := def.sections().(type) {
 		case []a.D:
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<ul class=\"flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0 gap-4 md:gap-6\">")
 			if templ_7745c5c3_Err != nil {
@@ -154,7 +154,7 @@ func C(def D) templ.Component {
 		}
 		if (def.Brand != nil && def.Copyright != nil) || len(def.Social) > 0 {
 			if def.Brand != nil || def.Sections != nil {
-				var templ_7745c5c3_Var6 = []any{def.separatorClass()}
+				var templ_7745c5c3_Var6 = []any{def.class("footer/separator")}
 				templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var6...)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
@@ -181,7 +181,7 @@ func C(def D) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var8 = []any{def.footerClass()}
+			var templ_7745c5c3_Var8 = []any{def.class("footer/footer")}
 			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var8...)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -203,7 +203,7 @@ func C(def D) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var10 = []any{def.copyrightClass()}
+			var templ_7745c5c3_Var10 = []any{def.class("footer/copyright")}
 			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var10...)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -233,7 +233,7 @@ func C(def D) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var12 = []any{def.socialClass()}
+			var templ_7745c5c3_Var12 = []any{def.class("footer/social")}
 			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var12...)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err

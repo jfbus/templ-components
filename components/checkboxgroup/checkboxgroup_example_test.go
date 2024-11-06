@@ -16,5 +16,5 @@ func ExampleC() {
 			{Label: "Option 2", Value: "2"},
 		},
 	})
-	c.Render(context.TODO(), os.Stdout)
+	_ = c.Render(context.TODO(), os.Stdout)
 }

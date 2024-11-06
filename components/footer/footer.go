@@ -2,6 +2,8 @@ package footer
 
 import (
 	"github.com/a-h/templ"
+	"github.com/jfbus/templ-components/components/a"
+	"github.com/jfbus/templ-components/components/footer/section"
 	"github.com/jfbus/templ-components/components/social"
 	"github.com/jfbus/templ-components/components/style"
 )
@@ -63,31 +65,45 @@ type D struct {
 	//playground:import:github.com/jfbus/templ-components/components/a
 	//playground:import:github.com/jfbus/templ-components/components/footer/section
 	//playground:default:[]section.D{{Title:"Section 1", Links: []a.D{{Text: "Link 1"},{Text: "Link 2"}}}, {Title:"Section 2", Links: []a.D{{Text: "Link 1"},{Text: "Link 2"}}}, {Title:"Section 3", Links: []a.D{{Text: "Link 1"},{Text: "Link 2"}}}}
-	Sections       any
-	Social         []social.D
-	ContainerClass style.D
+	Sections any
+	Social   []social.D
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"footer":               style.D{style.Add("...")},
+	// 		"footer/content":       style.D{style.Add("...")},
+	// 		"footer/social":        style.D{style.Add("...")},
+	// 		"footer/separator":     style.D{style.Add("...")},
+	// 		"footer/copyright":     style.D{style.Add("...")},
+	// 		"footer/footer":        style.D{style.Add("...")},
+	// 		"footer/section/link":  style.D{style.Add("...")},
+	// 		"footer/section/title": style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
 }
 
-func (def D) containerClass() string {
-	return def.ContainerClass.CSSClass(def.Style, "footer")
+func (def D) class(k string) string {
+	return style.CSSClass(def.Style, k, def.CustomStyle)
 }
 
-func (def D) class() string {
-	return style.D{}.CSSClass(def.Style, "footer/content")
-}
-
-func (def D) separatorClass() string {
-	return style.D{}.CSSClass(def.Style, "footer/separator")
-}
-
-func (def D) copyrightClass() string {
-	return style.D{}.CSSClass(def.Style, "footer/copyright")
-}
-
-func (def D) footerClass() string {
-	return style.D{}.CSSClass(def.Style, "footer/footer")
-}
-
-func (def D) socialClass() string {
-	return style.D{}.CSSClass(def.Style, "social/social")
+func (def D) sections() any {
+	switch secs := def.Sections.(type) {
+	case []a.D:
+		cc := style.Custom{
+			"a": style.Compute(def.Style, "footer/section/link", def.CustomStyle),
+		}
+		for i := range secs {
+			secs[i].CustomStyle = secs[i].CustomStyle.AddBefore(cc)
+		}
+		return secs
+	case []section.D:
+		cc := style.Custom{
+			"footer/section/link":  style.Compute(def.Style, "footer/section/link", def.CustomStyle),
+			"footer/section/title": style.Compute(def.Style, "footer/section/title", def.CustomStyle),
+		}
+		for i := range secs {
+			secs[i].CustomStyle = secs[i].CustomStyle.AddBefore(cc)
+		}
+		return secs
+	}
+	return def.Sections
 }

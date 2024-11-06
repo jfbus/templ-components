@@ -36,6 +36,11 @@ func init() {
 				style.Set("inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg"),
 			},
 		},
+		"toast/content": {
+			style.StyleDefault: {
+				style.Set("ms-3 text-sm font-normal"),
+			},
+		},
 	})
 }
 
@@ -55,14 +60,15 @@ type D struct {
 	//    // your custom content
 	//  }
 	Content string
-	// ContainerClass stores overrides to the container CSS classes.
-	ContainerClass style.D
-	// IconClass stores overrides to the icon CSS classes.
-	IconClass style.D
-	// Close defines if a close button will be added or if the toast will close after AutoCloseDelay.
-	Close Close
+	Close   Close
 	// AutoCloseDelay defines the close delay (default 5s).
 	AutoCloseDelay time.Duration
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"toast":      style.D{style.Add("...")},
+	// 		"toast/icon": style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
 }
 
 func (def *D) id() string {
@@ -94,12 +100,8 @@ func (def D) icon() string {
 	}
 }
 
-func (def D) containerClass() string {
-	return def.ContainerClass.CSSClass(def.Style, "toast")
-}
-
-func (def D) iconClass() string {
-	return def.IconClass.CSSClass(def.Style, "toast/icon")
+func (def D) class(k string) string {
+	return style.CSSClass(def.Style, k, def.CustomStyle)
 }
 
 func (def D) closeDelayMS() int {

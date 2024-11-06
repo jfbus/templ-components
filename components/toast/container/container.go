@@ -36,7 +36,11 @@ var DefaultID = "toasts"
 type D struct {
 	ID    string
 	Style style.Style
-	Class style.D
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"toast/container": style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
 }
 
 func (def D) id() string {
@@ -47,5 +51,5 @@ func (def D) id() string {
 }
 
 func (def D) class() string {
-	return def.Class.CSSClass(def.Style, "toast/container")
+	return style.CSSClass(def.Style, "toast/container", def.CustomStyle)
 }

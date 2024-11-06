@@ -21,12 +21,12 @@ func init() {
 				style.Set("fixed top-0 left-0 z-40 flex items-center justify-center w-full h-full px-4 py-5 bg-black/40"),
 			},
 		},
-		"modal/container": {
+		"modal": {
 			style.StyleDefault: {
 				style.Set("w-full max-w-screen-md max-h-full rounded-[10px] bg-white dark:bg-dark-2 overflow-y-auto"),
 			},
 		},
-		"modal/title/container": {
+		"modal/title": {
 			style.StyleDefault: {
 				style.Set("flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"),
 			},
@@ -42,6 +42,11 @@ func init() {
 			},
 			StyleButtonsRight: {
 				style.Add("justify-end"),
+			},
+		},
+		"modal/close": {
+			style.StyleDefault: {
+				style.Set("rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 inline-flex items-center justify-center"),
 			},
 		},
 	})
@@ -75,42 +80,32 @@ type D struct {
 	// Add modal.Close() to your success response to close the modal.
 	//playground:default:&button.D{Label:"OK"}
 	Confirm *button.D
-	// Class adds custom CSS classes.
-	Class style.D
-	// ButtonContainerClass defines the class for the buttons containers.
-	ButtonContainerClass style.D
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"modal/background":  style.D{style.Add("...")},
+	// 		"modal":             style.D{style.Add("...")},
+	// 		"modal/title":       style.D{style.Add("...")},
+	// 		"modal/title/title": style.D{style.Add("...")},
+	// 		"modal/close":       style.D{style.Add("...")},
+	// 		"modal/buttons":     style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
 }
 
 func (def D) id() string {
 	return def.ID
 }
 
-func (def D) bgClass() string {
-	return style.D{}.CSSClass(def.Style, "modal/background")
+func (def D) class(k string) string {
+	return style.CSSClass(def.Style, k, def.CustomStyle)
 }
 
 func (def D) containerClass() string {
+	s := style.Compute(def.Style, "modal", def.CustomStyle)
 	if def.MaxWidth != "" {
-		return style.D{style.Replace(string(MaxWidthScreenMD), string(def.MaxWidth))}.
-			CSSClass(def.Style, "modal/container")
+		s = append(s, style.Replace(string(MaxWidthScreenMD), string(def.MaxWidth)))
 	}
-	return style.D{}.CSSClass(def.Style, "modal/container")
-}
-
-func (def D) titleContainerClass() string {
-	return style.D{}.CSSClass(def.Style, "modal/title/container")
-}
-
-func (def D) titleTitleClass() string {
-	return style.D{}.CSSClass(def.Style, "modal/title/title")
-}
-
-func (def D) class() string {
-	return def.Class.CSSClass(def.Style, "modal")
-}
-
-func (def D) buttonContainerClass() string {
-	return def.Class.CSSClass(def.Style, "modal/buttons")
+	return s.String()
 }
 
 func (def D) close() button.D {

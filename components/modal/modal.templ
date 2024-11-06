@@ -12,7 +12,7 @@ import (
 templ C(def D) {
 	<div
 		tabindex="-1"
-		class={ def.bgClass() }
+		class={ def.class("modal/background") }
 		x-data="{}"
 		x-ref={ def.id() }
 		x-transition
@@ -21,18 +21,17 @@ templ C(def D) {
 			class={ def.containerClass() }
 			@click.outside={ "$refs." + def.id() + ".remove()" }
 		>
-			<div class={ def.titleContainerClass() }>
-				<h3 class={ def.titleTitleClass() }>
+			<div class={ def.class("modal/title") }>
+				<h3 class={ def.class("modal/title/title") }>
 					{ def.Title }
 				</h3>
 				@button.C(button.D{
-					Icon:      icon.X,
-					Label:     "Close",
-					HideLabel: button.HideLabelAlways,
-					Size:      size.Normal,
-					Style:     button.StyleNoBorder,
-					Class: style.D{
-						style.Set("rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 inline-flex items-center justify-center"),
+					Icon:  icon.X,
+					Label: "Close",
+					Size:  size.Normal,
+					Style: button.StyleNoBorder | button.StyleHideLabelAlways,
+					CustomStyle: style.Custom{
+						"button": {style.Set(def.class("modal/close"))},
 					},
 					Attributes: templ.Attributes{
 						"@click.stop": "$refs." + def.id() + ".remove()",
@@ -65,7 +64,7 @@ templ body(def D) {
 		}
 	</div>
 	if def.Close != nil || def.Confirm != nil {
-		<div class={ def.buttonContainerClass() }>
+		<div class={ def.class("modal/buttons") }>
 			if def.Close != nil {
 				@button.C(def.close())
 			}

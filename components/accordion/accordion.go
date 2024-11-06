@@ -15,10 +15,12 @@ type D struct {
 	//templplayground:import:github.com/jfbus/templ-components/components/helper
 	//templplayground:default:[]element.D{{Title: "Section 1", Content:helpers.S("Content 1")},{Title: "Section 2", Content:helpers.S("Content 2")})
 	Children []element.D
-	// TitleClass overrides the class of the elements title.
-	TitleClass style.D
-	// ContentClass overrides the class of the element content.
-	ContentClass style.D
+	// CustomStyle defines a custom style for children elements.
+	// 	style.Custom{
+	// 		"accordion/element/title":   style.D{style.Add("text-xl")},
+	// 		"accordion/element/content": style.D{style.Add("text-sm")},
+	//	}
+	CustomStyle style.Custom
 }
 
 func (def D) id() string {
@@ -51,8 +53,7 @@ func (def D) defaultState() string {
 func (def D) children() []element.D {
 	for i := range def.Children {
 		def.Children[i].ID = def.ID + strconv.Itoa(i+1)
-		def.Children[i].TitleClass = append(def.TitleClass, def.Children[i].TitleClass...)
-		def.Children[i].ContentClass = append(def.ContentClass, def.Children[i].ContentClass...)
+		def.Children[i].CustomStyle.AddBefore(def.CustomStyle)
 	}
 	return def.Children
 }

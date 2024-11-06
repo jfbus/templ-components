@@ -3,7 +3,7 @@ package radio
 import "github.com/jfbus/templ-components/components/label"
 
 templ C(def D) {
-	<div class={ def.containerClass() }>
+	<div class={ def.class("radio") }>
 		<input
 			type="radio"
 			id={ def.id() }
@@ -17,7 +17,7 @@ templ C(def D) {
 			if def.Disabled {
 				disabled
 			}
-			class={ def.inputClass() }
+			class={ def.class("radio/input") }
 			{ def.Attributes... }
 		/>
 		@label.C(def.label())

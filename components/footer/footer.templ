@@ -7,8 +7,8 @@ import (
 )
 
 templ C(def D) {
-	<footer class={ def.containerClass() }>
-		<div class={ def.class() }>
+	<footer class={ def.class("footer") }>
+		<div class={ def.class("footer/content") }>
 			if def.Brand != nil {
 				@def.Brand
 			} else {
@@ -18,7 +18,7 @@ templ C(def D) {
 					</span>
 				}
 			}
-			switch s := def.Sections.(type) {
+			switch s := def.sections().(type) {
 				case []a.D:
 					<ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0 gap-4 md:gap-6">
 						for _,l := range s {
@@ -39,13 +39,13 @@ templ C(def D) {
 		</div>
 		if (def.Brand != nil && def.Copyright != nil) || len(def.Social)>0 {
 			if def.Brand != nil || def.Sections != nil {
-				<hr class={ def.separatorClass() }/>
+				<hr class={ def.class("footer/separator") }/>
 			}
-			<div class={ def.footerClass() }>
-				<span class={ def.copyrightClass() }>
+			<div class={ def.class("footer/footer") }>
+				<span class={ def.class("footer/copyright") }>
 					@def.Copyright
 				</span>
-				<div class={ def.socialClass() }>
+				<div class={ def.class("footer/social") }>
 					for _, s := range def.Social {
 						@social.C(s)
 					}

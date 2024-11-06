@@ -30,27 +30,31 @@ type D struct {
 	Buttons []button.D
 	// Size defines the buttons size (shortcut for Buttons.Size).
 	Size size.Size
-	// Class defines additional CSS class for the buttongroup.
-	Class style.D
-	// Class defines the default CSS class for the buttons (if not set).
-	ButtonClass style.D
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"buttongroup":        style.D{style.Add("...")},
+	//		"buttongroup/button": style.D{style.Add("...")},
+	//	}
+	CustomStyle style.Custom
 	// Attributes stores additional attributes (e.g. HTMX attributes).
 	Attributes templ.Attributes
 }
 
 func (def D) buttons() []button.D {
-	bc := def.ButtonClass.WithDefault(style.StyleDefault, "buttongroup/button")
+	bcs := style.Custom{
+		"button": style.Compute(style.StyleDefault, "buttongroup/button", def.CustomStyle),
+	}
 	bs := make([]button.D, len(def.Buttons))
 	for i := range def.Buttons {
 		bs[i] = def.Buttons[i]
 		if def.Size != size.Inherit {
 			bs[i].Size = def.Size
 		}
-		bs[i].Class = append(bc, bs[i].Class...)
+		bs[i].CustomStyle = bs[i].CustomStyle.AddBefore(bcs)
 	}
 	return bs
 }
 
-func (def D) groupClass() string {
-	return def.Class.CSSClass(style.StyleDefault, "buttongroup")
+func (def D) class(k string) string {
+	return style.CSSClass(style.StyleDefault, k, def.CustomStyle)
 }

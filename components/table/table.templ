@@ -3,7 +3,7 @@ package table
 import "github.com/jfbus/templ-components/components/table/row"
 
 templ C(def D) {
-	<table class={ def.tableClass() }>
+	<table class={ def.class("table") }>
 		if def.Header != nil {
 			<thead class={ def.headerClass() }>
 				@row.C(def.header())

@@ -13,5 +13,5 @@ func ExampleC() {
 		Style:       toast.StyleError,
 		Content:     "An error occurred !",
 	})
-	c.Render(context.TODO(), os.Stdout)
+	_ = c.Render(context.TODO(), os.Stdout)
 }

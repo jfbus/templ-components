@@ -17,12 +17,14 @@ const (
 )
 
 const (
-	StylePill        style.Style = 1 << 8
-	StyleAlternative style.Style = 1 << 9
-	StyleOutline     style.Style = 1 << 10
-	StyleOutlinePill style.Style = 1 << 11
-	StyleNoBorder    style.Style = 1 << 12
-	StyleFullWidth   style.Style = 1 << 13
+	StylePill            style.Style = 1 << 8
+	StyleAlternative     style.Style = 1 << 9
+	StyleOutline         style.Style = 1 << 10
+	StyleOutlinePill     style.Style = 1 << 11
+	StyleNoBorder        style.Style = 1 << 12
+	StyleFullWidth       style.Style = 1 << 13
+	StyleHideLabelAlways style.Style = 1 << 14
+	StyleHideLabelSmall  style.Style = 1 << 15
 )
 
 type HideLabel int
@@ -58,6 +60,14 @@ func init() {
 				style.Add("cursor-not-allowed"),
 			},
 		},
+		"button/label": {
+			StyleHideLabelAlways: {
+				style.Set("sr-only"),
+			},
+			StyleHideLabelSmall: {
+				style.Set("hidden sm:block"),
+			},
+		},
 	})
 }
 
@@ -69,8 +79,6 @@ type D struct {
 	Type Type
 	// Label is the button label.
 	Label string
-	// HideLabel defines if the label is displayed or only available to screenreaders.
-	HideLabel HideLabel
 	// Style is the button style (Normal, Pill, Outline ou Pill|Outline).
 	Style style.Style
 	// Size defines the input size (size.XS, size.S, size.Normal (default) size.L or size.XL).
@@ -86,8 +94,11 @@ type D struct {
 	Disabled bool
 	// Loader displays a spinning loader when an HTMX action is triggered by the input.
 	Loader bool
-	// Class overrides the default CSS class for the button.
-	Class style.D
+	// CustomStyle defines a custom style.
+	// 	style.Custom{
+	// 		"button": style.D{style.Add("text-sm")},
+	//	}
+	CustomStyle style.Custom
 	// Attributes stores additional attributes (e.g. HTMX attributes).
 	Attributes templ.Attributes
 }
@@ -107,7 +118,7 @@ func (def D) buttonType() string {
 }
 
 func (def D) buttonClass() string {
-	class := def.Class.CSSClass(def.style(), "button")
+	class := style.CSSClass(def.style(), "button", def.CustomStyle)
 	switch {
 	case def.noLabel() && def.Size >= size.Normal:
 		class += " p-2.5 text-sm"
@@ -133,22 +144,15 @@ func (def D) buttonClass() string {
 }
 
 func (def D) noLabel() bool {
-	return def.HideLabel == HideLabelAlways || def.Label == ""
+	return def.Style&StyleHideLabelAlways != 0 || def.Label == ""
 }
 
 func (def D) labelClass() string {
-	switch def.HideLabel {
-	case HideLabelAlways:
-		return "sr-only"
-	case HideLabelSmall:
-		return "hidden sm:block"
-	default:
-		return ""
-	}
+	return style.CSSClass(def.style(), "button/label", def.CustomStyle)
 }
 
 func (def D) iconSize() size.Size {
-	if def.HideLabel == HideLabelAlways || def.Label == "" {
+	if def.noLabel() {
 		return def.Size + 1
 	}
 	switch def.Size {
@@ -161,19 +165,18 @@ func (def D) iconSize() size.Size {
 	}
 }
 
-func (def D) iconClass() style.D {
+func (def D) iconCustomStyle() style.Custom {
 	if def.noLabel() {
-		return style.D{}
+		return style.Custom{}
 	}
 	switch {
-	case def.HideLabel == HideLabelSmall && def.IconPosition == position.End:
-		return style.D{style.Set("sm:ms-2")}
+	case def.Style&StyleHideLabelSmall != 0 && def.IconPosition == position.End:
+		return style.Custom{"icon": style.D{style.Set("sm:ms-2")}}
 	case def.IconPosition == position.End:
-		return style.D{style.Set("ms-2")}
-	case def.HideLabel == HideLabelSmall:
-		return style.D{style.Set("sm:me-2")}
+		return style.Custom{"icon": style.D{style.Set("ms-2")}}
+	case def.Style&StyleHideLabelSmall != 0:
+		return style.Custom{"icon": style.D{style.Set("sm:me-2")}}
 	default:
-		return style.D{style.Set("me-2")}
-
+		return style.Custom{"icon": style.D{style.Set("me-2")}}
 	}
 }

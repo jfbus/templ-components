@@ -5,7 +5,7 @@ import "github.com/jfbus/templ-components/components/button"
 templ C(def D) {
 	<div
 		role="group"
-		class={ def.groupClass() }
+		class={ def.class("buttongroup") }
 		{ def.Attributes... }
 	>
 		for _, bd := range def.buttons() {

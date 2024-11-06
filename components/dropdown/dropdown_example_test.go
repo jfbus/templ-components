@@ -10,12 +10,14 @@ import (
 	"github.com/jfbus/templ-components/components/dropdown"
 )
 
-var usernameComponent templ.Component
+func usernameComponent() templ.Component {
+	return templ.Raw("User Name")
+}
 
 func ExampleC() {
 	c := dropdown.C(dropdown.D{
 		Button: button.D{Label: "Menu"},
-		Header: usernameComponent,
+		Header: usernameComponent(),
 		Links: [][]a.D{{
 			{Href: "/profile", Text: "Profile"},
 		}, {
@@ -23,5 +25,5 @@ func ExampleC() {
 		}},
 	})
 
-	c.Render(context.TODO(), os.Stdout)
+	_ = c.Render(context.TODO(), os.Stdout)
 }

@@ -3,10 +3,10 @@ package section
 import "github.com/jfbus/templ-components/components/a"
 
 templ C(def D) {
-	<h2 class={ def.titleClass() }>{ def.Title }</h2>
+	<h2 class={ def.class("footer/section/title") }>{ def.Title }</h2>
 	<ul>
 		for _, l := range def.Links {
-			<li class={ def.linkClass() }>
+			<li class={ def.class("footer/section/link") }>
 				@a.C(l)
 			</li>
 		}
