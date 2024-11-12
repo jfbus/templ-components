@@ -16,7 +16,7 @@ const (
 func init() {
 	style.SetDefaults(style.Defaults{
 		"footer": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8"),
 			},
 			StyleBorder: {
@@ -27,27 +27,27 @@ func init() {
 			},
 		},
 		"footer/content": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("md:flex md:items-center md:justify-between"),
 			},
 		},
 		"footer/separator": {
-			style.StyleDefault: {
-				style.Set("my-6 sm:mx-auto lg:my-8"),
+			style.Default: {
+				style.Set("my-6 sm:mx-auto"),
 			},
 		},
 		"footer/copyright": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("block text-sm sm:text-center"),
 			},
 		},
 		"footer/footer": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("sm:flex sm:items-center sm:justify-between"),
 			},
 		},
 		"footer/social": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("flex mt-4 sm:justify-center sm:mt-0"),
 			},
 		},

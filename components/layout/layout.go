@@ -66,5 +66,5 @@ func (def D) footer() footer.D {
 }
 
 func (def D) class() string {
-	return style.CSSClass(style.StyleDefault, "layout", def.CustomStyle)
+	return style.CSSClass(style.Default, "layout", def.CustomStyle)
 }

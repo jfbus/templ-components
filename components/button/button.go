@@ -30,7 +30,7 @@ const (
 func init() {
 	style.SetDefaults(style.Defaults{
 		"button": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("rounded-lg font-medium focus:ring-4 focus:outline-none"),
 			},
 			StylePill: {
@@ -45,8 +45,38 @@ func init() {
 			StyleFullWidth: {
 				style.Add("block w-full text-center"),
 			},
-			style.StyleDisabled: {
+			style.Disabled: {
 				style.Add("cursor-not-allowed"),
+			},
+			style.SizeXS: {
+				style.Add("p-2 text-xs"),
+			},
+			style.SizeS: {
+				style.Add("p-2 text-sm"),
+			},
+			style.SizeNormal: {
+				style.Add("p-2.5 text-sm"),
+			},
+			style.SizeL: {
+				style.Add("p-3 text-base"),
+			},
+			style.SizeXL: {
+				style.Add("p-3.5 text-base"),
+			},
+			StyleHideLabelAlways | style.SizeXS: {
+				style.Replace("p-2", "p-1"),
+			},
+			StyleHideLabelAlways | style.SizeS: {
+				style.Replace("p-2", "p-1.5"),
+			},
+			StyleHideLabelAlways | style.SizeNormal: {
+				style.Replace("p-2.5", "p-2"),
+			},
+			StyleHideLabelAlways | style.SizeL: {
+				style.Replace("p-3", "p-2.5"),
+			},
+			StyleHideLabelAlways | style.SizeXL: {
+				style.Replace("p-3.5", "p-3"),
 			},
 		},
 		"button/label": {
@@ -86,6 +116,8 @@ type D struct {
 	Disabled bool
 	// Loader displays a spinning loader when an HTMX action is triggered by the input.
 	Loader bool
+	// StyleKey defines the style key to use ("button" by default).
+	StyleKey string
 	// CustomStyle defines a custom style.
 	// 	style.Custom{
 	// 		"button": style.D{style.Add("text-sm")},
@@ -95,11 +127,26 @@ type D struct {
 	Attributes templ.Attributes
 }
 
-func (def D) style() style.Style {
-	if def.Disabled {
-		return def.Style | style.StyleDisabled
+func (def D) size() size.Size {
+	if def.Size == 0 {
+		return size.Normal
 	}
-	return def.Style
+	return def.Size
+}
+
+func (def D) style() style.Style {
+	st := def.Style | style.Size(def.size())
+	if def.Disabled {
+		return st | style.Disabled
+	}
+	return st
+}
+
+func (def D) styleKey() string {
+	if def.StyleKey == "" {
+		return "button"
+	}
+	return def.StyleKey
 }
 
 func (def D) buttonType() string {
@@ -110,25 +157,7 @@ func (def D) buttonType() string {
 }
 
 func (def D) buttonClass() string {
-	class := style.CSSClass(def.style(), "button", def.CustomStyle)
-	switch {
-	case def.noLabel() && def.Size >= size.Normal:
-		class += " p-2.5 text-sm"
-	case def.noLabel() && def.Size == size.XS:
-		class += " p-1 text-sm"
-	case def.noLabel():
-		class += " p-1.5 text-sm"
-	case def.Size == size.XS:
-		class += " p-2 text-xs"
-	case def.Size == size.S:
-		class += " p-2 text-sm"
-	case def.Size == size.L:
-		class += " p-3 text-base"
-	case def.Size == size.XL:
-		class += " p-3.5 text-base"
-	default:
-		class += " p-2.5 text-sm"
-	}
+	class := style.CSSClass(def.style(), def.styleKey(), def.CustomStyle)
 	if def.Icon != "" || def.Loader {
 		class += " inline-flex items-center justify-center"
 	}
@@ -140,14 +169,14 @@ func (def D) noLabel() bool {
 }
 
 func (def D) labelClass() string {
-	return style.CSSClass(def.style(), "button/label", def.CustomStyle)
+	return style.CSSClass(def.style(), def.styleKey()+"/label", def.CustomStyle)
 }
 
 func (def D) iconSize() size.Size {
 	if def.noLabel() {
-		return def.Size + 1
+		return def.size() + 1
 	}
-	switch def.Size {
+	switch def.size() {
 	case size.XS:
 		return size.XS
 	case size.L, size.XL:
@@ -163,12 +192,12 @@ func (def D) iconCustomStyle() style.Custom {
 	}
 	switch {
 	case def.Style&StyleHideLabelSmall != 0 && def.IconPosition == position.End:
-		return style.Custom{"icon": style.D{style.Set("sm:ms-2")}}
+		return style.CustomAdd("sm:ms-2")
 	case def.IconPosition == position.End:
-		return style.Custom{"icon": style.D{style.Set("ms-2")}}
+		return style.CustomAdd("ms-2")
 	case def.Style&StyleHideLabelSmall != 0:
-		return style.Custom{"icon": style.D{style.Set("sm:me-2")}}
+		return style.CustomAdd("sm:me-2")
 	default:
-		return style.Custom{"icon": style.D{style.Set("me-2")}}
+		return style.CustomAdd("me-2")
 	}
 }

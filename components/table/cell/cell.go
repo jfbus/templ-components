@@ -14,5 +14,5 @@ type D struct {
 }
 
 func (def D) class() string {
-	return style.CSSClass(style.StyleDefault, "table/cell", def.CustomStyle)
+	return style.CSSClass(style.Default, "table/cell", def.CustomStyle)
 }

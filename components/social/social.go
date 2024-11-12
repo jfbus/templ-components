@@ -51,5 +51,5 @@ func (def D) icon() string {
 }
 
 func (def D) class() string {
-	return style.CSSClass(style.StyleDefault, "social", def.CustomStyle)
+	return style.CSSClass(style.Default, "social", def.CustomStyle)
 }

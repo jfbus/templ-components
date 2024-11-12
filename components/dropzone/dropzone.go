@@ -12,40 +12,40 @@ import (
 func init() {
 	style.SetDefaults(style.Defaults{
 		"dropzone": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("relative flex items-center justify-center w-full"),
 			},
 		},
 		"dropzone/input": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"),
 			},
-			style.StyleDisabled: {
+			style.Disabled: {
 				style.Add("cursor-not-allowed"),
 			},
 		},
 		"dropzone/label": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("w-full flex flex-col items-center justify-center text-center py-6 gap-2 bg-gray-50 text-gray-500 dark:text-gray-400 dark:bg-gray-700 dark:border-gray-600 border-2 border-gray-300 border-dashed rounded-lg"),
 			},
 		},
 		"dropzone/label/drag": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("!bg-gray-100 !border-solid"),
 			},
 		},
 		"dropzone/label/icon": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("w-8 h-8"),
 			},
 		},
 		"dropzone/label/label": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("text-sm"),
 			},
 		},
 		"dropzone/label/allowed": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("text-xs"),
 			},
 		},
@@ -64,7 +64,7 @@ type D struct {
 	Multiple bool
 	// AllowedTypes is the list of allowed mime types
 	AllowedTypes []string
-	// Style defines the style (style.StyleDefault, StyleValid or StyleInvalid).
+	// Style defines the style (style.Default, Valid or Invalid).
 	Style style.Style
 	// Icon allows you to define a custom icon.
 	Icon *icon.D
@@ -111,10 +111,10 @@ func (def D) dropMessage() string {
 
 func (def D) style() style.Style {
 	if def.Invalid {
-		return def.Style | style.StyleInvalid
+		return def.Style | style.Invalid
 	}
 	if def.Disabled {
-		return def.Style | style.StyleDisabled
+		return def.Style | style.Disabled
 	}
 	return def.Style
 }
@@ -177,7 +177,7 @@ func (def D) class(k string) string {
 }
 
 func (def D) inputClassInvalid() string {
-	return style.Delta(def.Style, style.StyleInvalid, "dropzone/input", def.CustomStyle)
+	return style.Delta(def.Style, style.Invalid, "dropzone/input", def.CustomStyle)
 }
 
 func (def D) message() message.D {

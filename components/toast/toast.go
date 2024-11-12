@@ -27,17 +27,17 @@ const (
 func init() {
 	style.SetDefaults(style.Defaults{
 		"toast": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("flex items-center w-full max-w-xs p-4 rounded-lg shadow"),
 			},
 		},
 		"toast/icon": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg"),
 			},
 		},
 		"toast/content": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("ms-3 text-sm font-normal"),
 			},
 		},

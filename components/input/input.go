@@ -24,15 +24,24 @@ const (
 func init() {
 	style.SetDefaults(style.Defaults{
 		"input/input": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("block w-full border rounded-lg"),
 			},
-			style.StyleDisabled: {
+			style.Disabled: {
 				style.Add("cursor-not-allowed"),
+			},
+			style.SizeS: {
+				style.Add("p-2 text-xs"),
+			},
+			style.SizeNormal: {
+				style.Add("p-2.5 text-sm"),
+			},
+			style.SizeL: {
+				style.Add("p-4 text-base"),
 			},
 		},
 		"input/icon": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("absolute inset-y-0 flex items-center pointer-events-none"),
 			},
 		},
@@ -47,7 +56,7 @@ type D struct {
 	Name string
 	// Type is the input type (text, password, ...).
 	Type Type
-	// Style defines the style (style.StyleDefault, StyleValid or StyleInvalid).
+	// Style defines the style (style.Default, Valid or Invalid).
 	Style style.Style
 	// Label is the input label.
 	Label any
@@ -87,14 +96,22 @@ type D struct {
 	Attributes templ.Attributes
 }
 
+func (def D) size() size.Size {
+	if def.Size == 0 {
+		return size.Normal
+	}
+	return def.Size
+}
+
 func (def D) style() style.Style {
+	st := def.Style | style.Size(def.size())
 	if def.Invalid {
-		return def.Style | style.StyleInvalid
+		return st | style.Invalid
 	}
 	if def.Disabled {
-		return def.Style | style.StyleDisabled
+		return st | style.Disabled
 	}
-	return def.Style
+	return st
 }
 
 func (def D) label() label.D {
@@ -123,7 +140,7 @@ func (def D) label() label.D {
 	case label.D:
 		l.InputID = def.id()
 		l.InputName = def.Name
-		if l.Style == style.StyleDefault {
+		if l.Style == style.Default {
 			l.Style = def.style()
 		}
 		l.NoValidation = def.Message == nil
@@ -169,14 +186,6 @@ func (def D) iconSize() size.Size {
 
 func (def D) inputClass() string {
 	class := style.CSSClass(def.style(), "input/input", def.CustomStyle)
-	switch def.Size {
-	case size.S:
-		class += " p-2 text-xs"
-	case size.L:
-		class += " p-4 text-base"
-	default:
-		class += " p-2.5 text-sm"
-	}
 	switch {
 	case def.Icon == "":
 		return class
@@ -192,7 +201,7 @@ func (def D) containerClass() string {
 }
 
 func (def D) inputClassInvalid() string {
-	return style.Delta(def.Style, style.StyleInvalid, "input/input", def.CustomStyle)
+	return style.Delta(def.Style, style.Invalid, "input/input", def.CustomStyle)
 }
 
 func (def D) message() message.D {

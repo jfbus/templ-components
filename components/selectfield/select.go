@@ -22,7 +22,7 @@ type D struct {
 	ID string
 	// Name is the tag name.
 	Name string
-	// Style is the style (style.StyleDefault, style.StyleValid or style.StyleInvalid).
+	// Style is the style (style.Default, style.Valid or style.Invalid).
 	Style style.Style
 	// Label is the label (either a string or a label.D).
 	Label any
@@ -59,11 +59,19 @@ func (def D) id() string {
 	return def.Name
 }
 
-func (def D) style() style.Style {
-	if def.Disabled {
-		return def.Style | style.StyleDisabled
+func (def D) size() size.Size {
+	if def.Size == 0 {
+		return size.Normal
 	}
-	return def.Style
+	return def.Size
+}
+
+func (def D) style() style.Style {
+	st := def.Style | style.Size(def.size())
+	if def.Disabled {
+		return st | style.Disabled
+	}
+	return st
 }
 
 func (def D) label() label.D {
@@ -84,19 +92,6 @@ func (def D) label() label.D {
 
 func (def D) class(k string) string {
 	return style.CSSClass(def.style(), k, def.CustomStyle)
-}
-
-func (def D) inputClass() string {
-	class := style.CSSClass(def.style(), "select/input", def.CustomStyle)
-	switch def.Size {
-	case size.S:
-		class += " p-2 text-xs"
-	case size.L:
-		class += " p-4 text-base"
-	default:
-		class += " p-2.5 text-sm"
-	}
-	return class
 }
 
 func (def D) message() message.D {

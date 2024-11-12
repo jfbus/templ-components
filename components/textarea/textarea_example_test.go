@@ -18,5 +18,5 @@ func ExampleC() {
 		Size:  size.S,
 		Icon:  icon.Text,
 	})
-	c.Render(context.TODO(), os.Stdout)
+	_ = c.Render(context.TODO(), os.Stdout)
 }

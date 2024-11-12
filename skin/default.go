@@ -13,17 +13,17 @@ import (
 
 var Default = style.Defaults{
 	"layout": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"),
 		},
 	},
 	"accordion/title": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("text-gray-500 focus:ring-gray-200 dark:focus:ring-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"),
 		},
 	},
 	"button": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"),
 		},
 		button.StyleAlternative: {
@@ -37,7 +37,7 @@ var Default = style.Defaults{
 		},
 	},
 	"checkbox/input": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"),
 		},
 	},
@@ -47,17 +47,17 @@ var Default = style.Defaults{
 		},
 	},
 	"dropdown": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("bg-white divide-gray-100 dark:bg-gray-700 dark:divide-gray-600"),
 		},
 	},
 	"dropdown/link": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("hover:bg-gray-100 dark:hover:bg-gray-600"),
 		},
 	},
 	"footer": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("bg-white dark:bg-gray-800"),
 		},
 		footer.StyleSticky: {
@@ -65,38 +65,38 @@ var Default = style.Defaults{
 		},
 	},
 	"footer/separator": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("border-gray-200 dark:border-gray-700"),
 		},
 	},
 	"footer/copyright": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("text-gray-500 dark:text-gray-400"),
 		},
 	},
 	"footer/social": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("flex mt-4 sm:justify-center sm:mt-0"),
 		},
 	},
 	"footer/section/title": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("text-gray-900 dark:text-white"),
 		},
 	},
 	"footer/section/link": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("text-gray-500 dark:text-gray-400"),
 		},
 	},
 	"form/validation/message": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("text-red-600 dark:text-red-500"),
 		},
-		style.StyleValid: {
+		style.Valid: {
 			style.Set("text-green-600 dark:text-green-500"),
 		},
-		style.StyleInvalid: {
+		style.Invalid: {
 			style.Set("text-red-600 dark:text-red-500"),
 		},
 	},
@@ -106,47 +106,52 @@ var Default = style.Defaults{
 		},
 	},
 	"input/input": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("border-gray-300 dark:border-gray-600 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"),
 		},
-		style.StyleDisabled: {
+		style.Disabled: {
 			style.ReplaceVariants("bg", "bg-gray-100 dark:bg-gray-700"),
 		},
-		style.StyleValid: {
+		style.Valid: {
 			style.Set("bg-green-50 border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500"),
 		},
-		style.StyleInvalid: {
+		style.Invalid: {
 			style.Set("bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500"),
 		},
 	},
 	"input/icon": {
-		style.StyleValid: {
+		style.Valid: {
 			style.Set("text-green-700 dark:text-green-500"),
 		},
-		style.StyleInvalid: {
+		style.Invalid: {
 			style.Set("text-red-700 dark:text-red-500"),
 		},
 	},
 	"label": {
-		style.StyleValid: {
+		style.Valid: {
 			style.Set("text-green-700 dark:text-green-500"),
 		},
-		style.StyleInvalid: {
+		style.Invalid: {
 			style.Set("text-red-700 dark:text-red-500"),
 		},
 	},
+	"loader": {
+		style.Default: {
+			style.Set("fill-blue-600"),
+		},
+	},
 	"navbar": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("bg-white"),
 		},
 	},
 	"radio/input": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("border-gray-300 dark:border-gray-600 text-blue-600 bg-gray-100 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700"),
 		},
 	},
 	"radio/label": {
-		style.StyleDisabled: {
+		style.Disabled: {
 			style.ReplaceVariants("text", "text-gray-400 dark:text-gray-500"),
 		},
 	},
@@ -156,31 +161,31 @@ var Default = style.Defaults{
 		},
 	},
 	"select/input": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("border-gray-300 dark:border-gray-600 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"),
 		},
-		style.StyleDisabled: {
+		style.Disabled: {
 			style.ReplaceVariants("bg", "bg-gray-100 dark:bg-gray-700"),
 		},
-		style.StyleValid: {
+		style.Valid: {
 			style.Set("bg-green-50 border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500"),
 		},
-		style.StyleInvalid: {
+		style.Invalid: {
 			style.Set("bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500"),
 		},
 	},
 	"sidebar": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("bg-gray-50 dark:bg-gray-800"),
 		},
 	},
 	"social": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("text-gray-500 hover:text-gray-900 dark:hover:text-white"),
 		},
 	},
 	"table/header": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"),
 		},
 		table.StyleNoBorder: {
@@ -199,29 +204,29 @@ var Default = style.Defaults{
 		},
 	},
 	"textarea/input": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("border-gray-300 dark:border-gray-600 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"),
 		},
-		style.StyleDisabled: {
+		style.Disabled: {
 			style.ReplaceVariants("bg", "bg-gray-100 dark:bg-gray-700"),
 		},
-		style.StyleValid: {
+		style.Valid: {
 			style.Set("bg-green-50 border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500"),
 		},
-		style.StyleInvalid: {
+		style.Invalid: {
 			style.Set("bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500"),
 		},
 	},
 	"textarea/icon": {
-		style.StyleValid: {
+		style.Valid: {
 			style.Set("text-green-700 dark:text-green-500"),
 		},
-		style.StyleInvalid: {
+		style.Invalid: {
 			style.Set("text-red-700 dark:text-red-500"),
 		},
 	},
 	"toast": {
-		style.StyleDefault: {
+		style.Default: {
 			style.Set("bg-white"),
 		},
 	},

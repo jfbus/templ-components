@@ -10,12 +10,12 @@ var DefaultID = "sidebar"
 func init() {
 	style.SetDefaults(style.Defaults{
 		"sidebar": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("fixed top-0 left-0 z-20 w-64 h-screen transition-transform sm:translate-x-0"),
 			},
 		},
 		"sidebar/content": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("h-full px-3 py-4 overflow-y-auto"),
 			},
 		},
@@ -43,5 +43,5 @@ func (def D) id() string {
 }
 
 func (def D) class(k string) string {
-	return style.CSSClass(style.StyleDefault, k, def.CustomStyle)
+	return style.CSSClass(style.Default, k, def.CustomStyle)
 }

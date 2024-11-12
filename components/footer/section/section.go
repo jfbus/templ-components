@@ -8,12 +8,12 @@ import (
 func init() {
 	style.SetDefaults(style.Defaults{
 		"footer/section/title": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("mb-6 text-sm font-semibold uppercase"),
 			},
 		},
 		"footer/section/link": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("font-medium mb-4"),
 			},
 		},
@@ -32,5 +32,5 @@ type D struct {
 }
 
 func (def D) class(k string) string {
-	return style.CSSClass(style.StyleDefault, k, def.CustomStyle)
+	return style.CSSClass(style.Default, k, def.CustomStyle)
 }

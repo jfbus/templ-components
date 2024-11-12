@@ -15,8 +15,17 @@ func init() {
 	style.CopyDefaults("input/input", "textarea/input")
 	style.SetDefaults(style.Defaults{
 		"textarea/icon": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("absolute inset-y-0 flex items-top pointer-events-none"),
+			},
+			style.SizeS: {
+				style.Add("pt-2"),
+			},
+			style.SizeNormal: {
+				style.Add("pt-3.5"),
+			},
+			style.SizeL: {
+				style.Add("pt-4"),
 			},
 		},
 	})
@@ -62,11 +71,19 @@ type D struct {
 	Attributes  templ.Attributes
 }
 
-func (def D) style() style.Style {
-	if def.Disabled {
-		return def.Style | style.StyleDisabled
+func (def D) size() size.Size {
+	if def.Size == 0 {
+		return size.Normal
 	}
-	return def.Style
+	return def.Size
+}
+
+func (def D) style() style.Style {
+	st := def.Style | style.Size(def.size())
+	if def.Disabled {
+		return st | style.Disabled
+	}
+	return st
 }
 
 func (def D) class(k string) string {
@@ -75,14 +92,7 @@ func (def D) class(k string) string {
 
 func (def D) iconClass() string {
 	class := style.CSSClass(def.style(), "textarea/icon", def.CustomStyle)
-	switch def.Size {
-	case size.S:
-		class += " pt-2"
-	case size.L:
-		class += " pt-4"
-	default:
-		class += " pt-3.5"
-	}
+
 	switch {
 	case def.Icon == "":
 		return ""
@@ -102,14 +112,6 @@ func (def D) iconSize() size.Size {
 
 func (def D) inputClass() string {
 	class := style.CSSClass(def.style(), "textarea/input", def.CustomStyle)
-	switch def.Size {
-	case size.S:
-		class += " p-2 text-xs"
-	case size.L:
-		class += " p-4 text-base"
-	default:
-		class += " p-2.5 text-sm"
-	}
 	switch {
 	case def.Icon == "":
 		return class
@@ -141,7 +143,7 @@ func (def D) label() label.D {
 		}
 	case label.D:
 		l.InputID = def.id()
-		if l.Style == style.StyleDefault {
+		if l.Style == style.Default {
 			l.Style = def.style()
 		}
 		l.CustomStyle = l.CustomStyle.AddBefore(cc)

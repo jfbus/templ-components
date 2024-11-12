@@ -11,7 +11,7 @@ const StyleInline style.Style = 1 << 8
 func init() {
 	style.SetDefaults(style.Defaults{
 		"label": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("block mb-2 text-sm font-medium"),
 			},
 			StyleInline: {
@@ -50,5 +50,5 @@ func (def D) class() string {
 }
 
 func (def D) classInvalid() string {
-	return style.Delta(def.Style, def.Style|style.StyleInvalid, "label", def.CustomStyle)
+	return style.Delta(def.Style, def.Style|style.Invalid, "label", def.CustomStyle)
 }

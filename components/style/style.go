@@ -5,6 +5,7 @@ import (
 	"strings"
 	"unicode"
 
+	"github.com/jfbus/templ-components/components/size"
 	"maps"
 	"slices"
 )
@@ -97,9 +98,9 @@ func (def D) apply(d string) string {
 }
 
 func defs(defaults Defaults, style Style, k string) D {
-	defs := defaults[k][StyleDefault]
+	defs := defaults[k][Default]
 	for _, dstyle := range slices.Sorted(maps.Keys(defaults[k])) {
-		if dstyle&style == 0 {
+		if dstyle&style == 0 || dstyle&style != dstyle {
 			continue
 		}
 		defs = append(defs, defaults[k][dstyle]...)
@@ -139,17 +140,35 @@ func Delta(src, dst Style, k string, custom Custom) string {
 }
 
 // Style defines a style.
+// - 1 up to 1 << 5 are reserved for common styles
+// - 1 << 6 up to 1 << 15 are reserved for component styles
+// - 1 << 16 up to 1 << 29 are reserved for size styles
 type Style int
 
 const (
-	// StyleDefault is the default style.
-	StyleDefault Style = 0
-	// StyleDisabled is automatically added when a component has a set Disabled attribute.
-	StyleDisabled Style = 1
-	// StyleValid is supported by input attributes. Text/background/border switch to green.
-	StyleValid Style = 1 << 1
-	// StyleInvalid is supported by input attributes. Text/background/border switch to red.
-	StyleInvalid Style = 1 << 2
+	// Default is the default style.
+	Default Style = 0
+	// Disabled is automatically added when a component has a set Disabled attribute.
+	Disabled Style = 1
+	// Valid is supported by input attributes. Text/background/border switch to green.
+	Valid Style = 1 << 1
+	// Invalid is supported by input attributes. Text/background/border switch to red.
+	Invalid Style = 1 << 2
+
+	SizeXS      Style = 1 << 16
+	SizeS       Style = 1 << 17
+	SizeNormal  Style = 1 << 18
+	SizeL       Style = 1 << 19
+	SizeXL      Style = 1 << 20
+	SizeTwoXL   Style = 1 << 21
+	SizeThreeXL Style = 1 << 22
+	SizeFourXL  Style = 1 << 23
+	SizeFiveXL  Style = 1 << 24
+	SizeSixXL   Style = 1 << 25
+	SizeSevenXL Style = 1 << 26
+	SizeEightXL Style = 1 << 27
+	SizeNineXL  Style = 1 << 28
+	SizeFull    Style = 1 << 29
 )
 
 // Defaults defines the default styles for a component.
@@ -160,7 +179,7 @@ var defaults = Defaults{}
 func SetDefaults(d Defaults) {
 	for c, cdefs := range d {
 		if defaults[c] == nil {
-			defaults[c] = map[Style]D{}
+			defaults[c] = make(map[Style]D, len(cdefs))
 		}
 		for style, v := range cdefs {
 			defaults[c][style] = v
@@ -169,7 +188,12 @@ func SetDefaults(d Defaults) {
 }
 
 func CopyDefaults(src, dst string) {
-	defaults[dst] = defaults[src]
+	if defaults[dst] == nil {
+		defaults[dst] = make(map[Style]D, len(defaults[src]))
+	}
+	for k, v := range defaults[src] {
+		defaults[dst][k] = slices.Clone(v)
+	}
 }
 
 var skin = Defaults{}
@@ -224,4 +248,25 @@ func CustomReplaceVariants(pattern, replace string) Custom {
 	return Custom{
 		customSelf: {ReplaceVariants(pattern, replace)},
 	}
+}
+
+var sizes = map[size.Size]Style{
+	size.XS:      SizeXS,
+	size.S:       SizeS,
+	size.Normal:  SizeNormal,
+	size.L:       SizeL,
+	size.XL:      SizeXL,
+	size.TwoXL:   SizeTwoXL,
+	size.ThreeXL: SizeThreeXL,
+	size.FourXL:  SizeFourXL,
+	size.FiveXL:  SizeFiveXL,
+	size.SixXL:   SizeSixXL,
+	size.SevenXL: SizeSevenXL,
+	size.EightXL: SizeEightXL,
+	size.NineXL:  SizeNineXL,
+	size.Full:    SizeFull,
+}
+
+func Size(sz size.Size) Style {
+	return sizes[sz]
 }
