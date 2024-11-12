@@ -20,19 +20,11 @@ const (
 	StylePill            style.Style = 1 << 8
 	StyleAlternative     style.Style = 1 << 9
 	StyleOutline         style.Style = 1 << 10
-	StyleOutlinePill     style.Style = 1 << 11
-	StyleNoBorder        style.Style = 1 << 12
-	StyleFullWidth       style.Style = 1 << 13
-	StyleHideLabelAlways style.Style = 1 << 14
-	StyleHideLabelSmall  style.Style = 1 << 15
-)
-
-type HideLabel int
-
-const (
-	HideLabelNever = iota
-	HideLabelAlways
-	HideLabelSmall
+	StyleNoBorder        style.Style = 1 << 11
+	StyleFullWidth       style.Style = 1 << 12
+	StyleHideLabelAlways style.Style = 1 << 13
+	StyleHideLabelSmall  style.Style = 1 << 14
+	StyleHideLabelMedium style.Style = 1 << 15
 )
 
 func init() {
@@ -42,16 +34,13 @@ func init() {
 				style.Set("rounded-lg font-medium focus:ring-4 focus:outline-none"),
 			},
 			StylePill: {
-				style.Set("rounded-full font-medium focus:ring-4 focus:outline-none"),
+				style.Replace("rounded-lg", "rounded-full"),
 			},
 			StyleAlternative: {
-				style.Set("rounded-lg font-medium focus:ring-4 focus:outline-none border"),
+				style.Add("border"),
 			},
 			StyleOutline: {
-				style.Set("rounded-lg font-medium focus:ring-4 focus:outline-none border"),
-			},
-			StyleOutlinePill: {
-				style.Set("rounded-full font-medium focus:ring-4 focus:outline-none border"),
+				style.Add("border"),
 			},
 			StyleFullWidth: {
 				style.Add("block w-full text-center"),
@@ -66,6 +55,9 @@ func init() {
 			},
 			StyleHideLabelSmall: {
 				style.Set("hidden sm:block"),
+			},
+			StyleHideLabelMedium: {
+				style.Set("hidden md:block"),
 			},
 		},
 	})
