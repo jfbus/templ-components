@@ -2,8 +2,8 @@ package accordion_test
 
 import (
 	"github.com/a-h/templ"
-	"github.com/jfbus/templ-components/components/accordion"
-	"github.com/jfbus/templ-components/components/accordion/element"
+	"github.com/jfbus/templui/components/accordion"
+	"github.com/jfbus/templui/components/accordion/element"
 )
 
 var yourcomponent = func() templ.Component {

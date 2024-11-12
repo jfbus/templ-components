@@ -3,12 +3,12 @@ package textarea
 
 import (
 	"github.com/a-h/templ"
-	"github.com/jfbus/templ-components/components/form/validation/message"
-	_ "github.com/jfbus/templ-components/components/input"
-	"github.com/jfbus/templ-components/components/label"
-	"github.com/jfbus/templ-components/components/position"
-	"github.com/jfbus/templ-components/components/size"
-	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templui/components/form/validation/message"
+	_ "github.com/jfbus/templui/components/input"
+	"github.com/jfbus/templui/components/label"
+	"github.com/jfbus/templui/components/position"
+	"github.com/jfbus/templui/components/size"
+	"github.com/jfbus/templui/components/style"
 )
 
 func init() {
@@ -57,7 +57,7 @@ type D struct {
 	IconPosition position.Position
 	// Message adds a validation message below the field.
 	// Just add &message.D{} to add automatic validation.
-	//playground:import:github.com/jfbus/templ-components/components/form/validation/message
+	//playground:import:github.com/jfbus/templui/components/form/validation/message
 	//playground:default:&message.D{Message: "Validation message"}
 	Message *message.D
 	// CustomStyle defines a custom style.

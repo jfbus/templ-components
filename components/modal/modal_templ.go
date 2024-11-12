@@ -9,12 +9,12 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"github.com/jfbus/templ-components/components/button"
-	"github.com/jfbus/templ-components/components/form"
-	"github.com/jfbus/templ-components/components/icon"
-	"github.com/jfbus/templ-components/components/size"
-	"github.com/jfbus/templ-components/components/style"
-	"github.com/jfbus/templ-components/components/text"
+	"github.com/jfbus/templui/components/button"
+	"github.com/jfbus/templui/components/form"
+	"github.com/jfbus/templui/components/icon"
+	"github.com/jfbus/templui/components/size"
+	"github.com/jfbus/templui/components/style"
+	"github.com/jfbus/templui/components/text"
 )
 
 func C(def D) templ.Component {

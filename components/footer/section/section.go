@@ -1,8 +1,8 @@
 package section
 
 import (
-	"github.com/jfbus/templ-components/components/a"
-	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templui/components/a"
+	"github.com/jfbus/templui/components/style"
 )
 
 func init() {

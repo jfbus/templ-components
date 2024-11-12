@@ -5,7 +5,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/jfbus/templ-components/components/size"
+	"github.com/jfbus/templui/components/size"
 	"maps"
 	"slices"
 )

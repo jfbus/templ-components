@@ -1,7 +1,7 @@
-# A library of templ components
+# Templ UI - A library of templ UI components
 
-<a href="https://pkg.go.dev/github.com/jfbus/templ-components"><img src="https://pkg.go.dev/badge/github.com/jfbus/templ-components.svg" alt="Go Reference" /></a>
-<a href="https://goreportcard.com/report/github.com/jfbus/templ-components"><img src="https://goreportcard.com/badge/github.com/jfbus/templ-components" alt="Go Report Card" /></a>
+<a href="https://pkg.go.dev/github.com/jfbus/templui"><img src="https://pkg.go.dev/badge/github.com/jfbus/templui.svg" alt="Go Reference" /></a>
+<a href="https://goreportcard.com/report/github.com/jfbus/templui"><img src="https://goreportcard.com/badge/github.com/jfbus/templui" alt="Go Report Card" /></a>
 
 A library of components to be used in a Go/templ/HTMX/Alpine.js project, based on [Flowbite](https://flowbite.com/) components and the [Lucide](https://lucide.dev/) icon
 library.
@@ -19,7 +19,7 @@ Go support: 1.23+
 Install this package :
 
 ```
-go get -u github.com/jfbus/templ-components
+go get -u github.com/jfbus/templui
 ```
 
 Create a new `assets_src` directory & install Flowbite:
@@ -28,7 +28,7 @@ Create a new `assets_src` directory & install Flowbite:
 npm install flowbite
 ```
 
-No need to configure Tailwind & Flowbite, it is handled by templ-components.
+No need to configure Tailwind & Flowbite, it is handled by templui.
 
 Install [Alpine.js](https://alpinejs.dev/).
 
@@ -96,7 +96,7 @@ style.Replace("ring", "foo") // removes ring-2, ring-[2px], hover:ring-2, ...
 Basic usage:
 
 ```templ
-import "github.com/jfbus/templ-components/components/icon"
+import "github.com/jfbus/templui/components/icon"
 
 @icon.C(icon.Flower)
 ```
@@ -104,7 +104,7 @@ import "github.com/jfbus/templ-components/components/icon"
 A size can be set:
 
 ```templ
-import "github.com/jfbus/templ-components/components/size"
+import "github.com/jfbus/templui/components/size"
 
 @icon.C(icon.D{Icon:icon.Flower, Size:size:S})
 ```
@@ -148,7 +148,7 @@ You can define a custom loader by changing `loader.DefaultLoader`.
 ### Textarea
 
 ```templ
-import "github.com/jfbus/templ-components/components/textarea"
+import "github.com/jfbus/templui/components/textarea"
 
 @textarea.C(textarea.D{
     Name:  "foo",
@@ -162,8 +162,8 @@ import "github.com/jfbus/templ-components/components/textarea"
 
 ```templ
 import (
-	"github.com/jfbus/templ-components/components/selectfield"
-	"github.com/jfbus/templ-components/components/selectfield/option"
+	"github.com/jfbus/templui/components/selectfield"
+	"github.com/jfbus/templui/components/selectfield/option"
 )
 
 @selectfield.C(selectfield.D{
@@ -189,8 +189,8 @@ import (
 
 ```templ
 import (
-  "github.com/jfbus/templ-components/components/radio"
-  "github.com/jfbus/templ-components/components/radiogroup"
+  "github.com/jfbus/templui/components/radio"
+  "github.com/jfbus/templui/components/radiogroup"
 )
 
 @radiogroup.C(radiogroup.D{
@@ -209,7 +209,7 @@ import (
 ### Inline editing
 
 ```templ
-import "github.com/jfbus/templ-components/components/inline"
+import "github.com/jfbus/templui/components/inline"
 
 @inline.C(inline.D{
     Value:    [your value],
@@ -233,7 +233,7 @@ import "github.com/jfbus/templ-components/components/inline"
 ### Button
 
 ```templ
-import "github.com/jfbus/templ-components/components/button"
+import "github.com/jfbus/templui/components/button"
 
 @button.C(button.D{
     Name:  "foo",
@@ -246,7 +246,7 @@ import "github.com/jfbus/templ-components/components/button"
 ### Button group
 
 ```templ
-import "github.com/jfbus/templ-components/components/buttongroup"
+import "github.com/jfbus/templui/components/buttongroup"
 
 @buttongroup.C(buttongroup.D{
     Size:    size.S,
@@ -280,9 +280,9 @@ import "github.com/jfbus/templ-components/components/buttongroup"
 
 ```templ
 import (
-    "github.com/jfbus/templ-components/components/table"
-    "github.com/jfbus/templ-components/components/table/row"
-    "github.com/jfbus/templ-components/components/table/cell"
+    "github.com/jfbus/templui/components/table"
+    "github.com/jfbus/templui/components/table/row"
+    "github.com/jfbus/templui/components/table/cell"
 )
 
 @table.C(table.D{
@@ -313,8 +313,8 @@ a slice of `templ.Component` components or a `[]any` slice containing any number
 
 ```templ
 import (
-    "github.com/jfbus/templ-components/components/accordion"
-    "github.com/jfbus/templ-components/components/accordion/element"
+    "github.com/jfbus/templui/components/accordion"
+    "github.com/jfbus/templui/components/accordion/element"
 )
 
 @accordion.C(accordion.D{
@@ -335,7 +335,7 @@ import (
 Toasts either close manually or automatically.
 
 ```templ
-import "github.com/jfbus/templ-components/components/toast"
+import "github.com/jfbus/templui/components/toast"
 
 @toast.C(toast.D{
     Style:   toast.StyleError,
@@ -346,7 +346,7 @@ import "github.com/jfbus/templ-components/components/toast"
 ## Helpers
 
 ```
-import "github.com/jfbus/templ-components/components/helper"
+import "github.com/jfbus/templui/components/helper"
 ```
 
 ### S
@@ -373,4 +373,4 @@ Run `go generate` again, and update your Tailwind class (`npx tailwindcss -i [..
 
 Check that your `tailwind.config.js` content section contains :
 * your templates (something like `"../views/**/*.{templ,go}"`)
-* templ-components (something like `"[your local path]/github.com/jfbus/templ-components/**/*.{templ,go}"`)
+* templui (something like `"[your local path]/github.com/jfbus/templui/**/*.{templ,go}"`)

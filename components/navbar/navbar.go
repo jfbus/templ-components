@@ -2,7 +2,7 @@ package navbar
 
 import (
 	"github.com/a-h/templ"
-	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templui/components/style"
 )
 
 const (
@@ -34,11 +34,11 @@ func init() {
 // To add multiple components (buttons, dropdowns, ...) to a section, use div.C/components.Append.
 type D struct {
 	Style style.Style
-	//playground:import:github.com/jfbus/templ-components/components/a
-	//playground:import:github.com/jfbus/templ-components/components/button
-	//playground:import:github.com/jfbus/templ-components/components/dropdown
-	//playground:import:github.com/jfbus/templ-components/components/icon
-	//playground:import:github.com/jfbus/templ-components/components/size
+	//playground:import:github.com/jfbus/templui/components/a
+	//playground:import:github.com/jfbus/templui/components/button
+	//playground:import:github.com/jfbus/templui/components/dropdown
+	//playground:import:github.com/jfbus/templui/components/icon
+	//playground:import:github.com/jfbus/templui/components/size
 	//playground:default:[]templ.Component{a.C(a.D{Text:"Your Brand"}), dropdown.C(dropdown.D{Button: button.D{Style: button.StyleNoBorder, Icon: icon.CircleUserRound, Size: size.XL}, Links: [][]a.D{{{Text: "Profile"}}, {{Text: "Logout"}}}})}
 	Sections []templ.Component
 	// CustomStyle defines a custom style.

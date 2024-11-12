@@ -2,10 +2,10 @@ package footer
 
 import (
 	"github.com/a-h/templ"
-	"github.com/jfbus/templ-components/components/a"
-	"github.com/jfbus/templ-components/components/footer/section"
-	"github.com/jfbus/templ-components/components/social"
-	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templui/components/a"
+	"github.com/jfbus/templui/components/footer/section"
+	"github.com/jfbus/templui/components/social"
+	"github.com/jfbus/templui/components/style"
 )
 
 const (
@@ -62,8 +62,8 @@ type D struct {
 	Copyright templ.Component
 	Brand     templ.Component
 	// Sections can either be a []section.D or a []a.D slice.
-	//playground:import:github.com/jfbus/templ-components/components/a
-	//playground:import:github.com/jfbus/templ-components/components/footer/section
+	//playground:import:github.com/jfbus/templui/components/a
+	//playground:import:github.com/jfbus/templui/components/footer/section
 	//playground:default:[]section.D{{Title:"Section 1", Links: []a.D{{Text: "Link 1"},{Text: "Link 2"}}}, {Title:"Section 2", Links: []a.D{{Text: "Link 1"},{Text: "Link 2"}}}, {Title:"Section 3", Links: []a.D{{Text: "Link 1"},{Text: "Link 2"}}}}
 	Sections any
 	Social   []social.D

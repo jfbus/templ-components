@@ -9,8 +9,8 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"github.com/jfbus/templ-components/components/form/validation/message"
-	"github.com/jfbus/templ-components/components/radio"
+	"github.com/jfbus/templui/components/form/validation/message"
+	"github.com/jfbus/templui/components/radio"
 )
 
 func C(def D) templ.Component {

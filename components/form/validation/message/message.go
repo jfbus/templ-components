@@ -1,8 +1,8 @@
 package message
 
 import (
-	"github.com/jfbus/templ-components/components/size"
-	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templui/components/size"
+	"github.com/jfbus/templui/components/style"
 )
 
 func init() {

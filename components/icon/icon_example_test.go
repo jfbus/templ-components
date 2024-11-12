@@ -4,7 +4,7 @@ import (
 	"context"
 	"os"
 
-	"github.com/jfbus/templ-components/components/icon"
+	"github.com/jfbus/templui/components/icon"
 )
 
 func ExampleC() {

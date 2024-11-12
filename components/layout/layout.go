@@ -3,12 +3,12 @@ package layout
 import (
 	"strconv"
 
-	"github.com/jfbus/templ-components/components/footer"
-	"github.com/jfbus/templ-components/components/navbar"
-	"github.com/jfbus/templ-components/components/sidebar"
-	"github.com/jfbus/templ-components/components/size"
-	"github.com/jfbus/templ-components/components/style"
-	"github.com/jfbus/templ-components/components/toast/container"
+	"github.com/jfbus/templui/components/footer"
+	"github.com/jfbus/templui/components/navbar"
+	"github.com/jfbus/templui/components/sidebar"
+	"github.com/jfbus/templui/components/size"
+	"github.com/jfbus/templui/components/style"
+	"github.com/jfbus/templui/components/toast/container"
 )
 
 type NavbarHeight size.Size

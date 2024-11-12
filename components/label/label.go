@@ -3,7 +3,7 @@ package label
 
 import (
 	"github.com/a-h/templ"
-	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templui/components/style"
 )
 
 const StyleInline style.Style = 1 << 8

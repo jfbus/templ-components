@@ -9,10 +9,10 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"github.com/jfbus/templ-components/components/footer"
-	"github.com/jfbus/templ-components/components/navbar"
-	"github.com/jfbus/templ-components/components/sidebar"
-	"github.com/jfbus/templ-components/components/toast/container"
+	"github.com/jfbus/templui/components/footer"
+	"github.com/jfbus/templui/components/navbar"
+	"github.com/jfbus/templui/components/sidebar"
+	"github.com/jfbus/templui/components/toast/container"
 )
 
 func C(def D) templ.Component {

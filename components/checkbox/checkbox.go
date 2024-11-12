@@ -3,8 +3,8 @@ package checkbox
 
 import (
 	"github.com/a-h/templ"
-	"github.com/jfbus/templ-components/components/label"
-	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templui/components/label"
+	"github.com/jfbus/templui/components/style"
 )
 
 func init() {

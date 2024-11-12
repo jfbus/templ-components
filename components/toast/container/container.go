@@ -1,6 +1,6 @@
 package container
 
-import "github.com/jfbus/templ-components/components/style"
+import "github.com/jfbus/templui/components/style"
 
 func init() {
 	style.SetDefaults(style.Defaults{

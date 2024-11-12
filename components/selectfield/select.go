@@ -4,12 +4,12 @@ package selectfield
 
 import (
 	"github.com/a-h/templ"
-	"github.com/jfbus/templ-components/components/form/validation/message"
-	_ "github.com/jfbus/templ-components/components/input"
-	"github.com/jfbus/templ-components/components/label"
-	"github.com/jfbus/templ-components/components/selectfield/option"
-	"github.com/jfbus/templ-components/components/size"
-	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templui/components/form/validation/message"
+	_ "github.com/jfbus/templui/components/input"
+	"github.com/jfbus/templui/components/label"
+	"github.com/jfbus/templui/components/selectfield/option"
+	"github.com/jfbus/templui/components/size"
+	"github.com/jfbus/templui/components/style"
 )
 
 func init() {
@@ -27,7 +27,7 @@ type D struct {
 	// Label is the label (either a string or a label.D).
 	Label any
 	// Options is the list of options.
-	//playground:import:github.com/jfbus/templ-components/components/selectfield/option
+	//playground:import:github.com/jfbus/templui/components/selectfield/option
 	//playground:default:[]option.D{{Label:"Select a value"},{Label:"Option 1"},{Label:"Option 2"}}
 	Options []option.D
 	// Select is the selected value.
@@ -38,7 +38,7 @@ type D struct {
 	Size size.Size
 	// Message adds a validation message below the field.
 	// Just add &message.D{} to add automatic validation.
-	//playground:import:github.com/jfbus/templ-components/components/form/validation/message
+	//playground:import:github.com/jfbus/templui/components/form/validation/message
 	//playground:default:&message.D{Message: "Validation message"}
 	Message *message.D
 	// CustomStyle defines a custom style.

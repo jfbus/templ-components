@@ -1,9 +1,9 @@
 package radiogroup
 
 import (
-	"github.com/jfbus/templ-components/components/form/validation/message"
-	"github.com/jfbus/templ-components/components/radio"
-	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templui/components/form/validation/message"
+	"github.com/jfbus/templui/components/radio"
+	"github.com/jfbus/templui/components/style"
 )
 
 const (
@@ -69,12 +69,12 @@ type D struct {
 	// Style is the radiogroup style.
 	Style style.Style
 	// Radios is the list of radios in the group.
-	//playground:import:github.com/jfbus/templ-components/components/radio
+	//playground:import:github.com/jfbus/templui/components/radio
 	//playground:default:[]radio.D{{Name: "foo", Value: "1", Label: "Choice 1"},{Name: "foo", Value: "2", Label:"Choice 2"}}
 	Radios []radio.D
 	// Message adds a validation message below the field.
 	// Just add &message.D{} to add automatic validation.
-	//playground:import:github.com/jfbus/templ-components/components/form/validation/message
+	//playground:import:github.com/jfbus/templui/components/form/validation/message
 	//playground:default:&message.D{Message: "Validation message"}
 	Message *message.D
 	// CustomStyle defines a custom style.

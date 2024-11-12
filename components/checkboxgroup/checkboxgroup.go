@@ -1,9 +1,9 @@
 package checkboxgroup
 
 import (
-	"github.com/jfbus/templ-components/components/checkbox"
-	"github.com/jfbus/templ-components/components/form/validation/message"
-	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templui/components/checkbox"
+	"github.com/jfbus/templui/components/form/validation/message"
+	"github.com/jfbus/templui/components/style"
 )
 
 const (
@@ -69,12 +69,12 @@ type D struct {
 	// Style is the checkboxgroup style.
 	Style style.Style
 	// Checkboxes is the list of checkboxes in the group.
-	//playground:import:github.com/jfbus/templ-components/components/checkbox
+	//playground:import:github.com/jfbus/templui/components/checkbox
 	//playground:default:[]checkbox.D{{Name: "foo", Value: "1", Label: "Choice 1"},{Name: "foo", Value: "2", Label:"Choice 2"}}
 	Checkboxes []checkbox.D
 	// Message adds a validation message below the field.
 	// Just add &message.D{} to add automatic validation.
-	//playground:import:github.com/jfbus/templ-components/components/form/validation/message
+	//playground:import:github.com/jfbus/templui/components/form/validation/message
 	//playground:default:&message.D{Message: "Validation message"}
 	Message *message.D
 	// CustomStyle defines a custom style.

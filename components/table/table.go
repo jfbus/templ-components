@@ -2,8 +2,8 @@
 package table
 
 import (
-	"github.com/jfbus/templ-components/components/style"
-	"github.com/jfbus/templ-components/components/table/row"
+	"github.com/jfbus/templui/components/style"
+	"github.com/jfbus/templui/components/table/row"
 )
 
 const (
@@ -45,7 +45,7 @@ type D struct {
 	// Style defines the table style.
 	Style style.Style
 	// Header defines an optional header row (thead).
-	//playground:import:github.com/jfbus/templ-components/components/table/row
+	//playground:import:github.com/jfbus/templui/components/table/row
 	//playground:default:&row.D{Cells: []string{"Name", "Description", ""}}
 	Header *row.D
 	// Rows defines the body rows (tbody).

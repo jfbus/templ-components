@@ -5,9 +5,9 @@ import (
 	"os"
 
 	"github.com/a-h/templ"
-	"github.com/jfbus/templ-components/components/a"
-	"github.com/jfbus/templ-components/components/button"
-	"github.com/jfbus/templ-components/components/dropdown"
+	"github.com/jfbus/templui/components/a"
+	"github.com/jfbus/templui/components/button"
+	"github.com/jfbus/templui/components/dropdown"
 )
 
 func usernameComponent() templ.Component {

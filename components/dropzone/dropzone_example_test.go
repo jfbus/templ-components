@@ -4,7 +4,7 @@ import (
 	"context"
 	"os"
 
-	"github.com/jfbus/templ-components/components/dropzone"
+	"github.com/jfbus/templui/components/dropzone"
 )
 
 func ExampleD() {

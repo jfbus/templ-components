@@ -3,9 +3,9 @@ package button
 
 import (
 	"github.com/a-h/templ"
-	"github.com/jfbus/templ-components/components/position"
-	"github.com/jfbus/templ-components/components/size"
-	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templui/components/position"
+	"github.com/jfbus/templui/components/size"
+	"github.com/jfbus/templui/components/style"
 )
 
 type Type string

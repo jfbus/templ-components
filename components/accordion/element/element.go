@@ -2,7 +2,7 @@ package element
 
 import (
 	"github.com/a-h/templ"
-	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templui/components/style"
 )
 
 func init() {

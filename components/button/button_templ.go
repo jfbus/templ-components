@@ -9,9 +9,9 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"github.com/jfbus/templ-components/components/icon"
-	"github.com/jfbus/templ-components/components/loader"
-	"github.com/jfbus/templ-components/components/position"
+	"github.com/jfbus/templui/components/icon"
+	"github.com/jfbus/templui/components/loader"
+	"github.com/jfbus/templui/components/position"
 )
 
 func C(def D) templ.Component {

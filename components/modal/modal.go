@@ -5,9 +5,9 @@ import (
 	"net/http"
 
 	"github.com/a-h/templ"
-	"github.com/jfbus/templ-components/components/button"
-	"github.com/jfbus/templ-components/components/form"
-	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templui/components/button"
+	"github.com/jfbus/templui/components/form"
+	"github.com/jfbus/templui/components/style"
 )
 
 const (
@@ -73,7 +73,7 @@ type D struct {
 	// Content is the modal content (as an alternative, you can add the content as the component children).
 	Content any
 	// Close is the close button. It closes the modal without submitting the form.
-	//playground:import:github.com/jfbus/templ-components/components/button
+	//playground:import:github.com/jfbus/templui/components/button
 	//playground:default:&button.D{Label:"Cancel", Style: button.StyleOutline}
 	Close *button.D
 	// Confirm is the confirm button. It submits the modal form but does not close the modal.

@@ -9,9 +9,9 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"github.com/jfbus/templ-components/components/a"
-	"github.com/jfbus/templ-components/components/footer/section"
-	"github.com/jfbus/templ-components/components/social"
+	"github.com/jfbus/templui/components/a"
+	"github.com/jfbus/templui/components/footer/section"
+	"github.com/jfbus/templui/components/social"
 )
 
 func C(def D) templ.Component {

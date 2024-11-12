@@ -1,4 +1,4 @@
-module github.com/jfbus/templ-components
+module github.com/jfbus/templui
 
 go 1.23
 

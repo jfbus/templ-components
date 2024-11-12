@@ -3,9 +3,9 @@ package buttongroup
 
 import (
 	"github.com/a-h/templ"
-	"github.com/jfbus/templ-components/components/button"
-	"github.com/jfbus/templ-components/components/size"
-	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templui/components/button"
+	"github.com/jfbus/templui/components/size"
+	"github.com/jfbus/templui/components/style"
 )
 
 func init() {
@@ -27,7 +27,7 @@ func init() {
 
 type D struct {
 	// Buttons is the list of buttons to display.
-	//playground:import:github.com/jfbus/templ-components/components/button
+	//playground:import:github.com/jfbus/templui/components/button
 	//playground:default:[]button.D{{Label:"A"},{Label:"B"},{Label:"C"},{Label:"D"}}
 	Buttons []button.D
 	// Size defines the buttons size (shortcut for Buttons.Size).

@@ -5,8 +5,8 @@ import (
 	"os"
 
 	"github.com/a-h/templ"
-	"github.com/jfbus/templ-components/components/div"
-	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templui/components/div"
+	"github.com/jfbus/templui/components/style"
 )
 
 func myComponent() templ.Component {

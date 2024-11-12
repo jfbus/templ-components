@@ -2,8 +2,8 @@ package row
 
 import (
 	"github.com/a-h/templ"
-	"github.com/jfbus/templ-components/components/style"
-	"github.com/jfbus/templ-components/components/table/cell"
+	"github.com/jfbus/templui/components/style"
+	"github.com/jfbus/templui/components/table/cell"
 )
 
 // D defines a table row (tr).

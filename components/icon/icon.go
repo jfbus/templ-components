@@ -5,8 +5,8 @@ package icon
 
 import (
 	"github.com/a-h/templ"
-	"github.com/jfbus/templ-components/components/size"
-	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templui/components/size"
+	"github.com/jfbus/templui/components/style"
 )
 
 const (

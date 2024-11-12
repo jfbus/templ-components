@@ -4,9 +4,9 @@ import (
 	"context"
 	"os"
 
-	"github.com/jfbus/templ-components/components/checkbox"
-	"github.com/jfbus/templ-components/components/style"
-	"github.com/jfbus/templ-components/skin"
+	"github.com/jfbus/templui/components/checkbox"
+	"github.com/jfbus/templui/components/style"
+	"github.com/jfbus/templui/skin"
 )
 
 func ExampleD() {

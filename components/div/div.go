@@ -2,11 +2,11 @@ package div
 
 import (
 	"github.com/a-h/templ"
-	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templui/components/style"
 )
 
 type D struct {
-	//playground:import:github.com/jfbus/templ-components/components/button
+	//playground:import:github.com/jfbus/templui/components/button
 	//playground:default:button.C(button.D{Label:"Button"})
 	Content     templ.Component
 	CustomStyle style.Custom

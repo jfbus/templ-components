@@ -4,8 +4,8 @@ package loader
 import (
 	"strings"
 
-	"github.com/jfbus/templ-components/components/size"
-	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templui/components/size"
+	"github.com/jfbus/templui/components/style"
 )
 
 // DefaultLoader is the default loader (a spinning circle).

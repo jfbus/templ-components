@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/jfbus/templ-components/components/icon"
-	"github.com/jfbus/templ-components/components/style"
-	"github.com/jfbus/templ-components/components/toast/container"
+	"github.com/jfbus/templui/components/icon"
+	"github.com/jfbus/templui/components/style"
+	"github.com/jfbus/templui/components/toast/container"
 	"github.com/rs/xid"
 )
 

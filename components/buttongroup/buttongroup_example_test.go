@@ -5,11 +5,11 @@ import (
 	"os"
 
 	"github.com/a-h/templ"
-	"github.com/jfbus/templ-components/components/button"
-	"github.com/jfbus/templ-components/components/buttongroup"
-	"github.com/jfbus/templ-components/components/icon"
-	"github.com/jfbus/templ-components/components/size"
-	"github.com/jfbus/templ-components/components/style"
+	"github.com/jfbus/templui/components/button"
+	"github.com/jfbus/templui/components/buttongroup"
+	"github.com/jfbus/templui/components/icon"
+	"github.com/jfbus/templui/components/size"
+	"github.com/jfbus/templui/components/style"
 )
 
 func ExampleC() {

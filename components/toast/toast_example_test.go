@@ -4,7 +4,7 @@ import (
 	"context"
 	"os"
 
-	"github.com/jfbus/templ-components/components/toast"
+	"github.com/jfbus/templui/components/toast"
 )
 
 func ExampleC() {

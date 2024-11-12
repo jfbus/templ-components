@@ -1,6 +1,6 @@
 package cell
 
-import "github.com/jfbus/templ-components/components/style"
+import "github.com/jfbus/templui/components/style"
 
 type D struct {
 	Header  bool

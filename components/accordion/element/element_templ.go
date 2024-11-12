@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"fmt"
-	"github.com/jfbus/templ-components/components/icon"
+	"github.com/jfbus/templui/components/icon"
 )
 
 func C(def D) templ.Component {
