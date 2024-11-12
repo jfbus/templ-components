@@ -10,6 +10,8 @@ _Note: all Flowbite JS code has been rewritten using Alpine._
 
 > This is a work in progress, breaking changes might happen.
 
+Go support: 1.23+
+
 ## Setup
 
 ### Start a new project

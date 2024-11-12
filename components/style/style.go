@@ -5,6 +5,7 @@ import (
 	"strings"
 	"unicode"
 
+	"maps"
 	"slices"
 )
 
@@ -97,11 +98,11 @@ func (def D) apply(d string) string {
 
 func defs(defaults Defaults, style Style, k string) D {
 	defs := defaults[k][StyleDefault]
-	for dstyle, ddefaults := range defaults[k] {
+	for _, dstyle := range slices.Sorted(maps.Keys(defaults[k])) {
 		if dstyle&style == 0 {
 			continue
 		}
-		defs = append(defs, ddefaults...)
+		defs = append(defs, defaults[k][dstyle]...)
 	}
 	return defs
 }
