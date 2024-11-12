@@ -15,17 +15,17 @@ const (
 func init() {
 	style.SetDefaults(style.Defaults{
 		"table": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("w-full text-sm text-left"),
 			},
 		},
 		"table/header": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("text-xs"),
 			},
 		},
 		"table/row": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("border-b"),
 			},
 			StyleNoBorder: {
@@ -33,7 +33,7 @@ func init() {
 			},
 		},
 		"table/cell": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("px-6 py-4"),
 			},
 		},

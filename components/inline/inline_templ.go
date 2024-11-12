@@ -73,7 +73,7 @@ func C(def D) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = icon.C(icon.D{Icon: icon.Pencil, CustomStyle: style.Custom{"icon": style.D{style.Set("inline-block ml-1")}}, Size: def.IconSize}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = icon.C(icon.D{Icon: icon.Pencil, CustomStyle: style.CustomAdd("inline-block ml-1"), Size: def.IconSize}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

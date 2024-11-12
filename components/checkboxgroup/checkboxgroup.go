@@ -34,7 +34,7 @@ func init() {
 			},
 		},
 		"checkboxgroup/checkbox": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("flex items-center"),
 			},
 			StyleBordered: {
@@ -53,7 +53,7 @@ func init() {
 			},
 		},
 		"checkboxgroup/checkbox/label": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Add("py-3"),
 			},
 			StyleLabelOnly: {

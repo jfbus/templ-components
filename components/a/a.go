@@ -8,7 +8,7 @@ import (
 func init() {
 	style.SetDefaults(style.Defaults{
 		"a": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("hover:underline"),
 			},
 		},
@@ -30,5 +30,5 @@ type D struct {
 }
 
 func (def D) class() string {
-	return style.CSSClass(style.StyleDefault, "a", def.CustomStyle)
+	return style.CSSClass(style.Default, "a", def.CustomStyle)
 }

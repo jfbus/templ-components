@@ -8,7 +8,7 @@ import (
 func init() {
 	style.SetDefaults(style.Defaults{
 		"form/validation/message": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("mt-2"),
 			},
 		},

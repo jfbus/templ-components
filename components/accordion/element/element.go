@@ -8,12 +8,12 @@ import (
 func init() {
 	style.SetDefaults(style.Defaults{
 		"accordion/element/title": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("font-medium flex items-center justify-between w-full p-5 rtl:text-right border first:rounded-t-xl border-b-0 last:border-b-1 focus:ring-4 gap-3 cursor-pointer"),
 			},
 		},
 		"accordion/element/content": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("p-5 border border-b-0"),
 			},
 		},
@@ -30,5 +30,5 @@ type D struct {
 }
 
 func (def D) class(k string) string {
-	return style.CSSClass(style.StyleDefault, k, def.CustomStyle)
+	return style.CSSClass(style.Default, k, def.CustomStyle)
 }

@@ -10,12 +10,12 @@ import (
 func init() {
 	style.SetDefaults(style.Defaults{
 		"dropdown": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("absolute z-10 divide-y rounded-lg border shadow w-44 mt-2"),
 			},
 		},
 		"dropdown/link": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("block px-4 py-2"),
 			},
 		},
@@ -48,12 +48,12 @@ func (def D) button() button.D {
 }
 
 func (def D) class() string {
-	return style.CSSClass(style.StyleDefault, "dropdown", def.CustomStyle)
+	return style.CSSClass(style.Default, "dropdown", def.CustomStyle)
 }
 
 func (def D) links() [][]a.D {
 	cc := style.Custom{
-		"a": style.Compute(style.StyleDefault, "dropdown/link", def.CustomStyle),
+		"a": style.Compute(style.Default, "dropdown/link", def.CustomStyle),
 	}
 	for i := range def.Links {
 		for j := range def.Links[i] {

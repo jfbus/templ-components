@@ -9,14 +9,16 @@ import (
 )
 
 func init() {
+	style.CopyDefaults("button", "buttongroup/button")
+	style.CopyDefaults("button/label", "buttongroup/button/label")
 	style.SetDefaults(style.Defaults{
 		"buttongroup": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("inline-flex rounded-md shadow-sm"),
 			},
 		},
 		"buttongroup/button": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("border-t border-b border-e first:border first:rounded-s-lg last:border-t last:border-b last:border-e last:rounded-e-lg"),
 			},
 		},
@@ -41,20 +43,17 @@ type D struct {
 }
 
 func (def D) buttons() []button.D {
-	bcs := style.Custom{
-		"button": style.Compute(style.StyleDefault, "buttongroup/button", def.CustomStyle),
-	}
 	bs := make([]button.D, len(def.Buttons))
 	for i := range def.Buttons {
 		bs[i] = def.Buttons[i]
 		if def.Size != size.Inherit {
 			bs[i].Size = def.Size
 		}
-		bs[i].CustomStyle = bs[i].CustomStyle.AddBefore(bcs)
+		bs[i].StyleKey = "buttongroup/button"
 	}
 	return bs
 }
 
 func (def D) class(k string) string {
-	return style.CSSClass(style.StyleDefault, k, def.CustomStyle)
+	return style.CSSClass(style.Default, k, def.CustomStyle)
 }

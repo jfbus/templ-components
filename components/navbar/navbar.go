@@ -12,7 +12,7 @@ const (
 func init() {
 	style.SetDefaults(style.Defaults{
 		"navbar": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("w-full"),
 			},
 			StyleSticky: {
@@ -20,7 +20,7 @@ func init() {
 			},
 		},
 		"navbar/content": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"),
 			},
 			StyleSticky: {

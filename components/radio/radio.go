@@ -10,15 +10,15 @@ import (
 func init() {
 	style.SetDefaults(style.Defaults{
 		"radio": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("flex items-center"),
 			},
-			style.StyleDisabled: {
+			style.Disabled: {
 				style.Add("cursor-not-allowed"),
 			},
 		},
 		"radio/input": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("w-4 h-4 focus:ring-2"),
 			},
 		},
@@ -51,9 +51,9 @@ type D struct {
 
 func (def D) style() style.Style {
 	if def.Disabled {
-		return style.StyleDefault | style.StyleDisabled
+		return style.Default | style.Disabled
 	}
-	return style.StyleDefault
+	return style.Default
 }
 
 func (def D) label() label.D {

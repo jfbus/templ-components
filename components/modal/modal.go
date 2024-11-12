@@ -17,27 +17,27 @@ const (
 func init() {
 	style.SetDefaults(style.Defaults{
 		"modal/background": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("fixed top-0 left-0 z-40 flex items-center justify-center w-full h-full px-4 py-5 bg-black/40"),
 			},
 		},
 		"modal": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("w-full max-w-screen-md max-h-full rounded-[10px] bg-white dark:bg-dark-2 overflow-y-auto"),
 			},
 		},
 		"modal/title": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"),
 			},
 		},
 		"modal/title/title": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("text-xl font-semibold text-gray-900 dark:text-white"),
 			},
 		},
 		"modal/buttons": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("flex items-center p-4 md:p-5 border-t rounded-b gap-3"),
 			},
 			StyleButtonsRight: {
@@ -45,7 +45,7 @@ func init() {
 			},
 		},
 		"modal/close": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 inline-flex items-center justify-center"),
 			},
 		},

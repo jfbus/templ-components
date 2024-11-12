@@ -19,6 +19,48 @@ func init() {
 			StyleBorder: {
 				style.Set("p-1 rounded-md border"),
 			},
+			style.SizeXS: {
+				style.Add("h-3 w-3"),
+			},
+			style.SizeS: {
+				style.Add("h-3.5 w-3.5"),
+			},
+			style.SizeNormal: {
+				style.Add("h-4 w-4"),
+			},
+			style.SizeL: {
+				style.Add("h-[18px] w-[18px]"),
+			},
+			style.SizeXL: {
+				style.Add("h-5 w-5"),
+			},
+			style.SizeTwoXL: {
+				style.Add("h-6 w-6"),
+			},
+			style.SizeThreeXL: {
+				style.Add("h-[30px] w-[30px]"),
+			},
+			style.SizeFourXL: {
+				style.Add("h-9 w-9"),
+			},
+			style.SizeFiveXL: {
+				style.Add("h-12 w-12"),
+			},
+			style.SizeSixXL: {
+				style.Add("h-[60px] w-[60px]"),
+			},
+			style.SizeSevenXL: {
+				style.Add("h-[72px] w-[72px]"),
+			},
+			style.SizeEightXL: {
+				style.Add("h-24 w-24"),
+			},
+			style.SizeNineXL: {
+				style.Add("h-32 w-32"),
+			},
+			style.SizeFull: {
+				style.Add("h-full w-full"),
+			},
 		},
 	})
 }
@@ -40,7 +82,13 @@ type D struct {
 	Attributes templ.Attributes
 }
 
+func (def D) size() size.Size {
+	if def.Size == 0 {
+		return size.Normal
+	}
+	return def.Size
+}
+
 func (def D) class() string {
-	return style.CSSClass(def.Style, "icon", def.CustomStyle) +
-		" " + def.Size.Class()
+	return style.CSSClass(def.Style|style.Size(def.size()), "icon", def.CustomStyle)
 }

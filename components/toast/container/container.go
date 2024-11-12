@@ -5,7 +5,7 @@ import "github.com/jfbus/templ-components/components/style"
 func init() {
 	style.SetDefaults(style.Defaults{
 		"toast/container": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("z-50 fixed top-0 right-0 m-2 space-y-2"),
 			},
 			StyleTopLeft: {

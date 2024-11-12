@@ -34,7 +34,7 @@ func init() {
 			},
 		},
 		"radiogroup/radio": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Set("flex items-center"),
 			},
 			StyleBordered: {
@@ -53,7 +53,7 @@ func init() {
 			},
 		},
 		"radiogroup/radio/label": {
-			style.StyleDefault: {
+			style.Default: {
 				style.Add("py-3"),
 			},
 			StyleLabelOnly: {

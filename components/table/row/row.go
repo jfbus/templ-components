@@ -22,7 +22,7 @@ type D struct {
 }
 
 func (def D) class() string {
-	return style.CSSClass(style.StyleDefault, "table/row", def.CustomStyle)
+	return style.CSSClass(style.Default, "table/row", def.CustomStyle)
 }
 
 func (def D) cells() []cell.D {
