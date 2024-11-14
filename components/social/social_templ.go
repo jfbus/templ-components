@@ -33,7 +33,8 @@ func C(def D) templ.Component {
 		ctx = templ.ClearChildren(ctx)
 		templ_7745c5c3_Err = button.C(button.D{
 			Type:  button.A,
-			Style: button.StyleNoBorder,
+			Style: button.StyleNoBorder | button.StyleHideLabelAlways,
+			Label: def.Type.String(),
 			Icon:  def.icon(),
 			Size:  def.Size,
 			Attributes: templ.Attributes{

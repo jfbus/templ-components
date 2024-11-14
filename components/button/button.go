@@ -84,10 +84,10 @@ func init() {
 				style.Set("sr-only"),
 			},
 			StyleHideLabelSmall: {
-				style.Set("hidden sm:block"),
+				style.Set("sr-only sm:not-sr-only"),
 			},
 			StyleHideLabelMedium: {
-				style.Set("hidden md:block"),
+				style.Set("sr-only md:not-sr-only"),
 			},
 		},
 	})

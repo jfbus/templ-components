@@ -1,3 +1,4 @@
+//go:generate stringer -type=Type
 package social
 
 import (
