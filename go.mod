@@ -3,7 +3,7 @@ module github.com/jfbus/templui
 go 1.23
 
 require (
-	github.com/a-h/templ v0.2.778
+	github.com/a-h/templ v0.2.793
 	github.com/rs/xid v1.6.0
 	github.com/stretchr/testify v1.9.0
 )
