@@ -5,7 +5,8 @@ import "github.com/jfbus/templui/components/button"
 templ C(def D) {
 	@button.C(button.D{
 		Type:  button.A,
-		Style: button.StyleNoBorder,
+		Style: button.StyleNoBorder | button.StyleHideLabelAlways,
+		Label: def.Type.String(),
 		Icon:  def.icon(),
 		Size:  def.Size,
 		Attributes: templ.Attributes{
