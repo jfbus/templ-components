@@ -1,4 +1,4 @@
-package layout
+package body
 
 import (
 	"github.com/jfbus/templui/components/footer"
@@ -8,7 +8,11 @@ import (
 )
 
 templ C(def D) {
-	<div x-data={ def.state() } class={ def.class() }>
+	<body
+		x-data={ def.state() }
+		class={ def.class() }
+		{ def.Attributes... }
+	>
 		if def.Navbar != nil {
 			@navbar.C(*def.Navbar)
 		}
@@ -20,5 +24,5 @@ templ C(def D) {
 			@footer.C(def.footer())
 		}
 		@container.C(def.toasts())
-	</div>
+	</body>
 }

@@ -1,8 +1,9 @@
-package layout
+package body
 
 import (
 	"strconv"
 
+	"github.com/a-h/templ"
 	"github.com/jfbus/templui/components/footer"
 	"github.com/jfbus/templui/components/navbar"
 	"github.com/jfbus/templui/components/sidebar"
@@ -18,10 +19,15 @@ func (h NavbarHeight) paddingTop() string {
 }
 
 type D struct {
-	Navbar       *navbar.D
-	Sidebar      *sidebar.D
-	Toasts       *container.D
-	Footer       *footer.D
+	// Navbar defines an optional navbar.
+	Navbar *navbar.D
+	// Sidebar defines an optional sidebar.
+	Sidebar *sidebar.D
+	// Toasts defines a custom toast container (a default one will be added otherwise).
+	Toasts *container.D
+	// Footer defines an optional footer.
+	Footer *footer.D
+	// State defines a default Alpine.js state.
 	State        map[string]string
 	NavbarHeight NavbarHeight
 	// CustomStyle defines a custom style.
@@ -29,6 +35,8 @@ type D struct {
 	// 		"layout":       style.D{style.Add("...")},
 	//	}
 	CustomStyle style.Custom
+	// Attributes adds additional attributes (e.g. HTMX attributes).
+	Attributes templ.Attributes
 }
 
 func (def D) state() string {

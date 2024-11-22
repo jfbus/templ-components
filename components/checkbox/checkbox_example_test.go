@@ -9,7 +9,7 @@ import (
 	"github.com/jfbus/templui/skin"
 )
 
-func ExampleD() {
+func ExampleC() {
 	style.SetSkin(skin.Default)
 	c := checkbox.C(checkbox.D{
 		Name:  "accept",
