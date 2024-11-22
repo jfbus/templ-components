@@ -6,6 +6,7 @@ import (
 	"github.com/jfbus/templui/components/position"
 	"github.com/jfbus/templui/components/size"
 	"github.com/jfbus/templui/components/style"
+	"github.com/jfbus/templui/components/tooltip"
 )
 
 type Type string
@@ -116,6 +117,8 @@ type D struct {
 	Disabled bool
 	// Loader displays a spinning loader when an HTMX action is triggered by the input.
 	Loader bool
+	// Tooltip adds a tooltip to the button.
+	Tooltip *tooltip.D
 	// StyleKey defines the style key to use ("button" by default).
 	StyleKey string
 	// CustomStyle defines a custom style.
@@ -160,6 +163,9 @@ func (def D) buttonClass() string {
 	class := style.CSSClass(def.style(), def.styleKey(), def.CustomStyle)
 	if def.Icon != "" || def.Loader {
 		class += " inline-flex items-center justify-center"
+	}
+	if def.Tooltip != nil {
+		class += " " + def.Tooltip.Class()
 	}
 	return class
 }

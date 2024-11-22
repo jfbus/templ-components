@@ -38,6 +38,9 @@ templ C(def D) {
 				}
 				class={ def.inputClass() }
 				{ def.Attributes... }
+				if def.Tooltip != nil {
+					tooltip={ def.Tooltip.Text }
+				}
 			>{ def.Value }</textarea>
 		</div>
 		if def.Message != nil {

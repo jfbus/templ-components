@@ -24,6 +24,9 @@ templ C(def D) {
 				class={ def.class() }
 				:class={ "hasError('" + def.InputName + "') && '" + def.classInvalid() + "'" }
 				{ def.Attributes... }
+				if def.Tooltip != nil {
+					tooltip={ def.Tooltip.Text }
+				}
 			>
 				if c, ok := def.Label.(templ.Component); ok {
 					@c

@@ -24,6 +24,9 @@ templ a(def D) {
 		if def.Loader {
 			hx-indicator={ "#" + def.ID + "-indicator" }
 		}
+		if def.Tooltip != nil {
+			tooltip={ def.Tooltip.Text }
+		}
 	>
 		@label(def)
 	</a>
@@ -42,6 +45,9 @@ templ button(def D) {
 		}
 		if def.Loader {
 			hx-indicator={ "#" + def.ID + "-indicator" }
+		}
+		if def.Tooltip != nil {
+			tooltip={ def.Tooltip.Text }
 		}
 	>
 		@label(def)

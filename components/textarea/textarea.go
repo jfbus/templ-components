@@ -9,6 +9,7 @@ import (
 	"github.com/jfbus/templui/components/position"
 	"github.com/jfbus/templui/components/size"
 	"github.com/jfbus/templui/components/style"
+	"github.com/jfbus/templui/components/tooltip"
 )
 
 func init() {
@@ -60,6 +61,8 @@ type D struct {
 	//playground:import:github.com/jfbus/templui/components/form/validation/message
 	//playground:default:&message.D{Message: "Validation message"}
 	Message *message.D
+	// Tooltip adds a tooltip to the input.
+	Tooltip *tooltip.D
 	// CustomStyle defines a custom style.
 	// 	style.Custom{
 	// 		"textarea":       style.D{style.Add("...")},
@@ -112,6 +115,9 @@ func (def D) iconSize() size.Size {
 
 func (def D) inputClass() string {
 	class := style.CSSClass(def.style(), "textarea/input", def.CustomStyle)
+	if def.Tooltip != nil {
+		class += " " + def.Tooltip.Class()
+	}
 	switch {
 	case def.Icon == "":
 		return class

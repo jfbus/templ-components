@@ -9,7 +9,7 @@ import (
 	"github.com/jfbus/templui/components/size"
 )
 
-func ExampleD() {
+func ExampleC() {
 	c := input.C(input.D{
 		Name:        "title",
 		Type:        input.TypeText,
@@ -19,5 +19,5 @@ func ExampleD() {
 		Size:        size.S,
 		Icon:        icon.Bookmark,
 	})
-	c.Render(context.TODO(), os.Stdout)
+	_ = c.Render(context.TODO(), os.Stdout)
 }

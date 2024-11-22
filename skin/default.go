@@ -241,4 +241,10 @@ var Default = style.Defaults{
 			style.Set("text-red-500 bg-red-100 dark:bg-red-800 dark:text-red-200"),
 		},
 	},
+	"tooltip": {
+		style.Default: {
+			style.Add("before:border-transparent before:border-t-black/70"),
+			style.Add("after:text-white after:bg-gray-900 after:dark:bg-gray-700"),
+		},
+	},
 }

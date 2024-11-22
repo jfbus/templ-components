@@ -8,6 +8,7 @@ import (
 	"github.com/jfbus/templui/components/position"
 	"github.com/jfbus/templui/components/size"
 	"github.com/jfbus/templui/components/style"
+	"github.com/jfbus/templui/components/tooltip"
 )
 
 type Type string
@@ -84,6 +85,8 @@ type D struct {
 	// IconPosition can be position.Start (default) or position.End.
 	//playground:values:position.Start,position.End
 	IconPosition position.Position
+	// Tooltip adds a tooltip to the input.
+	Tooltip *tooltip.D
 	// CustomStyle defines a custom style.
 	// 	style.Custom{
 	// 		"input":       style.D{style.Add("...")},
@@ -186,6 +189,9 @@ func (def D) iconSize() size.Size {
 
 func (def D) inputClass() string {
 	class := style.CSSClass(def.style(), "input/input", def.CustomStyle)
+	if def.Tooltip != nil {
+		class += " " + def.Tooltip.Class()
+	}
 	switch {
 	case def.Icon == "":
 		return class

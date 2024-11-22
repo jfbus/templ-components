@@ -10,6 +10,7 @@ import (
 	"github.com/jfbus/templui/components/selectfield/option"
 	"github.com/jfbus/templui/components/size"
 	"github.com/jfbus/templui/components/style"
+	"github.com/jfbus/templui/components/tooltip"
 )
 
 func init() {
@@ -41,6 +42,8 @@ type D struct {
 	//playground:import:github.com/jfbus/templui/components/form/validation/message
 	//playground:default:&message.D{Message: "Validation message"}
 	Message *message.D
+	// Tooltip adds a tooltip to the select.
+	Tooltip *tooltip.D
 	// CustomStyle defines a custom style.
 	// 	style.Custom{
 	// 		"select":       style.D{style.Add("...")},
@@ -92,6 +95,14 @@ func (def D) label() label.D {
 
 func (def D) class(k string) string {
 	return style.CSSClass(def.style(), k, def.CustomStyle)
+}
+
+func (def D) inputClass() string {
+	class := def.class("select/input")
+	if def.Tooltip != nil {
+		class += " " + def.Tooltip.Class()
+	}
+	return class
 }
 
 func (def D) message() message.D {

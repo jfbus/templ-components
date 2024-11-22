@@ -4,6 +4,7 @@ package label
 import (
 	"github.com/a-h/templ"
 	"github.com/jfbus/templui/components/style"
+	"github.com/jfbus/templui/components/tooltip"
 )
 
 const StyleInline style.Style = 1 << 8
@@ -12,10 +13,10 @@ func init() {
 	style.SetDefaults(style.Defaults{
 		"label": {
 			style.Default: {
-				style.Set("block mb-2 text-sm font-medium"),
+				style.Set("relative group block mb-2 text-sm font-medium"),
 			},
 			StyleInline: {
-				style.Set("ms-2 text-sm font-medium"),
+				style.Replace("block mb-2", "ms-2"),
 			},
 		},
 	})
@@ -36,6 +37,8 @@ type D struct {
 	Hide bool
 	// NoValidation removes the validation code.
 	NoValidation bool
+	// Tooltip adds a tooltip to the label.
+	Tooltip *tooltip.D
 	// CustomStyle defines a custom style.
 	// 	style.Custom{
 	// 		"label":       style.D{style.Add("...")},
@@ -46,7 +49,11 @@ type D struct {
 }
 
 func (def D) class() string {
-	return style.CSSClass(def.Style, "label", def.CustomStyle)
+	class := style.CSSClass(def.Style, "label", def.CustomStyle)
+	if def.Tooltip != nil {
+		class += " " + def.Tooltip.Class()
+	}
+	return class
 }
 
 func (def D) classInvalid() string {
