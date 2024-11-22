@@ -1,12 +1,12 @@
-# Templ UI - A library of templ UI components
+# TemplUI - A library of templ UI components
 
 <a href="https://pkg.go.dev/github.com/jfbus/templui"><img src="https://pkg.go.dev/badge/github.com/jfbus/templui.svg" alt="Go Reference" /></a>
 <a href="https://goreportcard.com/report/github.com/jfbus/templui"><img src="https://goreportcard.com/badge/github.com/jfbus/templui" alt="Go Report Card" /></a>
 
-A library of components to be used in a Go/templ/HTMX/Alpine.js project, based on [Flowbite](https://flowbite.com/) components and the [Lucide](https://lucide.dev/) icon
+A library of components to be used in a Go/templ/HTMX/Alpine.js project, loosely based on [Flowbite](https://flowbite.com/) components and the [Lucide](https://lucide.dev/) icon
 library.
 
-_Note: all Flowbite JS code has been rewritten using Alpine._
+_Note: all Flowbite JS code has been rewritten using Alpine or pure CSS._
 
 > This is a work in progress, breaking changes might happen.
 
@@ -61,7 +61,6 @@ it renames the previous config file to `tailwind.config.js.saved`.
 ## Roadmap
 
 - [ ] Rating
-- [ ] Tooltip
 - [ ] Only add used components in tailwind config
 - [ ] Storybook-like viewer
 
@@ -72,28 +71,47 @@ Not all components support all sizes. Each component definition lists the allowe
 
 ## Overriding CSS classes
 
-Default CSS classes are defined by a `Defaults` package variable.
-They can be changed if you need to globally change the style.
+Default CSS classes are defined by a `style.Defaults` global variable.
+It can be changed after init if you need to globally change the style.
 
-You can override two components: `Class` (borders, spacing, text size, ...) and `Color` (foreground/background/text color, ...).
-There are usually `Class` attributes in each component to add your style overrides.
+Each component has one or multiple html tags, each having its CSS classes (e.g. "button" and "button/label").
 
-* `style.Class()` replaces all `Class` values by new CSS classes,
-* `style.Color()` replaces all `Color` values by new CSS classes,
-* `style.Add()` adds new CSS classes to the default ones,
-* `style.ReplaceClass()`/`style.ReplaceColor()`/`style.Replace()` replace some CSS classes by new ones.
+Most components have a `CustomStyle` attribute that can be used to modify those default classes.
 
-Remove removes the specified class family, including all variants (modifiers, values, ...)
-
-```go
-style.Replace("ring", "foo") // removes ring-2, ring-[2px], hover:ring-2, ...
+```
+    CustomStyle: style.Custom{
+      "button": style.D{style.Add("text-sm")},
+	},
 ```
 
-## Components
+You may use :
+* `style.Add` to add some CSS classes,
+* `style.Set` to replace all CSS classes,
+* `style.Replace` to replace some CSS classes by new ones,
+* `style.ReplaceVariants` to replace all variants from a CSS class,
+* `style.Remove` to remove some CSS classes.
 
-### Icon
+As a shortcut to modify the CSS class of the top-level tag, you can use :
 
-Basic usage:
+```
+    CustomStyle: style.CustomAdd("text-sm"),
+```
+
+## Configuring a skin
+
+You can configure a skin using `style.SetSkin`.
+
+You may use the default skin by calling `style.SetSkin(skin.Default)` or copy `skin.Default` and build your own style.
+
+## Using TemplUI
+
+### Base layout
+
+Replace your `<body>` tag with `body.C`, and add a navbar, a sidebar and a footer.
+
+### Icons
+
+Icons may be used by name:
 
 ```templ
 import "github.com/jfbus/templui/components/icon"
@@ -101,12 +119,14 @@ import "github.com/jfbus/templui/components/icon"
 @icon.C(icon.Flower)
 ```
 
-A size can be set:
+or using a definition:
 
 ```templ
-import "github.com/jfbus/templui/components/size"
+import "github.com/jfbus/templui/components/icon"
 
-@icon.C(icon.D{Icon:icon.Flower, Size:size:S})
+@icon.C(icon.D{
+  Icon:icon.Flower,
+})
 ```
 
 Icon sizes are mapped to text sizes:
@@ -117,94 +137,35 @@ Icon sizes are mapped to text sizes:
 
 `size.S` translates into a `w-3.5 h-3.5` class. `size.L` translates into a `w-[18px] h-[18px]` class.
 
-### Input Field
+### Forms
+
+Add a `form.C` component and various input fields (input, textarea, select, radio/radiogroup, checkbox/checkboxgroup).
+
+#### Validation errors
+
+Add a `Message` container to your inputs: 
 
 ```templ
 @input.C(input.D{
     Name:  "foo",
     Label: "Foo",
     Value: [your value],
-    Size:  size.S,
-    Icon:  icon.Flower,
+    Message: &message.D{},
 })
 ```
 
-With HTMX attributes and a spinning loader:
+And return errors from your code:
 
-```templ
-@input.C(input.D{
-    Name:       "foo",
-    Label:      "Foo",
-    Value:      [your value],
-    Loader:     true,
-    Attributes: templ.Attributes{
-        "hx-post":   "/add",
-        "hx-target": "#list",
-})
+```go
+return validation.Retarget(ctx, validation.D{
+		FormID: formID,
+		Errors: map[string]string{
+			"foo": "field is required",
+		},
+	}, w, http.StatusUnprocessableEntity)
 ```
 
-You can define a custom loader by changing `loader.DefaultLoader`. 
-
-### Textarea
-
-```templ
-import "github.com/jfbus/templui/components/textarea"
-
-@textarea.C(textarea.D{
-    Name:  "foo",
-    Label: "Foo",
-    Value: [your value],
-    Icon:  icon.Flower,
-})
-```
-
-### Select
-
-```templ
-import (
-	"github.com/jfbus/templui/components/selectfield"
-	"github.com/jfbus/templui/components/selectfield/option"
-)
-
-@selectfield.C(selectfield.D{
-    Name:  "country",
-    Label: "Country",
-    Options: []option.D{{
-        Label: "Select a country",
-    }, {
-        Value: "FR",
-        Label: "France",
-    }, {
-        Value: "DE",
-        Label: "Germany",
-    }, {
-        Value: "GB",
-        Label: "United Kingdom",
-    }},
-    Selected: "DE",
-})
-```
-
-### Radio/Radiogroup
-
-```templ
-import (
-  "github.com/jfbus/templui/components/radio"
-  "github.com/jfbus/templui/components/radiogroup"
-)
-
-@radiogroup.C(radiogroup.D{
-  Name: "choice",
-  Style: radiogroup.StyleBordered,
-  Inputs: []radio.D{{
-    Value: "choice1",
-    Label: "Choice 1",
-  }, {
-    Value: "choice2",
-    Label: "Choice 2",
-  }},
-})
-```
+Validation errors require Alpine.JS.
 
 ### Inline editing
 
@@ -230,51 +191,7 @@ import "github.com/jfbus/templui/components/inline"
 })
 ```
 
-### Button
-
-```templ
-import "github.com/jfbus/templui/components/button"
-
-@button.C(button.D{
-    Name:  "foo",
-    Label: "Foo",
-    Value: [your value],
-    Icon:  icon.Pencil,
-})
-```
-
-### Button group
-
-```templ
-import "github.com/jfbus/templui/components/buttongroup"
-
-@buttongroup.C(buttongroup.D{
-    Size:    size.S,
-    Buttons: []button.D{
-        {
-            Icon:  icon.ArrowDownNarrowWide,
-            Label: label.D{
-                  Label: "Sort",
-                  Hide: true,
-            },
-        },
-        {
-            Icon:      icon.Heart,
-            Label: label.D{
-                  Label: "Rating",
-                  Hide: true,
-            },
-        },
-        {
-            Icon:      icon.Banknote,
-            Label: label.D{
-                  Label: "Price",
-                  Hide: true,
-            },
-        },
-    },
-})
-```
+Inline editing require Alpine.JS.
 
 ### Table
 
@@ -309,37 +226,63 @@ import (
 Row contents can either be a slice of strings, a slice of `cell.D` definitions,
 a slice of `templ.Component` components or a `[]any` slice containing any number of these.
 
-### Accordion
+### Toasts
 
-```templ
-import (
-    "github.com/jfbus/templui/components/accordion"
-    "github.com/jfbus/templui/components/accordion/element"
+You may return both your normal handler output and a toast:
+
+```go
+templ.Join(
+	YourComponent(),
+	&toast.C(toast.D{
+		ContainerID: container.DefaultID,
+		Style:       toast.StyleOK,
+		Content:     "Success !",
+    }),
 )
-
-@accordion.C(accordion.D{
-    ID: "accordion",
-    Children: []element.D{{
-        Open:    true,
-        Title:   "First",
-        Content: your.component(),
-    }, {
-        Title:   "Second",
-        Content: your.component(),
-    }},
-})
 ```
 
-### Toast
+If you wish to replace the normal handler output by an error toast:
 
-Toasts either close manually or automatically.
+```go
+toast.Retarget(ctx, toast.D{
+    Style:       toast.StyleError,
+    Content:     "An error occured",
+    Close:       toast.CloseButton,
+}, r, http.StatusInternalServerError)
+```
+
+By default, toasts automatically close, use `Close: toast.CloseButton` to add a manually closing toast.
+
+Toasts require Alpine.JS.
+
+### Modals
+
+A handler may display a modal:
+
+```go
+modal.Retarget(ctx, modal.D{}, w, http.StatusOK)
+```
+
+Display a component and close a modal:
+
+```go
+templ.Join(
+	YourComponent(),
+	modal.Close(modalID),
+)
+```
+
+Modals require Alpine.JS.
+
+### Tooltips
+
+You may add tooltip to inputs, labels, buttons:
 
 ```templ
-import "github.com/jfbus/templui/components/toast"
-
-@toast.C(toast.D{
-    Style:   toast.StyleError,
-    Content: "An error occurred !",
+button.C(button.D{
+  ToolTip: &tooltip.D{
+    Text: "tooltip",
+  },
 })
 ```
 
@@ -360,10 +303,6 @@ Renders the first non empty string from a list of string parameters.
 ```go
 helper.IfEmpty(item.Value, "???")
 ```
-
-### L
-
-`L` returns a `templ.Component` based on a list of `templ.Component` values.
 
 ## FAQ
 
