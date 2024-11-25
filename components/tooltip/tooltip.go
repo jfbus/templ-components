@@ -8,7 +8,7 @@ func init() {
 			style.Default: {
 				style.Set("relative"),
 				style.Add("before:opacity-0 hover:before:opacity-100 before:absolute before:content-[''] before:z-50 before:border-solid before:border-t-4 before:border-x-[6px] before:border-b-0"),
-				style.Add("after:opacity-0 hover:after:opacity-100 after:absolute after:content-[attr(tooltip)] after:z-50 after:px-3 after:py-2 after:text-sm after:font-medium after:rounded-lg after:shadow-sm"),
+				style.Add("after:pointer-events-none after:text-nowrap after:opacity-0 hover:after:opacity-100 after:absolute after:content-[attr(tooltip)] after:z-50 after:px-3 after:py-2 after:text-sm after:font-medium after:rounded-lg after:shadow-sm"),
 			},
 			StylePositionTop: {
 				style.Add("before:-top-1.5 before:left-1/2 before:-translate-x-1/2"),
