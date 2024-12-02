@@ -7,19 +7,24 @@ import (
 	"github.com/jfbus/templui/components/toast/container"
 )
 
+//playground:ignore
 templ C(def D) {
 	<body
 		x-data={ def.state() }
-		class={ def.class() }
+		class={ def.class("body") }
 		{ def.Attributes... }
 	>
 		if def.Navbar != nil {
-			@navbar.C(*def.Navbar)
+			@navbar.C(def.navbar())
 		}
 		if def.Sidebar != nil {
 			@sidebar.C(def.sidebar())
 		}
-		{ children... }
+		<div class="w-full">
+			<div class={ def.class("body/div") }>
+				{ children... }
+			</div>
+		</div>
 		if def.Footer != nil {
 			@footer.C(def.footer())
 		}

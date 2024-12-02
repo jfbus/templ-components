@@ -21,10 +21,7 @@ func init() {
 		},
 		"navbar/content": {
 			style.Default: {
-				style.Set("max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"),
-			},
-			StyleSticky: {
-				style.Set("max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"),
+				style.Set("flex flex-wrap items-center justify-between mx-auto px-4 py-2"),
 			},
 		},
 	})

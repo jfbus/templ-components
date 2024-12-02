@@ -6,51 +6,54 @@ import (
 	"github.com/jfbus/templui/components/social"
 )
 
+//playground:ignore
 templ C(def D) {
 	<footer class={ def.class("footer") }>
-		<div class={ def.class("footer/content") }>
-			if def.Brand != nil {
-				@def.Brand
-			} else {
-				if def.Copyright != nil && len(def.Social) == 0 {
-					<span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+		<div class={ def.class("footer/div") }>
+			<div class={ def.class("footer/content") }>
+				if def.Brand != nil {
+					@def.Brand
+				} else {
+					if def.Copyright != nil && len(def.Social) == 0 {
+						<span class={ def.class("footer/copyright") }>
+							@def.Copyright
+						</span>
+					}
+				}
+				switch s := def.sections().(type) {
+					case []a.D:
+						<ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0 gap-4 md:gap-6">
+							for _,l := range s {
+								<li>
+									@a.C(l)
+								</li>
+							}
+						</ul>
+					case []section.D:
+						<div class="grid grid-cols-2 gap-8 sm:gap-6 sm:auto-cols-max">
+							for _,l := range s {
+								<div>
+									@section.C(l)
+								</div>
+							}
+						</div>
+				}
+			</div>
+			if (def.Brand != nil && def.Copyright != nil) || len(def.Social)>0 {
+				if def.Brand != nil || def.Sections != nil {
+					<hr class={ def.class("footer/separator") }/>
+				}
+				<div class={ def.class("footer/content") }>
+					<span class={ def.class("footer/copyright") }>
 						@def.Copyright
 					</span>
-				}
-			}
-			switch s := def.sections().(type) {
-				case []a.D:
-					<ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0 gap-4 md:gap-6">
-						for _,l := range s {
-							<li>
-								@a.C(l)
-							</li>
-						}
-					</ul>
-				case []section.D:
-					<div class="grid grid-cols-2 gap-8 sm:gap-6 sm:auto-cols-max">
-						for _,l := range s {
-							<div>
-								@section.C(l)
-							</div>
+					<div class={ def.class("footer/social") }>
+						for _, s := range def.Social {
+							@social.C(s)
 						}
 					</div>
+				</div>
 			}
 		</div>
-		if (def.Brand != nil && def.Copyright != nil) || len(def.Social)>0 {
-			if def.Brand != nil || def.Sections != nil {
-				<hr class={ def.class("footer/separator") }/>
-			}
-			<div class={ def.class("footer/footer") }>
-				<span class={ def.class("footer/copyright") }>
-					@def.Copyright
-				</span>
-				<div class={ def.class("footer/social") }>
-					for _, s := range def.Social {
-						@social.C(s)
-					}
-				</div>
-			</div>
-		}
 	</footer>
 }

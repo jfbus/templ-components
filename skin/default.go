@@ -12,7 +12,7 @@ import (
 )
 
 var Default = style.Defaults{
-	"layout": {
+	"body": {
 		style.Default: {
 			style.Set("text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"),
 		},
