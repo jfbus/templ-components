@@ -58,7 +58,7 @@ func init() {
 				style.Add("pt-16"),
 			},
 			StyleWithSidebar: {
-				style.Add("sm:pl-64"),
+				style.Add("md:pl-64"),
 			},
 		},
 		"body/navbar/content": {
@@ -109,7 +109,7 @@ func init() {
 				style.Add("max-w-screen-2xl"),
 			},
 			StyleWithSidebar: {
-				style.Add("sm:pl-64"),
+				style.Add("md:pl-64"),
 			},
 		},
 		"body/toast/container": {
