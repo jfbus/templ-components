@@ -9,7 +9,16 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 const (
-	SwapBeforeEnd = "beforeend"
+	SwapOutOfBand   = "true"
+	SwapInnerHTML   = "innerHTML"
+	SwapOuterHTML   = "outerHTML"
+	SwapTextContent = "textContent"
+	SwapBeforeBegin = "beforebegin"
+	SwapAfterBegin  = "afterbegin"
+	SwapBeforeEnd   = "beforeend"
+	SwapAfterEnd    = "afterend"
+	SwapDelete      = "delete"
+	SwapNone        = "none"
 )
 
 func OOBSwap(id, swap string, c templ.Component) templ.Component {
@@ -40,7 +49,7 @@ func OOBSwap(id, swap string, c templ.Component) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(id)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `htmx/htmx.templ`, Line: 8, Col: 13}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `htmx/htmx.templ`, Line: 17, Col: 13}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -53,7 +62,7 @@ func OOBSwap(id, swap string, c templ.Component) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(swap)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `htmx/htmx.templ`, Line: 8, Col: 34}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `htmx/htmx.templ`, Line: 17, Col: 34}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {

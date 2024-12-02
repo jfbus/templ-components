@@ -1,7 +1,16 @@
 package htmx
 
 const (
-	SwapBeforeEnd = "beforeend"
+	SwapOutOfBand   = "true"
+	SwapInnerHTML   = "innerHTML"
+	SwapOuterHTML   = "outerHTML"
+	SwapTextContent = "textContent"
+	SwapBeforeBegin = "beforebegin"
+	SwapAfterBegin  = "afterbegin"
+	SwapBeforeEnd   = "beforeend"
+	SwapAfterEnd    = "afterend"
+	SwapDelete      = "delete"
+	SwapNone        = "none"
 )
 
 templ OOBSwap(id, swap string, c templ.Component) {
