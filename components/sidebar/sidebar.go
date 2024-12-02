@@ -11,7 +11,7 @@ func init() {
 	style.SetDefaults(style.Defaults{
 		"sidebar": {
 			style.Default: {
-				style.Set("fixed top-0 left-0 z-20 w-64 h-screen transition-transform sm:translate-x-0"),
+				style.Set("fixed top-0 left-0 z-20 w-64 h-screen transition-transform md:translate-x-0"),
 			},
 		},
 		"sidebar/content": {

@@ -109,6 +109,46 @@ You may use the default skin by calling `style.SetSkin(skin.Default)` or copy `s
 
 Replace your `<body>` tag with `body.C`, and add a navbar, a sidebar and a footer.
 
+```
+@body.C(body.D{
+    Style: body.StyleXLargeWidth,
+    Navbar: &navbar.D{[...]},
+})
+```
+
+### Using with Alpine
+
+You can add `x-data` Alpine state variables to the body:
+
+```
+@body.C(body.D{
+    [...],
+    State: map[string]string{
+        "firstName": "John",
+        "lastName": "Doe",
+    },
+})
+```
+
+### Sidebar
+
+The sidebar hides automatically on phones (and displays on tablets).
+
+You need to add a sidebar control to your navbar to allow the user to display the sidebar on phones.
+
+```
+navbar.D{
+    Sections: []templ.Component{
+        div.C(div.D{Content: templ.Join(
+            control.C(control.D{}),
+            a.C(a.D{
+                Text: "Your brand",
+                Href: "/",
+            }),
+        )}),
+    },
+}
+```  
 ### Icons
 
 Icons may be used by name:
@@ -284,24 +324,6 @@ button.C(button.D{
     Text: "tooltip",
   },
 })
-```
-
-## Helpers
-
-```
-import "github.com/jfbus/templui/components/helper"
-```
-
-### S
-
-`helper.S` renders anything (numbers, booleans, ...). `{helper.S(1)}` is the equivalent of `{strconv.Itoa(1)}`
-
-### IfEmpty
-
-Renders the first non empty string from a list of string parameters.
-
-```go
-helper.IfEmpty(item.Value, "???")
 ```
 
 ## FAQ

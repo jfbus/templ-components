@@ -17,13 +17,18 @@ func init() {
 	style.SetDefaults(style.Defaults{
 		"footer": {
 			style.Default: {
-				style.Set("mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8"),
+				style.Set("mx-auto w-full"),
 			},
 			StyleBorder: {
-				style.Set("mx-auto w-full max-w-screen-xl p-4 rounded-lg shadow"),
+				style.Set("mx-auto w-full rounded-lg shadow"),
 			},
 			StyleSticky: {
 				style.Set("fixed bottom-0 left-0 z-20 w-full p-4 border-t shadow md:flex md:items-center md:justify-between md:p-6"),
+			},
+		},
+		"footer/div": {
+			style.Default: {
+				style.Set("px-4 py-6"),
 			},
 		},
 		"footer/content": {
@@ -39,11 +44,6 @@ func init() {
 		"footer/copyright": {
 			style.Default: {
 				style.Set("block text-sm sm:text-center"),
-			},
-		},
-		"footer/footer": {
-			style.Default: {
-				style.Set("sm:flex sm:items-center sm:justify-between"),
 			},
 		},
 		"footer/social": {
@@ -70,11 +70,11 @@ type D struct {
 	// CustomStyle defines a custom style.
 	// 	style.Custom{
 	// 		"footer":               style.D{style.Add("...")},
+	// 		"footer/div":               style.D{style.Add("...")},
 	// 		"footer/content":       style.D{style.Add("...")},
 	// 		"footer/social":        style.D{style.Add("...")},
 	// 		"footer/separator":     style.D{style.Add("...")},
 	// 		"footer/copyright":     style.D{style.Add("...")},
-	// 		"footer/footer":        style.D{style.Add("...")},
 	// 		"footer/section/link":  style.D{style.Add("...")},
 	// 		"footer/section/title": style.D{style.Add("...")},
 	//	}

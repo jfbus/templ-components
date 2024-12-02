@@ -14,7 +14,7 @@ const customSelf = "self"
 
 type Opt func(string) string
 
-// Set sets/replace the class attribute.
+// Set sets/replaces the class attribute.
 func Set(set string) Opt {
 	return func(_ string) string {
 		return set
@@ -34,7 +34,7 @@ func Add(add string) Opt {
 	}
 }
 
-// ReplaceVariants replace a Tailwind class and its variants from the class attribute.
+// ReplaceVariants replaces a Tailwind class and its variants from the class attribute.
 //
 //	// replaces border-[...], [...]:border-[...]
 //	style.ReplaceVariants("border", "border-none")
@@ -59,7 +59,24 @@ func Replace(old, new string) Opt {
 	}
 }
 
-// Remove removes.
+// RemoveVariants removes a Tailwind class and its variants from the class attribute.
+//
+//	// removes border-[...], [...]:border-[...]
+//	style.RemoveVariants("border", "border")
+func RemoveVariants(patterns ...string) Opt {
+	rePatterns := make([]*regexp.Regexp, len(patterns))
+	for i, pattern := range patterns {
+		rePatterns[i] = regexp.MustCompile(`\b(?:[^ ]+:)?` + pattern + `(?:-[^ ]+)?\b`)
+	}
+	return func(d string) string {
+		for _, rePattern := range rePatterns {
+			d = strings.TrimSpace(rePattern.ReplaceAllString(d, ""))
+		}
+		return trimSpaces(d)
+	}
+}
+
+// Remove removes classes.
 func Remove(remove ...string) Opt {
 	return func(d string) string {
 		for _, r := range remove {
