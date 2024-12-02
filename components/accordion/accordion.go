@@ -12,8 +12,9 @@ type D struct {
 	// ID is the accordion ID (mandatory).
 	ID string
 	// Children defines the list of elements in the accordion.
-	//templplayground:import:github.com/jfbus/templui/components/helper
-	//templplayground:default:[]element.D{{Title: "Section 1", Content:helpers.S("Content 1")},{Title: "Section 2", Content:helpers.S("Content 2")})
+	//playground:import:github.com/jfbus/templui/components/text
+	//playground:import:github.com/jfbus/templui/components/accordion/element
+	//playground:default:[]element.D{{Title: "Section 1", Content:text.C("Content 1")},{Title: "Section 2", Content:text.C("Content 2")}}
 	Children []element.D
 	// CustomStyle defines a custom style for children elements.
 	// 	style.Custom{
