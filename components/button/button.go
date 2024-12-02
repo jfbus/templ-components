@@ -120,6 +120,7 @@ type D struct {
 	// Tooltip adds a tooltip to the button.
 	Tooltip *tooltip.D
 	// StyleKey defines the style key to use ("button" by default).
+	//playground:ignore
 	StyleKey string
 	// CustomStyle defines a custom style.
 	// 	style.Custom{

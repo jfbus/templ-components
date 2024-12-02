@@ -17,8 +17,10 @@ func init() {
 
 type D struct {
 	// Href is the target URL.
+	//playground:default:"https://github.com/jfbus/templui"
 	Href string
 	// Text is the link text.
+	//playground:default:"Text"
 	Text string
 	// CustomStyle defines a custom style.
 	// 	style.Custom{
